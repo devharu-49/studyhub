@@ -1,11 +1,40 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyHub</title>
-</head>
-<body>
-    <h1>Hello, World!</h1>
-</body>
-</html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Document</title>
+    
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Rampart+One&display=swap" rel="stylesheet">
+    <!-- 追記 -->
+  </head>
+  
+      <body>
+          <nav class="h-20 bg-menuColor flex items-center">
+            <a href="" class="text-4xl font-rampartOne p-5">StudyHub</a>
+            <ul class="flex">
+              <li><a href="" class="text-2xl font-kosugiMaru p-5">HOME</a></li>
+              <li><a href="" class="text-2xl font-kosugiMaru p-5">検索</a></li>
+              <li><a href="" class="text-2xl font-bold font-kosugiMaru p-5">ToDo</a></li>
+            </ul>
+            <a href="" class><ion-icon name="exit-outline" class="text-4xl"></ion-icon></a>
+          </nav>
+          <div id="container"></div>
+  
+          <script
+              type="module"
+              src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+          ></script>
+          <script
+              nomodule
+              src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+          ></script>
+      </body>
+  </html>
