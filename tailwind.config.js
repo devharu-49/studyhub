@@ -12,6 +12,8 @@ module.exports = {
       colors: {
         menuColor: '#80a791', // メニューバーの色の追加
         card: "#dbeadb",
+        "card-button": "#a6a6a6",
+        "card-border": "#b2b3b0",
       },
     },
   },

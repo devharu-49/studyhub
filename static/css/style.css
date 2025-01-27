@@ -625,8 +625,17 @@ video {
   height: 15rem;
 }
 
+.signupcharacter {
+  width: 15rem;
+  height: 15rem;
+}
+
 .logintitle {
   margin-top: 16rem;
+}
+
+.signuptitle {
+  margin-top: -16rem;
 }
 
 .titletext {
