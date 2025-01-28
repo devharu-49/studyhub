@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <title>Document</title>
+    <title>StudyHub</title>
     
     <link href="{% static 'css/style.css' %}" rel="stylesheet" />
     
@@ -16,25 +16,51 @@
     <!-- 追記 -->
   </head>
   
-      <body>
-          <nav class="h-20 bg-menuColor flex items-center">
-            <a href="" class="text-4xl font-rampartOne p-5">StudyHub</a>
-            <ul class="flex">
-              <li><a href="" class="text-2xl font-kosugiMaru p-5">HOME</a></li>
-              <li><a href="" class="text-2xl font-kosugiMaru p-5">検索</a></li>
-              <li><a href="" class="text-2xl font-bold font-kosugiMaru p-5">ToDo</a></li>
-            </ul>
-            <a href="" class><ion-icon name="exit-outline" class="text-4xl"></ion-icon></a>
-          </nav>
-          <div id="container"></div>
-  
-          <script
-              type="module"
-              src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-          ></script>
-          <script
-              nomodule
-              src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-          ></script>
-      </body>
+  <body class="bg-baseColor">
+      <nav id="menubar" class="h-20 bg-menuColor flex items-center">
+        <a href="#" class="text-4xl text-white font-rampartOne pb-2 pr-10 pl-5">StudyHub</a>
+        <ul class="flex items-center h-full">
+          <li class="h-full flex items-center justify-center hover:bg-activeMenuColor">
+            <a href="#" class="text-2xl text-white font-kosugiMaru px-8">HOME</a>
+          </li>
+          <li class="h-full flex items-center justify-center hover:bg-activeMenuColor">
+            <a href="#" class="text-2xl text-white font-kosugiMaru px-8 hover:bg-activeMenuColor">検索</a>
+          </li>
+          <li class="h-full flex items-center justify-center hover:bg-activeMenuColor">
+            <a href="#" class="text-2xl text-white font-kosugiMaru px-8 hover:bg-activeMenuColor">ToDo</a>
+          </li>
+          <li>
+            <p class="text-xl font-medium text-white font-kosugiMaru px-8 ">マイページ</p>
+          </li>
+        </ul>
+        <a href="#" class="h-full flex items-center justify-center text-4xl text-white ml-auto p-5 hover:bg-activeMenuColor">
+          <ion-icon name="exit-outline" class="text-4xl pl-3"></ion-icon>
+        </a>
+      </nav>
+
+      {% block body %}
+      {% endblock body %}
+
+      <div id="timer" class="absolute flex bottom-0 right-5 w-[20%] max-w-fit min-w-72 items-center">
+        <img src="{% static 'images/timer.png' %}" alt="タイマー画像" class="">
+        <div class="absolute flex w-full h-[80%] items-center justify-between px-[3%]">
+          <div class="flex items-center justify-center w-[65%] h-full rounded-md bg-white">
+            <p class="text-[250%] font-medium">00:00:00</p>
+          </div>
+          <div class="flex flex-col w-[30%] h-full justify-between gap-3 py-[2%]">
+            <a href="#" class="flex items-center justify-center w-full h-full rounded-full bg-white">start</a>
+            <a href="#" class="flex items-center justify-center w-full h-full rounded-full bg-white">finish</a>
+          </div>
+        </div>
+      </div>
+      
+      <script
+          type="module"
+          src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+      ></script>
+      <script
+          nomodule
+          src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+      ></script>
+  </body>
   </html>
