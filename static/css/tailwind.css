@@ -4,7 +4,7 @@
 
 
 .background {
-    background-image: url('./freepik__modern-style-detailled-illustration-a-map-featurin__22191.jpeg'); /* 背景画像のURLを指定 */
+    background-image: url('../images/freepik__modern-style-detailled-illustration-a-map-featurin__22191.jpeg'); /* 背景画像のURLを指定 */
     background-size: cover;
     height: 100vh; /* ビューポートの高さに合わせる */
     filter: opacity(0.3); /* ここでぼかしの強さを指定 */

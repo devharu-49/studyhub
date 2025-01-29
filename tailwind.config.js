@@ -17,14 +17,8 @@ module.exports = {
         "card-button": "#a6a6a6",
         "card-border": "#b2b3b0",
       },
-
     },
   },
-  corePlugins: {
-    aspectRatio: false,
-  },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-  ],
+  plugins: [],
 }
 
