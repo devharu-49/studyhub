@@ -13,12 +13,9 @@ module.exports = {
         baseColor: '#f1f6f0', // 全体の背景色
         menuColor: '#80a791', // メニューバーの色
         activeMenuColor: '#9fc7aa', // 選択時のメニューバーの色
-      },
-      backgroundImage: {
-        timer: 'url("/static/images/timer.png")'
-      },
-      aspectRatio: {
-        '188/451': '188 / 451', // カスタム比率
+        card: "#dbeadb",
+        "card-button": "#a6a6a6",
+        "card-border": "#b2b3b0",
       },
 
     },
