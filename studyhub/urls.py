@@ -21,3 +21,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('user.urls')),  # 追加
 ]
+
+from django.views.generic import TemplateView
+urlpatterns = [
+    path('test/base/', TemplateView.as_view(template_name='base.html')),
+    path('test/login/', TemplateView.as_view(template_name='login.html')),
+    path('test/signup/', TemplateView.as_view(template_name='signup.html')),
+]
+
