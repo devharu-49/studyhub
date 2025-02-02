@@ -10,7 +10,9 @@ module.exports = {
         kosugiMaru: ['Kosugi Maru', 'sans-serif'],
       },
       colors: {
-        menuColor: '#80a791', // メニューバーの色の追加
+        baseColor: '#f1f6f0', // 全体の背景色
+        menuColor: '#80a791', // メニューバーの色
+        activeMenuColor: '#9fc7aa', // 選択時のメニューバーの色
         card: "#dbeadb",
         "card-button": "#a6a6a6",
         "card-border": "#b2b3b0",
