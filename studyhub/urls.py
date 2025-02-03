@@ -17,15 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from django.views.generic import TemplateView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('user.urls')),  # 追加
-]
+    path('', include('user.urls')),
 
-from django.views.generic import TemplateView
-urlpatterns = [
     path('test/base/', TemplateView.as_view(template_name='base.html')),
     path('test/login/', TemplateView.as_view(template_name='login.html')),
     path('test/signup/', TemplateView.as_view(template_name='signup.html')),
+    path('test/todo/', TemplateView.as_view(template_name='todo.html')),
+    path('test/todo/form', TemplateView.as_view(template_name='todoform.html')),
+    path('test/todo/detail', TemplateView.as_view(template_name='tododetail.html')),
 ]
+
 
