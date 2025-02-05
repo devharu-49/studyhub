@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block body %}
+<div class="mx-auto h-[calc(100dvh-5rem)] w-[60%] pt-[2%] font-kosugiMaru">
+  <h2 class="mb-[2%] text-center text-4xl font-bold">ToDo詳細</h2>
+  <form action="">
+    <div class="mb-[3%] flex items-center">
+      <label for="title" class="min-w-24">タイトル：</label>
+      <p class="w-full">ハッカソン中間発表 発表順争奪戦参加</p>
+    </div>
+    <div class="mb-[3%] flex items-center">
+      <label for="deadline" class="inline-block min-w-24">締切日：</label>
+      <p class="w-full">2025/02/02</p>
+    </div>
+    <div class="mb-[3%] flex items-center">
+      <label for="" class="inline-block min-w-24">状態：</label>
+      <p class="w-full">完了</p>
+    </div>
+    <div class="mb-[3%] flex items-start">
+      <label for="" class="inline-block min-w-24">内容：</label>
+      <p class="w-full">
+        前半最後<br />
+        後半最初らへん
+      </p>
+    </div>
+    <a
+      href="/test/todo/form"
+      class="mr-10 rounded border-2 border-card-border bg-card-button-yellow px-[10%] py-[1%]"
+    >
+      編集
+    </a>
+    <a
+      href="/test/todo"
+      class="rounded border-2 border-card-border bg-card-button px-[10%] py-[1%]"
+    >
+      戻る
+    </a>
+  </form>
+</div>
+
+{% endblock body %}

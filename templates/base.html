@@ -1,40 +1,107 @@
 {% load static %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <title>Document</title>
-    
+
+    <title>StudyHub</title>
+
     <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Rampart+One&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Rampart+One&display=swap"
+      rel="stylesheet"
+    />
     <!-- 追記 -->
   </head>
-  
-      <body>
-          <nav class="h-20 bg-menuColor flex items-center">
-            <a href="" class="text-4xl font-rampartOne p-5">StudyHub</a>
-            <ul class="flex">
-              <li><a href="" class="text-2xl font-kosugiMaru p-5">HOME</a></li>
-              <li><a href="" class="text-2xl font-kosugiMaru p-5">検索</a></li>
-              <li><a href="" class="text-2xl font-bold font-kosugiMaru p-5">ToDo</a></li>
-            </ul>
-            <a href="" class><ion-icon name="exit-outline" class="text-4xl"></ion-icon></a>
-          </nav>
-          <div id="container"></div>
-  
-          <script
-              type="module"
-              src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-          ></script>
-          <script
-              nomodule
-              src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-          ></script>
-      </body>
-  </html>
+
+  <body class="h-dvh w-full bg-baseColor">
+    <nav id="menubar" class="flex h-20 flex-shrink-0 items-center bg-menuColor">
+      <a
+        href="#"
+        class="pb-2 pl-5 pr-10 font-rampartOne text-4xl text-baseColor"
+        >StudyHub</a
+      >
+      <ul class="flex h-full items-center">
+        <li
+          class="flex h-full items-center justify-center hover:bg-highlightColor"
+        >
+          <a href="#" class="px-8 font-kosugiMaru text-2xl text-baseColor"
+            >HOME</a
+          >
+        </li>
+        <li
+          class="flex h-full items-center justify-center hover:bg-highlightColor"
+        >
+          <a href="#" class="px-8 font-kosugiMaru text-2xl text-baseColor"
+            >検索</a
+          >
+        </li>
+        <li
+          class="flex h-full items-center justify-center hover:bg-highlightColor"
+        >
+          <a
+            href="/test/todo"
+            class="px-8 font-kosugiMaru text-2xl text-baseColor"
+            >ToDo</a
+          >
+        </li>
+        <li>
+          <p class="px-8 font-kosugiMaru text-xl font-medium text-baseColor">
+            マイペー<span class="text-xs">ジ</span
+            ><ion-icon name="hammer-outline" class="scale-x-[-1]"></ion-icon>
+          </p>
+        </li>
+      </ul>
+      <a
+        href="#"
+        class="ml-auto flex h-full items-center justify-center p-5 text-4xl text-white hover:bg-highlightColor"
+      >
+        <ion-icon name="exit-outline" class="pl-3 text-4xl"></ion-icon>
+      </a>
+    </nav>
+
+    {% block body %} {% endblock body %}
+
+    <div
+      id="timer"
+      class="absolute bottom-0 right-5 flex w-[20%] min-w-72 max-w-fit items-center"
+    >
+      <img src="{% static 'images/timer.png' %}" alt="タイマー画像" class="" />
+      <div
+        class="absolute flex h-[80%] w-full items-center justify-between px-[3%]"
+      >
+        <div
+          class="flex h-full w-[65%] items-center justify-center rounded-md bg-white"
+        >
+          <p class="text-[250%] font-medium">00:00:00</p>
+        </div>
+        <div class="flex h-full w-[30%] flex-col justify-between gap-3 py-[2%]">
+          <a
+            href="#"
+            class="flex h-full w-full items-center justify-center rounded-full bg-white"
+            >start</a
+          >
+          <a
+            href="#"
+            class="flex h-full w-full items-center justify-center rounded-full bg-white"
+            >finish</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

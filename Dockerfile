@@ -24,13 +24,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app/
 
 # Tailwind CSSインストール
-RUN npm install tailwindcss@3.4.17
+RUN npm install -D tailwindcss@3.4.17 @tailwindcss/forms @tailwindcss/aspect-ratio
+RUN npm install -D prettier prettier-plugin-tailwindcss
 
 # TailwindCSSの初期化。設定ファイルtailwind.config.jsの作成
 RUN npx tailwindcss init
 
 # 実行コマンドを指定
-CMD ["sh", "-c", "./wait-for-it.sh db:3306 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+CMD ["sh", "-c", "./wait-for-it.sh db:3306 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000 && npm run watch"]
 
 WORKDIR /app
 
