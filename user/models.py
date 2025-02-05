@@ -27,10 +27,7 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
-        # Djangoの createsuperuser コマンドが username を求めるので、適当な値を設定する
-        extra_fields.setdefault(
-            "username", email
-        )  # `username` の代わりに `email` を使う
+        extra_fields.pop("username", None)
 
         return self._create_user(email, password, **extra_fields)
 
