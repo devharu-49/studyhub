@@ -48,9 +48,10 @@ class CustomUser(AbstractUser):
 
     objects = CustomUserManager()
 
-    # CustomUserとして作成されたテーブル名をUsersに変更
     class Meta:
-        db_table = "Users"
+        db_table = "Users"  # CustomUserとして作成されたテーブル名をUsersに変更
+        verbose_name = "User"  # 管理サイト上でのテーブル名表記指定
+        verbose_name_plural = "Users"
 
     def __str__(self):
         return self.name
@@ -69,6 +70,9 @@ class Todos(models.Model):
     update_at = models.DateTimeField(auto_now=True)
     deadline = models.DateTimeField(null=True)
 
+    class Meta:
+        verbose_name_plural = "Todos"
+
     def __str__(self):
         return self.title
 
@@ -79,6 +83,9 @@ class Times(models.Model):
     user_id = models.ForeignKey("CustomUser", on_delete=models.CASCADE)
     datetime = models.DateTimeField()
     count_time = models.DurationField()
+
+    class Meta:
+        verbose_name_plural = "Times"
 
     def __str__(self):
         return f"{self.user_id.name} - {self.datetime}"
