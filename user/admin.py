@@ -3,7 +3,7 @@ from .models import CustomUser, Todos, Times
 from django.contrib.auth.admin import UserAdmin
 
 
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(admin.ModelAdmin):
     exclude = ("groups", "user_permissions", "date_joined", "last_login")
     list_display = ("user_id", "email", "name")
     readonly_fields = ["user_id"]
@@ -14,7 +14,14 @@ class CustomUserAdmin(UserAdmin):
         (
             None,
             {
-                "fields": ("name", "password", "email", "is_staff", "is_active"),
+                "fields": (
+                    "user_id",
+                    "name",
+                    "password",
+                    "email",
+                    "is_staff",
+                    "is_active",
+                ),
             },
         ),
     )
