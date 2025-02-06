@@ -81,4 +81,4 @@ class Times(models.Model):
     count_time = models.DurationField()
 
     def __str__(self):
-        return self.user_id
+        return f"{self.user_id.name} - {self.datetime}"
