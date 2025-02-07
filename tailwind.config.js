@@ -14,6 +14,7 @@ module.exports = {
         card: "#dbeadb",
         "card-button": "#a6a6a6",
         "card-button-yellow": "#e5ca59",
+        "card-button-red": "#f48f8f",
         "card-border": "#b2b3b0",
       },
     },
