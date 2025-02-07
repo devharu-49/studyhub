@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .background {
     background-image: url('../images/freepik__modern-style-detailled-illustration-a-map-featurin__22191.jpeg'); /* 背景画像のURLを指定 */
     background-size: cover;
@@ -35,6 +34,16 @@
 
 .titletext {
     font-size: 9rem;
+}
+
+.hidden-scrollbar {
+    -ms-overflow-style: none; /* IE, Edge 対応 */
+    scrollbar-width: none; /* Firefox 対応 */
+  }
+
+.hidden-scrollbar::-webkit-scrollbar {
+    /* Chrome, Safari 対応 */
+    display: none;
 }
 
 #map {
