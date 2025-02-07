@@ -1,35 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../static/css/style.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Rampart+One&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../static/css/style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Rampart+One&display=swap"
+      rel="stylesheet"
+    />
     <title>StudyHub</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="background"></div>
-    <div class="container content flex flex-nowrap md:flex-wrap justify-center gap-24 min-w-full min-h-screen items-center">
-        <div class="logintitle">
-            <h1 class="font-rampartOne titletext">StudyHub</h1>
-            <p class="font-kosugiMaru font-bold text-center mt-8 text-xl">- 今日頑張る場所を探そう -</p>
-            <img class="logincharacter mt-5" src="../static/images/doubutu_halloweenhoukikuma.png" alt="">
+    <div
+      class="content container flex min-h-screen min-w-full flex-nowrap items-center justify-center gap-24 md:flex-wrap"
+    >
+      <div class="logintitle">
+        <h1 class="titletext font-rampartOne">StudyHub</h1>
+        <p class="mt-8 text-center font-kosugiMaru text-xl font-bold">
+          - 今日頑張る場所を探そう -
+        </p>
+        <img
+          class="logincharacter mt-5"
+          src="../static/images/doubutu_halloweenhoukikuma.png"
+          alt=""
+        />
+      </div>
+      <div
+        class="flex w-3/12 flex-col gap-6 rounded border-2 border-card-border bg-card px-5"
+      >
+        <h2 class="mt-5 text-center font-rampartOne text-5xl">Login</h2>
+        <div>
+          <p class="font-kosugiMaru text-xs font-bold">メールアドレス</p>
+          <input
+            type="text"
+            class="h-14 w-full rounded-md border-2 border-card-border pl-1"
+            placeholder="mail@example.com"
+          />
         </div>
-        <div class="rounded bg-card px-5 flex flex-col border-2 border-card-border w-3/12 gap-6">
-            <h2 class="font-rampartOne text-5xl text-center mt-5">Login</h2>
-            <div>
-                <p class="font-kosugiMaru text-xs font-bold">メールアドレス</p>
-                <input type="text" class="rounded-md border-2 border-card-border pl-1 h-14 w-full" placeholder="mail@example.com">
-            </div>
-            <div>
-                <p class="font-kosugiMaru text-xs font-bold">パスワード</p>
-                <input type="text" class="rounded-md border-2 border-card-border h-14 w-full">
-                <p class="font-kosugiMaru text-end text-xs font-bold"><input type="checkbox">パスワードを表示する</p>
-            </div>
-            <a href=""><button class="bg-card-button text-white rounded-md underline font-kosugiMaru py-4 w-full font-bold">ログイン</button></a>
-            <a href="" class="font-kosugiMaru text-xs underline text-center mb-6 font-bold">サインアップ</a>
+        <div>
+          <p class="font-kosugiMaru text-xs font-bold">パスワード</p>
+          <input
+            type="text"
+            class="h-14 w-full rounded-md border-2 border-card-border"
+          />
+          <p class="text-end font-kosugiMaru text-xs font-bold">
+            <input type="checkbox" />パスワードを表示する
+          </p>
         </div>
+        <a href=""
+          ><button
+            class="w-full rounded-md bg-card-button py-4 font-kosugiMaru font-bold text-white underline"
+          >
+            ログイン
+          </button></a
+        >
+        <a
+          href=""
+          class="mb-6 text-center font-kosugiMaru text-xs font-bold underline"
+          >サインアップ</a
+        >
+      </div>
     </div>
-</body>
+  </body>
 </html>

@@ -3,33 +3,33 @@
 @tailwind utilities;
 
 .background {
-    background-image: url('../images/freepik__modern-style-detailled-illustration-a-map-featurin__22191.jpeg'); /* 背景画像のURLを指定 */
-    background-size: cover;
-    height: 100vh; /* ビューポートの高さに合わせる */
-    filter: opacity(0.3); /* ここでぼかしの強さを指定 */
+  background-image: url("../images/freepik__modern-style-detailled-illustration-a-map-featurin__22191.jpeg"); /* 背景画像のURLを指定 */
+  background-size: cover;
+  height: 100vh; /* ビューポートの高さに合わせる */
+  filter: opacity(0.3); /* ここでぼかしの強さを指定 */
 }
 
 .content {
-    position: absolute;
-    top: 0;
+  position: absolute;
+  top: 0;
 }
 
 .logincharacter {
-    width: 15rem;
-    height: 15rem;
+  width: 15rem;
+  height: 15rem;
 }
 
 .signupcharacter {
-    width: 15rem;
-    height: 15rem;
+  width: 15rem;
+  height: 15rem;
 }
 
 .logintitle {
-    margin-top: 16rem;
+  margin-top: 16rem;
 }
 
 .signuptitle {
-    margin-top: -16rem;
+  margin-top: -16rem;
 }
 
 .titletext {
@@ -44,4 +44,17 @@
 .hidden-scrollbar::-webkit-scrollbar {
   /* Chrome, Safari 対応 */
   display: none;
+}
+
+#map {
+    height: 80%;
+    width: 48%;
+    position: absolute;
+    top: 0;
+    margin-top: 8rem;
+    margin-left: 4rem;
+}
+
+.map-card {
+    width: 41.666667%;
 }

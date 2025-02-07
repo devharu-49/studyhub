@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% block body %}
+<div class="mx-auto h-[calc(100dvh-5rem)] w-[60%] pt-[2%] font-kosugiMaru">
+  <h2 class="mb-[2%] text-center text-4xl font-bold">ToDo作成</h2>
+  <form action="">
+    <div class="mb-[3%] flex items-center">
+      <label for="title" class="min-w-24">タイトル：</label>
+      <input
+        type="text"
+        placeholder=""
+        class="w-full rounded border-2 border-card-border"
+      />
+    </div>
+    <div class="mb-[3%] flex items-center">
+      <label for="deadline" class="inline-block min-w-24">締切日：</label>
+      <input
+        type="date"
+        placeholder="0000/00/00"
+        class="rounded border-2 border-card-border"
+      />
+    </div>
+    <div class="mb-[3%] flex items-center">
+      <label for="" class="inline-block min-w-24">状態：</label>
+      <input
+        type="radio"
+        name="is-completed"
+        value="completed"
+        class="form-radio"
+      /><label for="" class="mr-[5%]">完了</label>
+      <input
+        type="radio"
+        name="is-completed"
+        value="incompleted"
+        class="form-radio"
+      /><label for="">未完了</label>
+    </div>
+    <div class="mb-[3%] flex items-start">
+      <label for="" class="inline-block min-w-24">内容：</label>
+      <textarea
+        name=""
+        id=""
+        class="h-[30%] w-full rounded border-2 border-card-border"
+      ></textarea>
+    </div>
+    <a
+      href="/test/todo"
+      class="mr-10 rounded border-2 border-card-border bg-card-button-yellow px-[10%] py-[1%]"
+    >
+      更新
+    </a>
+    <a
+      href="/test/todo"
+      class="rounded border-2 border-card-border bg-card-button px-[10%] py-[1%]"
+    >
+      戻る
+    </a>
+  </form>
+</div>
+
+{% endblock body %}

@@ -5,7 +5,6 @@ __pycache__/
 
 # 🔹 環境設定ファイル
 .env
-.vscode/
 .idea/
 *.swp
 .DS_Store
