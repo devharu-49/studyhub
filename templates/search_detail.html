@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <div class="container flex flex-wrap md:flex-nowrap min-w-full">
+        <div id="map" class="rounded-lg border-4 border-card-border"></div>
+        <div class="mt-12 mr-16 ml-auto map-card">
+            <div class="rounded-lg bg-card flex flex-col border-4 border-card-border pl-24 py-16 space-y-14">
+                    <div class="flex space-x-36 items-center">
+                        <h1 class="font-kosugiMaru text-4xl font-bold">マクドナルド八王子店</h1>
+                        <p class="font-kosugiMaru text-3xl font-bold">500m</p>
+                    </div>
+                    <div>
+                        <p class="font-kosugiMaru font-bold text-xl">東京都八王子市八王子1-1-1</p>
+                    </div>
+                    <div>
+                        <p class="font-kosugiMaru font-bold text-xl">★★★★☆ 4.1</p>
+                    </div>
+                    <div class="flex space-x-7">
+                        <p class="font-kosugiMaru font-bold text-xl">68席</p>
+                        <p class="font-kosugiMaru font-bold text-xl">wifiあり</p>
+                        <p class="font-kosugiMaru font-bold text-xl">コンセントあり</p>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="font-kosugiMaru font-bold text-xl">口コミ</p>
+                        <div class="border-4 border-card-border rounded-[20px] bg-white w-fit py-4 px-3">
+                            <p class="font-kosugiMaru text-xs font-bold">よかった！</p>
+                        </div>
+                    </div>
+                </div>
+                <img class="character" src="./doubutu_tukinowaguma_valley3.png" alt="">
+            </div>
+        </div>
+    </div>
+    <script>
+      var MyLatLng = new google.maps.LatLng(35.6811673, 139.7670516);
+      var Options = {
+          zoom: 15,      //地図の縮尺値
+          center: MyLatLng,    //地図の中心座標
+          mapTypeId: 'roadmap'   //地図の種類
+      };
+      var map = new google.maps.Map(document.getElementById('map'), Options);
+    </script>
+
+{% endblock body %}
