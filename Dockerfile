@@ -31,7 +31,7 @@ RUN npm install -D prettier prettier-plugin-tailwindcss
 RUN npx tailwindcss init
 
 # 実行コマンドを指定
-CMD ["sh", "-c", "./wait-for-it.sh db:3306 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000 && npm run watch"]
+CMD ["sh", "-c", "./wait-for-it.sh db:3306 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000 && npm run build"]
 
 WORKDIR /app
 
