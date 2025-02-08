@@ -1,0 +1,87 @@
+{% extends 'base.html' %} {% block body %}
+<div
+  class="content container ml-12 flex min-h-screen min-w-full items-center justify-center gap-24"
+>
+  <div
+    class="flex w-3/12 flex-col gap-6 rounded border-2 border-card-border bg-card px-5"
+  >
+    <h2 class="mt-5 text-center font-kosugiMaru text-4xl font-bold">
+      近くのStudyHub
+    </h2>
+    <div>
+      <p class="font-kosugiMaru text-xs font-bold">メールアドレス</p>
+      <input
+        type="text"
+        class="h-14 w-full rounded-md border-2 border-card-border pl-1"
+        placeholder="mail@example.com"
+      />
+    </div>
+    <div>
+      <p class="font-kosugiMaru text-xs font-bold">パスワード</p>
+      <input
+        type="text"
+        class="h-14 w-full rounded-md border-2 border-card-border"
+      />
+      <p class="text-end font-kosugiMaru text-xs font-bold">
+        <input type="checkbox" />パスワードを表示する
+      </p>
+    </div>
+    <a href=""
+      ><button
+        class="w-full rounded-md bg-card-button py-4 font-kosugiMaru font-bold text-white underline"
+      >
+        ログイン
+      </button></a
+    >
+    <a
+      href=""
+      class="mb-6 text-center font-kosugiMaru text-xs font-bold underline"
+      >サインアップ</a
+    >
+  </div>
+  <div
+    class="flex w-3/12 flex-col gap-6 rounded border-2 border-card-border bg-card px-5"
+  >
+    <h2 class="mt-5 text-center font-kosugiMaru text-4xl font-bold">
+      急ぎのToDo
+    </h2>
+    <div>
+      <p class="font-kosugiMaru text-xs font-bold">メールアドレス</p>
+      <input
+        type="text"
+        class="h-14 w-full rounded-md border-2 border-card-border pl-1"
+        placeholder="mail@example.com"
+      />
+    </div>
+    <div>
+      <p class="font-kosugiMaru text-xs font-bold">パスワード</p>
+      <input
+        type="text"
+        class="h-14 w-full rounded-md border-2 border-card-border"
+      />
+      <p class="text-end font-kosugiMaru text-xs font-bold">
+        <input type="checkbox" />パスワードを表示する
+      </p>
+    </div>
+    <a href=""
+      ><button
+        class="w-full rounded-md bg-card-button py-4 font-kosugiMaru font-bold text-white underline"
+      >
+        ログイン
+      </button></a
+    >
+    <a
+      href=""
+      class="mb-6 text-center font-kosugiMaru text-xs font-bold underline"
+      >サインアップ</a
+    >
+  </div>
+  <div>
+    <img
+      class="main-character"
+      src="/static/images/doubutu_carrybackwomotteryokousurutukinowakuma.png"
+      alt=""
+    />
+  </div>
+</div>
+{% endblock body %}
