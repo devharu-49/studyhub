@@ -44,5 +44,10 @@ def login_view(request):
     return render(request, "login.html", {"form": form})
 
 
+def logout_view(request):
+    logout(request)
+    return redirect("login")  # ログインページにリダイレクト
+
+
 def base_view(request):
     return render(request, "base.html")
