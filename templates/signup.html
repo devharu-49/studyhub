@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="../static/css/style.css" rel="stylesheet" />
+    {% load static %}{% load widget_tweaks %}
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Rampart+One&display=swap"
@@ -19,7 +20,7 @@
       <div class="signuptitle">
         <img
           class="signupcharacter ml-auto"
-          src="../static/images/doubutu_aoihusenwomotukuma.png"
+          src="{% static 'images/doubutu_aoihusenwomotukuma.png' %}"
           alt=""
         />
         <h1 class="titletext font-rampartOne">StudyHub</h1>
@@ -31,52 +32,82 @@
         class="flex w-3/12 flex-col gap-6 rounded border-2 border-card-border bg-card px-5"
       >
         <h2 class="mt-5 text-center font-rampartOne text-5xl">Signup</h2>
-        <div>
-          <p class="font-kosugiMaru text-xs font-bold">ユーザー名</p>
-          <input
-            type="text"
-            class="h-14 w-full rounded-md border-2 border-card-border pl-1"
-          />
-        </div>
-        <div>
-          <p class="font-kosugiMaru text-xs font-bold">メールアドレス</p>
-          <input
-            type="text"
-            class="h-14 w-full rounded-md border-2 border-card-border pl-1"
-            placeholder="mail@example.com"
-          />
-        </div>
-        <div>
-          <p class="font-kosugiMaru text-xs font-bold">パスワード</p>
-          <input
-            type="text"
-            class="h-14 w-full rounded-md border-2 border-card-border"
-          />
-        </div>
-        <div>
-          <p class="font-kosugiMaru text-xs font-bold">パスワード（確認）</p>
-          <input
-            type="text"
-            class="h-14 w-full rounded-md border-2 border-card-border pl-1"
-            placeholder="確認用に再度入力してください"
-          />
-          <p class="text-end font-kosugiMaru text-xs font-bold">
-            <input type="checkbox" />パスワードを表示する
-          </p>
-        </div>
-        <a href=""
-          ><button
+        <!-- フォーム開始 -->
+        <form class="flex flex-col gap-6 font-kosugiMaru" method="post">
+          {% csrf_token %}
+
+          <div class="mb-4">
+            <p
+              for="{{ form.name.id_for_label }}"
+              class="font-kosugiMaru text-xs font-bold"
+            >
+              ユーザー名
+            </p>
+            <!-- prettier-ignore -->
+            {{ form.name|add_class:"h-14 w-full rounded-md border-2 border-card-border pl-1" }}
+          </div>
+
+          <div class="mb-4">
+            <p
+              for="{{ form.email.id_for_label }}"
+              class="font-kosugiMaru text-xs font-bold"
+            >
+              メールアドレス
+            </p>
+            <!-- prettier-ignore -->
+            {{ form.email|add_class:"h-14 w-full rounded-md border-2 border-card-border pl-1"|attr:"placeholder:mail@example.com" }}
+          </div>
+
+          <div class="mb-4">
+            <p
+              for="{{ form.password1.id_for_label }}"
+              class="font-kosugiMaru text-xs font-bold"
+            >
+              パスワード
+            </p>
+            <!-- prettier-ignore -->
+            {{ form.password1|add_class:"h-14 w-full rounded-md border-2 border-card-border pl-1"|attr:"id:password1" }}
+          </div>
+
+          <div class="mb-4">
+            <p
+              for="{{ form.password2.id_for_label }}"
+              class="font-kosugiMaru text-xs font-bold"
+            >
+              パスワード（確認）
+            </p>
+            <!-- prettier-ignore -->
+            {{ form.password2|add_class:"h-14 w-full rounded-md border-2 border-card-border pl-1"|attr:"placeholder:確認用に再度入力してください"|attr:"id:password2" }}
+            <p class="mt-2 text-end text-xs font-bold">
+              <input type="checkbox" id="show-password" />パスワードを表示する
+            </p>
+          </div>
+
+          <button
+            type="submit"
             class="w-full rounded-md bg-card-button py-4 font-kosugiMaru font-bold text-white underline"
           >
             サインアップ
-          </button></a
-        >
+          </button>
+        </form>
         <a
-          href=""
+          href="{% url 'login' %}"
           class="mb-6 text-center font-kosugiMaru text-xs font-bold underline"
           >ログイン</a
         >
       </div>
     </div>
+    <script>
+      document
+        .getElementById("show-password")
+        .addEventListener("change", function () {
+          document.getElementById("password1").type = this.checked
+            ? "text"
+            : "password";
+          document.getElementById("password2").type = this.checked
+            ? "text"
+            : "password";
+        });
+    </script>
   </body>
 </html>
