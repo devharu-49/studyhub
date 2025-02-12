@@ -31,37 +31,72 @@
         class="flex w-3/12 flex-col gap-6 rounded border-2 border-card-border bg-card px-5"
       >
         <h2 class="mt-5 text-center font-rampartOne text-5xl">Login</h2>
-        <div>
-          <p class="font-kosugiMaru text-xs font-bold">メールアドレス</p>
-          <input
-            type="text"
-            class="h-14 w-full rounded-md border-2 border-card-border pl-1"
-            placeholder="mail@example.com"
-          />
-        </div>
-        <div>
-          <p class="font-kosugiMaru text-xs font-bold">パスワード</p>
-          <input
-            type="text"
-            class="h-14 w-full rounded-md border-2 border-card-border"
-          />
-          <p class="text-end font-kosugiMaru text-xs font-bold">
-            <input type="checkbox" />パスワードを表示する
-          </p>
-        </div>
-        <a href=""
-          ><button
+        <!-- 修正: フォームを追加 -->
+        <form
+          class="flex flex-col gap-6 font-kosugiMaru"
+          method="POST"
+          action="{% url 'login' %}"
+        >
+          {% csrf_token %}
+          <!-- 修正: CSRFトークンを追加 -->
+
+          {% if form.errors %}
+          <!-- prettier-ignore -->
+          <div class="text-sm text-red-500">
+              {% for field, errors in form.errors.items %} 
+                {% for error in errors%}
+                  <p>{{ error }}</p>
+                {% endfor %} 
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <div>
+            <p class="font-kosugiMaru text-xs font-bold">メールアドレス</p>
+            <input
+              type="email"
+              name="email"
+              class="h-14 w-full rounded-md border-2 border-card-border pl-1"
+              placeholder="mail@example.com"
+              required
+            />
+          </div>
+          <div>
+            <p class="font-kosugiMaru text-xs font-bold">パスワード</p>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              class="h-14 w-full rounded-md border-2 border-card-border"
+              required
+            />
+            <p class="mt-2 text-end font-kosugiMaru text-xs font-bold">
+              <input type="checkbox" id="show-password" />パスワードを表示する
+            </p>
+          </div>
+          <!-- 修正: <a>ではなく、buttonのsubmitに変更 -->
+          <button
+            type="submit"
             class="w-full rounded-md bg-card-button py-4 font-kosugiMaru font-bold text-white underline"
           >
             ログイン
-          </button></a
-        >
+          </button>
+        </form>
         <a
-          href=""
+          href="{% url 'signup' %}"
           class="mb-6 text-center font-kosugiMaru text-xs font-bold underline"
-          >サインアップ</a
         >
+          サインアップ
+        </a>
       </div>
     </div>
+    <script>
+      document
+        .getElementById("show-password")
+        .addEventListener("change", function () {
+          var passwordInput = document.getElementById("password");
+          passwordInput.type = this.checked ? "text" : "password";
+        });
+    </script>
   </body>
 </html>

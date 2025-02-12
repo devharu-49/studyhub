@@ -42,6 +42,8 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=255)
     default_time = models.DurationField(default=datetime.timedelta(minutes=30))
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = "email"  # ログイン時にemailを使用
     REQUIRED_FIELDS = ["name"]  # サインアップ時にnameが必須
@@ -57,7 +59,7 @@ class CustomUser(AbstractUser):
         return self.name
 
 
-class Todos(models.Model):
+class Tasks(models.Model):
 
     id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(
@@ -83,6 +85,8 @@ class Times(models.Model):
     user_id = models.ForeignKey("CustomUser", on_delete=models.CASCADE)
     datetime = models.DateTimeField()
     count_time = models.DurationField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = "Times"
