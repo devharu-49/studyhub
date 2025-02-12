@@ -10,6 +10,7 @@
 
     <link href="{% static 'css/style.css' %}" rel="stylesheet" />
 
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyAuDf-txlL1EEte-Iqolx0CvtvxazFkF6k"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -57,12 +58,19 @@
           </p>
         </li>
       </ul>
-      <a
-        href="#"
-        class="ml-auto flex h-full items-center justify-center p-5 text-4xl text-white hover:bg-highlightColor"
+      <form
+        method="POST"
+        action="{% url 'logout' %}"
+        class="ml-auto flex h-full items-center justify-center"
       >
-        <ion-icon name="exit-outline" class="pl-3 text-4xl"></ion-icon>
-      </a>
+        {% csrf_token %}
+        <button
+          type="submit"
+          class="h-full p-5 text-4xl text-white hover:bg-highlightColor"
+        >
+          <ion-icon name="exit-outline" class="pl-3 text-4xl"></ion-icon>
+        </button>
+      </form>
     </nav>
 
     {% block body %} {% endblock body %}
