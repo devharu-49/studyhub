@@ -102,7 +102,7 @@ function startEditTime() {
   [...inputs].map((input, index) => {
     input.value = timeParts[index];
     // 編集箇所以外がクリックされたとき非表示にする
-    document.addEventListener("click", clickOutsideTimer, true);
+    document.addEventListener("click", clickOutsideTimer);
   });
   toggleTimeEditer();
 }
@@ -112,18 +112,30 @@ function endEditTime() {
   if (isRunning) return; // タイマー稼働中は無効
   const inputs = timeEditer.querySelectorAll(".input-time"); // 出力はNodeList 配列じゃない
   const inputTimes = [...inputs].map((input) => input.value); // 配列に直してmap関数を使う
+  if (inputTimes.some((value) => !/^\d+$/.test(value))) {
+    if (
+      document.getElementById("time-edit-error").classList.contains("hidden")
+    ) {
+      document.getElementById("time-edit-error").classList.remove("hidden");
+    }
+    return; // 半角数字以外が含まれていたら何もしない
+  }
   currentTimerValue.innerHTML = `${inputTimes[0].padStart(2, "0")}:${inputTimes[1].padStart(2, "0")}:${inputTimes[2].padStart(2, "0")}`;
-
+  if (
+    !document.getElementById("time-edit-error").classList.contains("hidden")
+  ) {
+    document.getElementById("time-edit-error").classList.add("hidden");
+  }
   toggleTimeEditer();
+  document.removeEventListener("click", clickOutsideTimer); // イベントリスナーの削除
 }
 
 // タイマー編集終了イベントを起こす関数
 function clickOutsideTimer(event) {
   if (timeEditer.contains(event.target) || event.target === currentTimerValue)
     return;
-
+  console.log("event");
   endEditTime();
-  document.removeEventListener("click", clickOutsideTimer); // イベントリスナーの削除
 }
 
 // Enterキーが押されたときタイマー編集を終了
