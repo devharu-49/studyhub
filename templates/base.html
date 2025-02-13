@@ -18,7 +18,6 @@
       rel="stylesheet"
     />
 
-    <!-- 追記 -->
   </head>
 
   <body class="h-dvh w-full bg-baseColor">
@@ -77,30 +76,86 @@
     {% block body %} {% endblock body %}
 
     <div
-      id="timer"
+      id="timer-container"
       class="absolute bottom-0 right-5 flex w-[20%] min-w-72 max-w-fit items-center"
     >
-      <img src="{% static 'images/timer.png' %}" alt="タイマー画像" class="" />
+      <img
+        id="timer-image"
+        src="{% static 'images/timer.png' %}"
+        alt="タイマー画像"
+        class=""
+      />
       <div
+        id="timer-controls"
         class="absolute flex h-[80%] w-full items-center justify-between px-[3%]"
       >
         <div
-          class="flex h-full w-[65%] items-center justify-center rounded-md bg-white"
+          id="timer-display"
+          class="flex flex-col h-full w-[65%] items-center justify-center rounded-md bg-white"
         >
-          <p class="text-[250%] font-medium">00:00:00</p>
+          <p id="time-edit-error" class="hidden fixed mb-20 text-xs text-card-button-red">半角数字で入力してください</p>
+          <p id="time" class="block text-4xl font-medium">00:30:00</p>
+          <div id="edit-time" class="hidden items-center justify-center w-11/12">
+            <input type="text" pattern="^[1-9][0-9]*$" inputmode="numeric" maxlength="2" value="00" class="input-time text-center text-4xl font-medium w-12 px-0.5 py-1">
+            <p class="text-center text-4xl font-medium">:</p>
+            <input type="text" pattern="^[1-9][0-9]*$" inputmode="numeric" maxlength="2" value="00" class="input-time text-center text-4xl font-medium w-12 px-0.5 py-1">
+            <p class="text-center text-4xl font-medium">:</p>
+            <input type="text" pattern="^[1-9][0-9]*$" inputmode="numeric" maxlength="2" value="00" class="input-time text-center text-4xl font-medium w-12 px-0.5 py-1">
+          </div>
         </div>
         <div class="flex h-full w-[30%] flex-col justify-between gap-3 py-[2%]">
-          <a
-            href="#"
+          <button
+            id="timer-start-btn"
+            onclick="startTimer()"
             class="flex h-full w-full items-center justify-center rounded-full bg-white"
-            >start</a
           >
-          <a
-            href="#"
+            START
+          </button>
+          <button
+            id="timer-stop-btn"
+            onclick="stopTimer()"
+            class="hidden h-full w-full items-center justify-center rounded-full bg-white"
+          >
+            STOP
+          </button>
+          <button
+            id="timer-finish-btn"
+            onclick="finishTimer()"
             class="flex h-full w-full items-center justify-center rounded-full bg-white"
-            >finish</a
           >
+            FINISH
+          </button>
         </div>
+      </div>
+    </div>
+
+    <div
+      id="timer-modal"
+      class="fixed left-0 top-0 hidden h-dvh w-dvw items-center justify-center font-kosugiMaru"
+    >
+      <div
+        class="modal-overlay fixed h-full w-full bg-slate-500 opacity-25"
+      ></div>
+      <div
+        class="z-50 flex h-1/4 min-h-32 w-1/4 min-w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"
+      >
+        <form class="flex flex-col items-center justify-center">
+            <h2 class="text-2xl">お疲れさまでした！</h2>
+            <p>今回の勉強時間</p>
+            <input id="registered-time" class="mt-1 mb-3 text-xl font-bold text-center" value="00:30:00"></input>
+            <p>登録しますか？</p>
+            
+            <div class="flex w-full max-w-sm my-2 justify-evenly">
+              <button type="button" onclick="resetTime()" class="h-8 w-24 rounded bg-card-button-red">登録</button>
+              <button
+              type="button"
+              onclick="toggleTimerModal()"
+              class="h-8 w-24 rounded bg-stone-50"
+              >
+              キャンセル
+              </button>
+            </div>
+        </from>
       </div>
     </div>
 
@@ -114,5 +169,7 @@
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
+
+    <script src="{% static 'js/timer.js' %}"></script>
   </body>
 </html>
