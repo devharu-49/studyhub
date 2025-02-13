@@ -35,7 +35,7 @@
     >
       <div class="grid grid-cols-[10fr_0.5fr_0.5fr] pr-6">
         <a
-          href="/test/todo/detail"
+          href="{% url 'taskdetail' task.id %}"
           class="grid grid-cols-[7fr_1fr_1fr_1fr] py-6 pl-6"
         >
           <p class="flex items-center">{{ task.title }}</p>
@@ -50,8 +50,12 @@
           未
           </p>
           {% endif %}
-          <p class="flex items-center justify-center">{{ task.deadline }}</p>
-          <p class="flex items-center justify-center">{{ task.update_at }}</p>
+          <p class="flex items-center justify-center">
+            {{ task.deadline|date:"Y/m/d" }}
+          </p>
+          <p class="flex items-center justify-center">
+            {{ task.update_at|date:"Y/m/d" }}
+          </p>
         </a>
         <a class="flex items-center justify-center">
           <ion-icon name="trash-outline"></ion-icon>
