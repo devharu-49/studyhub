@@ -1,19 +1,28 @@
 {% extends "base.html" %} {% block body %}
 <div class="mx-auto h-[calc(100dvh-5rem)] w-[60%] pt-[2%] font-kosugiMaru">
   <h2 class="mb-[2%] text-center text-4xl font-bold">ToDo作成</h2>
-  <form action="">
+  <form method="post">
+    {% csrf_token %}
     <div class="mb-[3%] flex items-center">
       <label for="title" class="min-w-24">タイトル：</label>
       <input
         type="text"
-        placeholder=""
+        name="title"
+        value="{{ form.title.value|default:'' }}"
         class="w-full rounded border-2 border-card-border"
       />
+      {% if form.title.errors %}
+      <div class="text-red-500">{{ form.title.errors }}</div>
+      {% endif %}
     </div>
+
     <div class="mb-[3%] flex items-center">
       <label for="deadline" class="inline-block min-w-24">締切日：</label>
       <input
         type="date"
+        name="deadline"
+        id="id_deadline"
+        value="{{ form.deadline.value|default:'' }}"
         placeholder="0000/00/00"
         class="rounded border-2 border-card-border"
       />
@@ -22,33 +31,35 @@
       <label for="" class="inline-block min-w-24">状態：</label>
       <input
         type="radio"
-        name="is-completed"
-        value="completed"
+        name="is_completed"
+        value="True"
         class="form-radio"
-      /><label for="" class="mr-[5%]">完了</label>
+        {% if form.is_completed.value|default:"" == "True" %}checked{% endif %}
+      /><label for="completed" class="mr-[5%]">完了</label>
       <input
         type="radio"
-        name="is-completed"
-        value="incompleted"
+        name="is_completed"
+        value="False"
         class="form-radio"
-      /><label for="">未完了</label>
+        {% if form.is_completed.value|default:"" == "False" %}checked{% endif %}
+      /><label for="incompleted">未完了</label>
     </div>
     <div class="mb-[3%] flex items-start">
       <label for="" class="inline-block min-w-24">内容：</label>
       <textarea
-        name=""
-        id=""
+        name="description"
+        id="description"
         class="h-[30%] w-full rounded border-2 border-card-border"
       ></textarea>
     </div>
-    <a
-      href="/todo"
+    <button
+      type="submit"
       class="mr-10 rounded border-2 border-card-border bg-card-button-yellow px-[10%] py-[1%]"
     >
       更新
-    </a>
+    </button>
     <a
-      href="/todo"
+      href="{% url 'task_list' %}"
       class="rounded border-2 border-card-border bg-card-button px-[10%] py-[1%]"
     >
       戻る

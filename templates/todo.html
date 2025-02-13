@@ -11,7 +11,7 @@
         <option value="">完了</option>
         <option value="">未完了</option>
       </select>
-      <a href="/test/todo/form" class="flex">
+      <a href="/todo/form" class="flex">
         <ion-icon
           name="add-outline"
           class="rounded bg-card-button text-4xl"
@@ -35,7 +35,7 @@
     >
       <div class="grid grid-cols-[10fr_0.5fr_0.5fr] pr-6">
         <a
-          href="{% url 'taskdetail' task.id %}"
+          href="{% url 'task_detail' task.id %}"
           class="grid grid-cols-[7fr_1fr_1fr_1fr] py-6 pl-6"
         >
           <p class="flex items-center">{{ task.title }}</p>
@@ -60,7 +60,8 @@
         <a class="flex items-center justify-center">
           <ion-icon name="trash-outline"></ion-icon>
         </a>
-        <a href="/test/todo/form" class="flex items-center justify-center">
+        <!-- prettier-ignore -->
+        <a href="{% url 'task_create' %}" class="flex items-center justify-center">
           <ion-icon name="brush-outline"></ion-icon>
         </a>
       </div>
