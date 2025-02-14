@@ -201,6 +201,13 @@ function timeToMilliseconds(timeString) {
   return Millisec;
 }
 
+// 勉強時間登録
+function saveTime() {
+  resetTime();
+  document.saveTimeForm.submit();
+  console.log("save!!");
+}
+
 // timesリセット
 function resetTime() {
   times = {
