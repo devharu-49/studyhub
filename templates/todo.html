@@ -57,7 +57,8 @@
             {{ task.update_at|date:"Y/m/d" }}
           </p>
         </a>
-        <a class="flex items-center justify-center">
+        <!-- prettier-ignore -->
+        <a href="#" onclick="showDeleteModal(event, '{{ task.id }}', '{{ task.title }}')" class="flex items-center justify-center">
           <ion-icon name="trash-outline"></ion-icon>
         </a>
         <!-- prettier-ignore -->
@@ -71,7 +72,7 @@
 </div>
 {% endblock body %} {% block modal %}
 <div
-  id="todo-delite-modal"
+  id="todo-delete-modal"
   class="fixed left-0 top-0 hidden h-dvh w-dvw items-center justify-center font-kosugiMaru"
 >
   <div class="modal-overlay fixed h-full w-full bg-slate-500 opacity-25"></div>
@@ -80,19 +81,25 @@
   >
     <div class="flex flex-col items-center justify-center">
       <p>以下のToDoを削除しますか？</p>
-      <h2 class="delite-todo-name mb-6 mt-2 text-2xl font-bold">
-        todoタイトル
-      </h2>
+      <h2 id="delete-todo-title" class="mb-6 mt-2 text-2xl font-bold"></h2>
     </div>
-    <div class="flex w-full max-w-sm justify-evenly">
-      <button class="h-8 w-24 rounded bg-card-button-red">削除</button>
-      <button onclick="hiddenModal(event)" class="h-8 w-24 rounded bg-stone-50">
-        キャンセル
-      </button>
-    </div>
+    <form id="delete-form" method="post">
+      {% csrf_token %}
+      <div class="flex w-full max-w-sm justify-evenly">
+        <button type="submit" class="h-8 w-24 rounded bg-card-button-red">
+          削除
+        </button>
+        <button
+          onclick="hiddenModal(event)"
+          class="h-8 w-24 rounded bg-stone-50"
+        >
+          キャンセル
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 
-<script src="{% static 'js/todo-delite.js' %}"></script>
+<script src="{% static 'js/todo-delete.js' %}"></script>
 
 {% endblock modal %}

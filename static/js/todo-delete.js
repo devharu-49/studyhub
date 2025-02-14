@@ -1,12 +1,15 @@
 // モーダル要素を取得
-const delitemodal = document.getElementById("todo-delite-modal");
+const delitemodal = document.getElementById("todo-delete-modal");
 
 // ゴミ箱アイコンが押されたときにモーダルを表示
-function showModal(event) {
-  const todo = event.target.closest("li").querySelector(".todo-name");
-  const todoname = todo.innerHTML;
-  delitemodal.querySelector(".delite-todo-name").innerHTML = todoname;
+function showModal(event, taskId, taskTitle) {
+  const todoName = document.getElementById("dekete-todo-title");
+  todoName.innerHTML = taskTitle;
   delitemodal.style.display = "flex";
+  
+  // 削除フォームのactionを設定（taskIdを送信する）
+  const deleteForm = document.getElementById("delete-form");
+  deleteForm.action = `/todo/delete/${taskId}/`;  // 適切なURLに変更
 }
 
 // キャンセルが押されたときにモーダルを非表示

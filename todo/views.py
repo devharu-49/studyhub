@@ -37,3 +37,15 @@ def taskcreate_view(request):
         form = TaskForm()  # フォームが送信されていない場合、空のフォームを表示
 
     return render(request, "todoform.html", {"form": form})
+
+
+# タスク削除
+def taskdelete_view(request, id):
+    if not request.user.is_authenticated:
+        return redirect("login")  # 未ログインならログインページへリダイレクト
+
+    task = get_object_or_404(
+        Tasks, id=id, user=request.user
+    )  # 自分のタスクのみ削除可能
+    task.delete()
+    return redirect("task_list")
