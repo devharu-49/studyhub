@@ -47,14 +47,19 @@
 }
 
 #map {
-    height: 80%;
-    width: 48%;
-    position: absolute;
-    top: 0;
-    margin-top: 8rem;
-    margin-left: 4rem;
+  height: 80%;
+  width: 48%;
+  position: absolute;
+  top: 0;
+  margin-top: 8rem;
+  margin-left: 4rem;
 }
 
 .map-card {
-    width: 41.666667%;
+  width: 41.666667%;
+}
+
+.main-character {
+  width: 25rem;
+  height: 25rem;
 }
