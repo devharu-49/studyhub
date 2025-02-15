@@ -47,5 +47,6 @@ def taskdelete_view(request, id):
     task = get_object_or_404(
         Tasks, id=id, user=request.user
     )  # 自分のタスクのみ削除可能
+
     task.delete()
     return redirect("task_list")

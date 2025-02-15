@@ -32,13 +32,14 @@
     {% for task in tasks %}
     <li
       class="mb-[3%] rounded border-2 border-card-border bg-stone-50 hover:bg-stone-100"
+      data-task-id="{{ task.id }}"
     >
       <div class="grid grid-cols-[10fr_0.5fr_0.5fr] pr-6">
         <a
           href="{% url 'task_detail' task.id %}"
           class="grid grid-cols-[7fr_1fr_1fr_1fr] py-6 pl-6"
         >
-          <p class="flex items-center">{{ task.title }}</p>
+          <p class="todo-name flex items-center">{{ task.title }}</p>
           {% if task.is_completed %}
           <!-- prettier-ignore -->
           <p class="mx-auto flex aspect-square items-center justify-center rounded-full border-2 border-card-border bg-highlightColor p-2">
@@ -57,10 +58,13 @@
             {{ task.update_at|date:"Y/m/d" }}
           </p>
         </a>
-        <!-- prettier-ignore -->
-        <a href="#" onclick="showDeleteModal(event, '{{ task.id }}', '{{ task.title }}')" class="flex items-center justify-center">
-          <ion-icon name="trash-outline"></ion-icon>
-        </a>
+        <button
+          onclick="showModal(event)"
+          class="delite-button flex items-center justify-center"
+          data-task-id="{{ task.id }}"
+        >
+          <ion-icon name="trash-outline" class="pointer-events-none"></ion-icon>
+        </button>
         <!-- prettier-ignore -->
         <a href="{% url 'task_create' %}" class="flex items-center justify-center">
           <ion-icon name="brush-outline"></ion-icon>
@@ -77,19 +81,28 @@
 >
   <div class="modal-overlay fixed h-full w-full bg-slate-500 opacity-25"></div>
   <div
-    class="z-50 flex h-1/4 min-h-32 w-1/4 min-w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"
+    class="z-50 flex h-fit w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"
   >
     <div class="flex flex-col items-center justify-center">
-      <p>以下のToDoを削除しますか？</p>
-      <h2 id="delete-todo-title" class="mb-6 mt-2 text-2xl font-bold"></h2>
+      <p class="mx-24 mt-12">以下のToDoを削除しますか？</p>
+      <h2
+        id="delete-todo-title"
+        class="mx-10 mb-6 mt-2 text-2xl font-bold"
+      ></h2>
     </div>
-    <form id="delete-form" method="post">
+    <form
+      class="flex w-full items-center justify-center"
+      id="delete-form"
+      method="post"
+      action=""
+    >
       {% csrf_token %}
-      <div class="flex w-full max-w-sm justify-evenly">
+      <div class="mb-12 flex w-full max-w-sm justify-center gap-8">
         <button type="submit" class="h-8 w-24 rounded bg-card-button-red">
           削除
         </button>
         <button
+          type="button"
           onclick="hiddenModal(event)"
           class="h-8 w-24 rounded bg-stone-50"
         >

@@ -6,5 +6,5 @@ urlpatterns = [
     path("", tasklist_view, name="task_list"),
     path("<int:id>/", taskdetail_view, name="task_detail"),
     path("form/", taskcreate_view, name="task_create"),
-    path("delete/<int:id>", taskdelete_view, name="task_delete"),
+    path("delete/<int:id>/", taskdelete_view, name="task_delete"),
 ]
