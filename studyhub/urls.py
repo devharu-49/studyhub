@@ -24,6 +24,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("user.urls")),
     path("timer/", include("timer.urls")),
+    path("search/", include("map.urls")),
+    path("api/", include("map.urls")),
 
     path("test/base/", TemplateView.as_view(template_name="base.html")),
     path("test/login/", TemplateView.as_view(template_name="login.html")),

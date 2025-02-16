@@ -63,3 +63,19 @@
   width: 25rem;
   height: 25rem;
 }
+
+.search-character {
+  width: 14rem;
+  height: 14rem;
+  margin-left: 41.1%;
+}
+
+.search-result-character {
+  width: 13rem;
+  height: 13rem;
+}
+
+.search-detail-character {
+  width: 15rem;
+  height: 15rem;
+}
