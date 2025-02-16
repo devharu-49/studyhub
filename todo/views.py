@@ -50,3 +50,24 @@ def taskdelete_view(request, id):
 
     task.delete()
     return redirect("task_list")
+
+
+# タスク編集
+def taskedit_view(request, id):
+    if not request.user.is_authenticated:
+        return redirect("login")  # 未ログインならログインページへリダイレクト
+
+    task = get_object_or_404(
+        Tasks, id=id, user=request.user
+    )  # 自分のタスクのみ編集可能
+
+    if request.method == "POST":
+        form = TaskForm(request.POST, instance=task)  # 既存のデータをフォームに適用
+        if form.is_valid():
+            form.save()
+            return redirect("task_list")  # 一覧ページへリダイレクト
+
+    else:
+        form = TaskForm(instance=task)  # 既存のデータをフォームにセット
+
+    return render(request, "todoform.html", {"form": form, "task": task})

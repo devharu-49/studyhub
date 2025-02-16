@@ -907,6 +907,16 @@ select {
   grid-column: span 2 / span 2;
 }
 
+.mx-10 {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
+
+.mx-24 {
+  margin-left: 6rem;
+  margin-right: 6rem;
+}
+
 .mx-6 {
   margin-left: 1.5rem;
   margin-right: 1.5rem;
@@ -922,18 +932,12 @@ select {
   margin-bottom: 0.5rem;
 }
 
-.mx-10 {
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
-}
-
-.mx-24 {
-  margin-left: 6rem;
-  margin-right: 6rem;
-}
-
 .mb-10 {
   margin-bottom: 2.5rem;
+}
+
+.mb-12 {
+  margin-bottom: 3rem;
 }
 
 .mb-20 {
@@ -958,14 +962,6 @@ select {
 
 .mb-\[3\%\] {
   margin-bottom: 3%;
-}
-
-.ml-20 {
-  margin-left: 5rem;
-}
-
-.ml-4 {
-  margin-left: 1rem;
 }
 
 .ml-auto {
@@ -1014,14 +1010,6 @@ select {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mb-8 {
-  margin-bottom: 2rem;
-}
-
-.mb-12 {
-  margin-bottom: 3rem;
 }
 
 .box-border {
@@ -1100,13 +1088,13 @@ select {
   height: 100dvh;
 }
 
-.h-full {
-  height: 100%;
-}
-
 .h-fit {
   height: -moz-fit-content;
   height: fit-content;
+}
+
+.h-full {
+  height: 100%;
 }
 
 .min-h-32 {
@@ -1541,11 +1529,6 @@ select {
   padding-bottom: 2%;
 }
 
-.px-20 {
-  padding-left: 5rem;
-  padding-right: 5rem;
-}
-
 .pb-2 {
   padding-bottom: 0.5rem;
 }
@@ -1687,8 +1670,9 @@ select {
   background-image: url("../images/freepik__modern-style-detailled-illustration-a-map-featurin__22191.jpeg");
   /* 背景画像のURLを指定 */
   background-size: cover;
-  height: 100vh;
+  height: calc(100dvh-5rem);
   /* ビューポートの高さに合わせる */
+  width: 100%;
   filter: opacity(0.3);
   /* ここでぼかしの強さを指定 */
 }

@@ -1,7 +1,12 @@
 {% extends "base.html" %} {% block body %}
 <div class="mx-auto h-[calc(100dvh-5rem)] w-[60%] pt-[2%] font-kosugiMaru">
-  <h2 class="mb-[2%] text-center text-4xl font-bold">ToDo作成</h2>
-  <form method="post">
+  <h2 class="mb-[2%] text-center text-4xl font-bold">
+    {% if task %}Todo編集{% else %}ToDo作成{% endif %}
+  </h2>
+  <form
+    method="post"
+    action="{% if task %}{% url 'task_edit' task.id %}{% else %}{% url 'task_create' %}{% endif %}"
+  >
     {% csrf_token %}
     <div class="mb-[3%] flex items-center">
       <label for="title" class="min-w-24">タイトル：</label>
@@ -22,27 +27,34 @@
         type="date"
         name="deadline"
         id="id_deadline"
-        value="{{ form.deadline.value|default:'' }}"
+        value="{{ form.deadline.value|date:'Y-m-d'|default:'' }}"
         placeholder="0000/00/00"
         class="rounded border-2 border-card-border"
       />
     </div>
     <div class="mb-[3%] flex items-center">
       <label for="" class="inline-block min-w-24">状態：</label>
+      <!-- prettier-ignore -->
       <input
         type="radio"
         name="is_completed"
         value="True"
         class="form-radio"
-        {% if form.is_completed.value|default:"" == "True" %}checked{% endif %}
-      /><label for="completed" class="mr-[5%]">完了</label>
+        {% if form.is_completed.value == "True" %}checked{% endif %}/><label
+        for="completed"
+        class="mr-[5%]"
+        >完了</label
+      >
+      <!-- prettier-ignore -->
       <input
         type="radio"
         name="is_completed"
         value="False"
         class="form-radio"
-        {% if form.is_completed.value|default:"" == "False" %}checked{% endif %}
-      /><label for="incompleted">未完了</label>
+        {% if form.is_completed.value == "False" %}checked{% endif %}/><label
+        for="incompleted"
+        >未完了</label
+      >
     </div>
     <div class="mb-[3%] flex items-start">
       <label for="" class="inline-block min-w-24">内容：</label>
@@ -50,13 +62,15 @@
         name="description"
         id="description"
         class="h-[30%] w-full rounded border-2 border-card-border"
-      ></textarea>
+      >
+{{form.description.value|default:''}}</textarea
+      >
     </div>
     <button
       type="submit"
       class="mr-10 rounded border-2 border-card-border bg-card-button-yellow px-[10%] py-[1%]"
     >
-      更新
+      {% if task %}更新{% else %}作成{% endif %}
     </button>
     <a
       href="{% url 'task_list' %}"

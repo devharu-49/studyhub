@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .models import CustomUser
+from todo.models import Tasks
 from .forms import CustomSignupForm, LoginForm
 
 
@@ -12,9 +12,7 @@ def signup_view(request):
         if form.is_valid():  # フォームのバリデーションが成功した場合
             user = form.save()  # データベースに保存
             login(request, user)  # 保存したユーサーでログイン
-            return redirect(
-                "base"
-            )  # あとでメイン画面にredirectするように書き直す(ビュー名を使用する)
+            return redirect("main")  # メイン画面にredirectする
     else:
         form = CustomSignupForm()  # フォームが送信されていない場合、空のフォームを表示
 
@@ -35,7 +33,7 @@ def login_view(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("base")
+                return redirect("main")
             else:
                 form.add_error(None, "無効なメールアドレスまたはパスワードです。")
         else:
@@ -49,5 +47,10 @@ def logout_view(request):
     return redirect("login")  # ログインページにリダイレクト
 
 
-def base_view(request):
-    return render(request, "base.html")
+def main_view(request):
+    if not request.user.is_authenticated:
+        return redirect("login")  # ログインしていない場合、ログインページへリダイレクト
+
+    # 締切日の近いタスクを3件取得
+    tasks = Tasks.objects.filter(user=request.user).order_by("deadline")[:3]
+    return render(request, "main.html", {"tasks": tasks})
