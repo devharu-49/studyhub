@@ -34,4 +34,5 @@ urlpatterns = [
     path("test/map/detail", TemplateView.as_view(template_name="search_detail.html")),
     path("test/map/result", TemplateView.as_view(template_name="search_result.html")),
     path("test/map", TemplateView.as_view(template_name="search.html")),
+    path('test/main', TemplateView.as_view(template_name='main.html')),
 ]
