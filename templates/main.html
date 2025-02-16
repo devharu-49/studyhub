@@ -1,92 +1,89 @@
 {% extends 'base.html' %} {% block body %}
-<div class="background"></div>
 <div
-  class="content container flex h-[calc(100dvh-5rem)] min-h-screen min-w-full items-center justify-center"
+  class="background container flex h-[calc(100dvh-5rem)] min-w-full items-center justify-evenly"
 >
   <div
-    class="flex w-3/12 flex-col space-y-2 rounded border-4 border-card-border bg-card px-5 py-10"
+    class="grid h-[90%] w-3/12 grid-rows-[0.5fr_1fr_1fr_1fr] rounded border-4 border-card-border bg-card px-5 py-10"
   >
     <h1 class="mb-10 mt-2 text-center font-kosugiMaru text-3xl font-bold">
       近くのStudyHub
     </h1>
-    <div class="flex flex-col space-y-7">
-      <a href="#"
-        ><div
-          class="space-y-4 rounded-lg border-4 border-card-border bg-white px-4 py-4 text-center"
-        >
-          <h3 class="font-kosugiMaru text-lg font-bold">
-            マクドナルド八王子店
-          </h3>
-          <div>
-            <p class="font-kosugiMaru text-lg font-bold">
-              東京都八王子市八王子1-1-1
-            </p>
-            <p class="font-kosugiMaru text-lg font-bold">
-              <span class="text-yellow-400">★★★★☆</span> 4.1
-            </p>
-            <p class="font-kosugiMaru text-xl font-bold">500m</p>
-          </div>
-        </div></a
+    <a href="#"
+      ><div
+        class="space-y-4 rounded-lg border-4 border-card-border bg-white px-4 py-4"
       >
-      <a href="#"
-        ><div
-          class="space-y-4 rounded-lg border-4 border-card-border bg-white px-4 py-4 text-center"
-        >
-          <h3 class="font-kosugiMaru text-lg font-bold">
-            マクドナルド八王子店
-          </h3>
-          <div>
-            <p class="font-kosugiMaru text-lg font-bold">
-              東京都八王子市八王子1-1-1
-            </p>
-            <p class="font-kosugiMaru text-lg font-bold">
-              <span class="text-yellow-400">★★★★☆</span> 4.1
-            </p>
-            <p class="font-kosugiMaru text-xl font-bold">500m</p>
-          </div>
-        </div></a
+        <h3 class="text-center font-kosugiMaru text-lg font-bold">
+          マクドナルド八王子店
+        </h3>
+        <div class="text-center">
+          <p class="font-kosugiMaru text-lg font-bold">
+            東京都八王子市八王子1-1-1
+          </p>
+          <p class="font-kosugiMaru text-lg font-bold">
+            <span class="text-yellow-400">★★★★☆</span> 4.1
+          </p>
+          <p class="font-kosugiMaru text-xl font-bold">500m</p>
+        </div>
+      </div>
+    </a>
+    <a href="#"
+      ><div
+        class="space-y-4 rounded-lg border-4 border-card-border bg-white px-4 py-4"
       >
-      <a href="#"
-        ><div
-          class="space-y-4 rounded-lg border-4 border-card-border bg-white px-4 py-4 text-center"
-        >
-          <h3 class="font-kosugiMaru text-lg font-bold">
-            マクドナルド八王子店
-          </h3>
-          <div>
-            <p class="font-kosugiMaru text-lg font-bold">
-              東京都八王子市八王子1-1-1
-            </p>
-            <p class="font-kosugiMaru text-lg font-bold">
-              <span class="text-yellow-400">★★★★☆</span> 4.1
-            </p>
-            <p class="font-kosugiMaru text-xl font-bold">500m</p>
-          </div>
-        </div></a
+        <h3 class="text-center font-kosugiMaru text-lg font-bold">
+          マクドナルド八王子店
+        </h3>
+        <div class="text-center">
+          <p class="font-kosugiMaru text-lg font-bold">
+            東京都八王子市八王子1-1-1
+          </p>
+          <p class="font-kosugiMaru text-lg font-bold">
+            <span class="text-yellow-400">★★★★☆</span> 4.1
+          </p>
+          <p class="font-kosugiMaru text-xl font-bold">500m</p>
+        </div>
+      </div>
+    </a>
+    <a href="#"
+      ><div
+        class="space-y-4 rounded-lg border-4 border-card-border bg-white px-4 py-4"
       >
-    </div>
+        <h3 class="text-center font-kosugiMaru text-lg font-bold">
+          マクドナルド八王子店
+        </h3>
+        <div class="text-center">
+          <p class="font-kosugiMaru text-lg font-bold">
+            東京都八王子市八王子1-1-1
+          </p>
+          <p class="font-kosugiMaru text-lg font-bold">
+            <span class="text-yellow-400">★★★★☆</span> 4.1
+          </p>
+          <p class="font-kosugiMaru text-xl font-bold">500m</p>
+        </div>
+      </div>
+    </a>
   </div>
+
   <div
-    class="flex w-3/12 flex-col space-y-2 rounded border-4 border-card-border bg-card px-5 py-10"
+    class="grid h-[90%] w-3/12 grid-rows-[0.5fr_1fr_1fr_1fr] rounded border-4 border-card-border bg-card px-5 py-10"
   >
     <h1 class="mb-10 mt-2 text-center font-kosugiMaru text-3xl font-bold">
       急ぎのToDo
     </h1>
-    <div class="flex flex-col space-y-7">
-      {% for task in tasks %}
-      <a href="{% url 'task_detail' task.id %}">
-        <div
-          class="space-y-8 rounded-lg border-4 border-card-border bg-white px-4 py-9 text-center"
-        >
-          <p class="font-kosugiMaru text-lg font-bold">{{ task.title }}</p>
-          <p class="font-kosugiMaru text-lg font-bold">
-            {{ task.deadline|date:"Y/m/d" }}
-          </p>
-        </div>
-      </a>
-      {% endfor %}
-    </div>
+    {% for task in tasks %}
+    <a href="{% url 'task_detail' task.id %}">
+      <div
+        class="space-y-8 rounded-lg border-4 border-card-border bg-white px-4 py-9 text-center"
+      >
+        <p class="font-kosugiMaru text-lg font-bold">{{ task.title }}</p>
+        <p class="font-kosugiMaru text-lg font-bold">
+          {{ task.deadline|date:"Y/m/d" }}
+        </p>
+      </div>
+    </a>
+    {% endfor %}
   </div>
+
   <div>
     <img
       class="main-character"
