@@ -60,6 +60,10 @@ function updateTimer(targetTime) {
 function startTimer() {
   if (isRunning) return;
 
+  if (timeEditer.passedTime === 0) {
+    console.log("update!!");
+    updateDefaultTime();
+  }
   toggleButton(); // ボタン切り替え
   isRunning = true; // 稼働中に変更
   times.startTime = new Date().getTime(); // 開始時間を格納
