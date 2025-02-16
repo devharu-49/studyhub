@@ -207,6 +207,10 @@ function timeToMilliseconds(timeString) {
 
 // 勉強時間登録
 function saveTime() {
+  if (times.passedTime == 0) {
+    toggleTimerModal();
+    return;
+  }
   resetTime();
   document.saveTimeForm.submit();
   console.log("save!!");
