@@ -58,9 +58,10 @@ function updateTimer(targetTime) {
 
 //タイマー開始
 function startTimer() {
+  console.log("start!!");
   if (isRunning) return;
 
-  if (timeEditer.passedTime === 0) {
+  if (times.passedTime == 0) {
     console.log("update!!");
     updateDefaultTime();
   }
@@ -138,7 +139,6 @@ function endEditTime() {
 function clickOutsideTimer(event) {
   if (timeEditer.contains(event.target) || event.target === currentTimerValue)
     return;
-  console.log("event");
   endEditTime();
 }
 
@@ -246,3 +246,44 @@ document.addEventListener("keydown", (event) => {
     sessionStorage.clear();
   }
 });
+
+// csrf対策
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+// defaulttime更新
+function updateDefaultTime() {
+  const url = document
+    .getElementById("timer-controls")
+    .getAttribute("data-url");
+  const body = JSON.stringify({ settingtime: currentTimerValue.innerHTML });
+  const csrftoken = getCookie("csrftoken");
+
+  fetch(url, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
+    },
+    body: body,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => console.log(error));
+}

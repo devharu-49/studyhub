@@ -66,6 +66,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "timer.context_processors.timer_modal_form",
+                "timer.context_processors.get_default_time",
             ],
         },
     },
@@ -144,7 +145,7 @@ AUTH_USER_MODEL = "user.CustomUser"
 CSRF_COOKIE_SECURE = False
 
 
-
+# これ以下はログを出すための設定なので、最終的には消してください
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

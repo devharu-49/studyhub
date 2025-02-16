@@ -10,6 +10,13 @@ def get_default_time(request):
         return {"default_time": "00:00:30"}
 
   user_id = request.user.user_id
-  currentuser = CustomUser.objects.get(id = user_id)
-  default_time = currentuser.default_time
-  return {"default_time": default_time}
+  currentuser = CustomUser.objects.get(user_id = user_id)
+  totalsec = currentuser.default_time.total_seconds()
+  # sec = microsec.total_seconds()
+  hours = int(totalsec // 3600)
+  minutes = int((totalsec % 3600) // 60)
+  seconds = int(totalsec % 60)
+  # print("あああ")
+  # print(default_time)
+  
+  return {"default_time": f"{hours:02}:{minutes:02}:{seconds:02}"}
