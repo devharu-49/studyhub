@@ -57,19 +57,3 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.name
-
-
-class Times(models.Model):
-
-    id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey("CustomUser", on_delete=models.CASCADE)
-    datetime = models.DateTimeField()
-    count_time = models.DurationField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name_plural = "Times"
-
-    def __str__(self):
-        return f"{self.user_id.name} - {self.datetime}"
