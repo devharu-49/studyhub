@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, Tasks, Times
+from .models import CustomUser, Tasks
 from django.contrib.auth.admin import UserAdmin
 
 
@@ -31,4 +31,3 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Tasks)
-admin.site.register(Times)

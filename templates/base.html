@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %} {% load widget_tweaks %}
 
 <!doctype html>
 <html lang="ja">
@@ -17,10 +17,8 @@
       href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Rampart+One&display=swap"
       rel="stylesheet"
     />
-
     <script src="{% static 'js/map.js' %}" defer></script>
     <script src="{% static 'js/map-display.js' %}" defer></script>
-
   </head>
 
   <body class="h-dvh w-full bg-baseColor">
@@ -76,7 +74,7 @@
       </form>
     </nav>
 
-    {% block body %} {% endblock body %}
+    {{test}} {% block body %} {% endblock body %}
 
     <div
       id="timer-container"
@@ -91,19 +89,52 @@
       <div
         id="timer-controls"
         class="absolute flex h-[80%] w-full items-center justify-between px-[3%]"
+        data-url="{% url 'timer:default' %}"
       >
         <div
           id="timer-display"
-          class="flex flex-col h-full w-[65%] items-center justify-center rounded-md bg-white"
+          class="flex h-full w-[65%] flex-col items-center justify-center rounded-md bg-white"
         >
-          <p id="time-edit-error" class="hidden fixed mb-20 text-xs text-card-button-red">半角数字で入力してください</p>
-          <p id="time" class="block text-4xl font-medium">00:30:00</p>
-          <div id="edit-time" class="hidden items-center justify-center w-11/12">
-            <input type="text" pattern="^[1-9][0-9]*$" inputmode="numeric" maxlength="2" value="00" class="input-time text-center text-4xl font-medium w-12 px-0.5 py-1">
+          <p
+            id="time-edit-error"
+            class="fixed mb-20 hidden text-xs text-card-button-red"
+          >
+            半角数字で入力してください
+          </p>
+          <p id="time" class="block text-4xl font-medium">{{ default_time }}</p>
+          <div
+            id="edit-time"
+            class="hidden w-11/12 items-center justify-center"
+          >
+            <input
+              name="hours"
+              type="text"
+              pattern="^[1-9][0-9]*$"
+              inputmode="numeric"
+              maxlength="2"
+              value="00"
+              class="input-time w-12 px-0.5 py-1 text-center text-4xl font-medium"
+            />
             <p class="text-center text-4xl font-medium">:</p>
-            <input type="text" pattern="^[1-9][0-9]*$" inputmode="numeric" maxlength="2" value="00" class="input-time text-center text-4xl font-medium w-12 px-0.5 py-1">
+            <input
+              name="minutes"
+              type="text"
+              pattern="^[1-9][0-9]*$"
+              inputmode="numeric"
+              maxlength="2"
+              value="00"
+              class="input-time w-12 px-0.5 py-1 text-center text-4xl font-medium"
+            />
             <p class="text-center text-4xl font-medium">:</p>
-            <input type="text" pattern="^[1-9][0-9]*$" inputmode="numeric" maxlength="2" value="00" class="input-time text-center text-4xl font-medium w-12 px-0.5 py-1">
+            <input
+              name="seconds"
+              type="text"
+              pattern="^[1-9][0-9]*$"
+              inputmode="numeric"
+              maxlength="2"
+              value="00"
+              class="input-time w-12 px-0.5 py-1 text-center text-4xl font-medium"
+            />
           </div>
         </div>
         <div class="flex h-full w-[30%] flex-col justify-between gap-3 py-[2%]">
@@ -140,25 +171,39 @@
         class="modal-overlay fixed h-full w-full bg-slate-500 opacity-25"
       ></div>
       <div
-        class="z-50 flex h-1/4 min-h-32 w-1/4 min-w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"
+        class="z-50 flex h-fit w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"
       >
-        <form name="saveTimeForm" action="{% url 'timer:save_time' %}" class="flex flex-col items-center justify-center">
-            <h2 class="text-2xl">お疲れさまでした！</h2>
-            <p>今回の勉強時間</p>
-            <input id="registered-time" class="mt-1 mb-3 text-xl font-bold text-center" value="00:30:00"></input>
-            <p>登録しますか？</p>
-            
-            <div class="flex w-full max-w-sm my-2 justify-evenly">
-              <button type="button" onclick="saveTime()" class="h-8 w-24 rounded bg-card-button-red">登録</button>
-              <button
+        <form
+          name="saveTimeForm"
+          action="{% url 'timer:save' %}"
+          class="flex flex-col items-center justify-center"
+          method="post"
+        >
+          <h2 class="mx-24 mt-12 text-2xl">お疲れさまでした！</h2>
+          <p>今回の勉強時間</p>
+          <!-- <input id="registered-time" class="mt-1 mb-3 text-xl font-bold text-center" value="00:30:00"></input> -->
+          <!-- prettier-ignore -->
+          {% csrf_token %}
+          {{ timer_modal_form.count_time|add_class:"mt-1 mb-3 text-xl font-bold text-center"|attr:"id:registered-time" }}
+          <p>登録しますか？</p>
+
+          <div class="mb-12 flex w-full max-w-sm justify-center gap-8">
+            <button
+              type="button"
+              onclick="saveTime()"
+              class="h-8 w-24 rounded bg-card-button-red"
+            >
+              登録
+            </button>
+            <button
               type="button"
               onclick="toggleTimerModal()"
               class="h-8 w-24 rounded bg-stone-50"
-              >
+            >
               キャンセル
-              </button>
-            </div>
-        </from>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
 
