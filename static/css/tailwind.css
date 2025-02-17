@@ -48,15 +48,12 @@
 
 #map {
   height: 80%;
-  width: 48%;
-  position: absolute;
-  top: 0;
-  margin-top: 8rem;
-  margin-left: 4rem;
+  width: 43%;
 }
 
 .map-card {
-  width: 41.666667%;
+  height: 80%;
+  width: 43%;
 }
 
 .main-character {
@@ -67,7 +64,6 @@
 .search-character {
   width: 14rem;
   height: 14rem;
-  margin-left: 41.1%;
 }
 
 .search-result-character {
