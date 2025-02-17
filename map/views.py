@@ -12,20 +12,21 @@ latest_location = {}
 # Create your views here.
 @csrf_exempt  # CSRF対策を無効化（適宜、別の方法で対策推奨）
 def receive_location(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            latitude = data.get('latitude')
-            longitude = data.get('longitude')
+  global latest_location
+  if request.method == "POST":
+    try:
+      data = json.loads(request.body)
+      latitude = data.get('latitude')
+      longitude = data.get('longitude')
 
-            print(f"受け取った位置情報: 緯度={latitude}, 経度={longitude}")
+      print(f"受け取った位置情報: 緯度={latitude}, 経度={longitude}")
 
-            latest_location = {'latitude': latitude, 'longitude': longitude}
+      latest_location = {'latitude': latitude, 'longitude': longitude}
 
-            return JsonResponse({"message": "位置情報を受け取りました"})
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=400)
-    return JsonResponse({"error": "Invalid request"}, status=400)
+      return JsonResponse({"message": "位置情報を受け取りました"})
+    except Exception as e:
+      return JsonResponse({"error": str(e)}, status=400)
+  return JsonResponse({"error": "Invalid request"}, status=400)
 
 
 def get_location(request):
