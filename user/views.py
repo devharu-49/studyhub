@@ -52,5 +52,9 @@ def main_view(request):
         return redirect("login")  # ログインしていない場合、ログインページへリダイレクト
 
     # 締切日の近いタスクを3件取得
-    tasks = Tasks.objects.filter(user=request.user).order_by("deadline")[:3]
+    tasks = (
+        Tasks.objects.filter(user=request.user)
+        .exclude(is_completed=True)
+        .order_by("deadline")[:3]
+    )
     return render(request, "main.html", {"tasks": tasks})
