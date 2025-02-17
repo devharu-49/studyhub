@@ -11,7 +11,7 @@
         <option value="">完了</option>
         <option value="">未完了</option>
       </select>
-      <a href="/test/todo/form" class="flex">
+      <a href="/todo/form" class="flex">
         <ion-icon
           name="add-outline"
           class="rounded bg-card-button text-4xl"
@@ -29,185 +29,90 @@
   </ul>
 
   <ul id="todolist" class="hidden-scrollbar flex-grow overflow-y-auto">
+    {% for task in tasks %}
     <li
       class="mb-[3%] rounded border-2 border-card-border bg-stone-50 hover:bg-stone-100"
+      data-task-id="{{ task.id }}"
     >
       <div class="grid grid-cols-[10fr_0.5fr_0.5fr] pr-6">
         <a
-          href="/test/todo/detail"
+          href="{% url 'task_detail' task.id %}"
           class="grid grid-cols-[7fr_1fr_1fr_1fr] py-6 pl-6"
         >
-          <p class="todo-name flex items-center">ハッカソン</p>
-          <p
-            class="mx-auto flex aspect-square items-center justify-center rounded-full border-2 border-card-border p-2"
-          >
-            未
+          <p class="todo-name flex items-center">{{ task.title }}</p>
+          {% if task.is_completed %}
+          <!-- prettier-ignore -->
+          <p class="mx-auto flex aspect-square items-center justify-center rounded-full border-2 border-card-border bg-highlightColor p-2">
+          済
           </p>
-          <p class="flex items-center justify-center">2/28</p>
-          <p class="flex items-center justify-center">1/4</p>
+          {% else %}
+          <!-- prettier-ignore -->
+          <p class="mx-auto flex aspect-square items-center justify-center rounded-full border-2 border-card-border p-2">
+          未
+          </p>
+          {% endif %}
+          <p class="flex items-center justify-center">
+            {{ task.deadline|date:"Y/m/d" }}
+          </p>
+          <p class="flex items-center justify-center">
+            {{ task.update_at|date:"Y/m/d" }}
+          </p>
         </a>
         <button
           onclick="showModal(event)"
           class="delite-button flex items-center justify-center"
+          data-task-id="{{ task.id }}"
         >
           <ion-icon name="trash-outline" class="pointer-events-none"></ion-icon>
         </button>
-        <a href="/test/todo/form" class="flex items-center justify-center">
+        <!-- prettier-ignore -->
+        <a href="{% url 'task_edit' task.id %}" class="flex items-center justify-center">
           <ion-icon name="brush-outline"></ion-icon>
         </a>
       </div>
     </li>
-    <li
-      class="mb-[3%] rounded border-2 border-card-border bg-stone-50 hover:bg-stone-100"
-    >
-      <div class="grid grid-cols-[10fr_0.5fr_0.5fr] pr-6">
-        <a
-          href="/test/todo/detail"
-          class="grid grid-cols-[7fr_1fr_1fr_1fr] py-6 pl-6"
-        >
-          <p class="flex items-center">ハッカソン</p>
-          <p
-            class="mx-auto flex aspect-square items-center justify-center rounded-full border-2 border-card-border bg-highlightColor p-2"
-          >
-            済
-          </p>
-          <p class="flex items-center justify-center">2/28</p>
-          <p class="flex items-center justify-center">1/4</p>
-        </a>
-        <a class="flex items-center justify-center">
-          <ion-icon name="trash-outline"></ion-icon>
-        </a>
-        <a href="/test/todo/form" class="flex items-center justify-center">
-          <ion-icon name="brush-outline"></ion-icon>
-        </a>
-      </div>
-    </li>
-    <li
-      class="mb-[3%] rounded border-2 border-card-border bg-stone-50 hover:bg-stone-100"
-    >
-      <div class="grid grid-cols-[10fr_0.5fr_0.5fr] pr-6">
-        <a
-          href="/test/todo/detail"
-          class="grid grid-cols-[7fr_1fr_1fr_1fr] py-6 pl-6"
-        >
-          <p class="flex items-center">ハッカソン</p>
-          <p
-            class="mx-auto flex aspect-square items-center justify-center rounded-full border-2 border-card-border bg-highlightColor p-2"
-          >
-            済
-          </p>
-          <p class="flex items-center justify-center">2/28</p>
-          <p class="flex items-center justify-center">1/4</p>
-        </a>
-        <a class="flex items-center justify-center">
-          <ion-icon name="trash-outline"></ion-icon>
-        </a>
-        <a href="/test/todo/form" class="flex items-center justify-center">
-          <ion-icon name="brush-outline"></ion-icon>
-        </a>
-      </div>
-    </li>
-    <li
-      class="mb-[3%] rounded border-2 border-card-border bg-stone-50 hover:bg-stone-100"
-    >
-      <div class="grid grid-cols-[10fr_0.5fr_0.5fr] pr-6">
-        <a
-          href="/test/todo/detail"
-          class="grid grid-cols-[7fr_1fr_1fr_1fr] py-6 pl-6"
-        >
-          <p class="flex items-center">ハッカソン</p>
-          <p
-            class="mx-auto flex aspect-square items-center justify-center rounded-full border-2 border-card-border p-2"
-          >
-            未
-          </p>
-          <p class="flex items-center justify-center">2/28</p>
-          <p class="flex items-center justify-center">1/4</p>
-        </a>
-        <a class="flex items-center justify-center">
-          <ion-icon name="trash-outline"></ion-icon>
-        </a>
-        <a href="/test/todo/form" class="flex items-center justify-center">
-          <ion-icon name="brush-outline"></ion-icon>
-        </a>
-      </div>
-    </li>
-    <li
-      class="mb-[3%] rounded border-2 border-card-border bg-stone-50 hover:bg-stone-100"
-    >
-      <div class="grid grid-cols-[10fr_0.5fr_0.5fr] pr-6">
-        <a
-          href="/test/todo/detail"
-          class="grid grid-cols-[7fr_1fr_1fr_1fr] py-6 pl-6"
-        >
-          <p class="flex items-center">ハッカソン</p>
-          <p
-            class="mx-auto flex aspect-square items-center justify-center rounded-full border-2 border-card-border p-2"
-          >
-            未
-          </p>
-          <p class="flex items-center justify-center">2/28</p>
-          <p class="flex items-center justify-center">1/4</p>
-        </a>
-        <a class="flex items-center justify-center">
-          <ion-icon name="trash-outline"></ion-icon>
-        </a>
-        <a href="/test/todo/form" class="flex items-center justify-center">
-          <ion-icon name="brush-outline"></ion-icon>
-        </a>
-      </div>
-    </li>
-    <li
-      class="mb-[3%] rounded border-2 border-card-border bg-stone-50 hover:bg-stone-100"
-    >
-      <div class="grid grid-cols-[10fr_0.5fr_0.5fr] pr-6">
-        <a
-          href="/test/todo/detail"
-          class="grid grid-cols-[7fr_1fr_1fr_1fr] py-6 pl-6"
-        >
-          <p class="flex items-center">ハッカソン</p>
-          <p
-            class="mx-auto flex aspect-square items-center justify-center rounded-full border-2 border-card-border p-2"
-          >
-            未
-          </p>
-          <p class="flex items-center justify-center">2/28</p>
-          <p class="flex items-center justify-center">1/4</p>
-        </a>
-        <a class="flex items-center justify-center">
-          <ion-icon name="trash-outline"></ion-icon>
-        </a>
-        <a href="/test/todo/form" class="flex items-center justify-center">
-          <ion-icon name="brush-outline"></ion-icon>
-        </a>
-      </div>
-    </li>
+    {% endfor %}
   </ul>
 </div>
 {% endblock body %} {% block modal %}
 <div
-  id="todo-delite-modal"
+  id="todo-delete-modal"
   class="fixed left-0 top-0 hidden h-dvh w-dvw items-center justify-center font-kosugiMaru"
 >
   <div class="modal-overlay fixed h-full w-full bg-slate-500 opacity-25"></div>
   <div
-    class="z-50 flex h-1/4 min-h-32 w-1/4 min-w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"
+    class="z-50 flex h-fit w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"
   >
     <div class="flex flex-col items-center justify-center">
-      <p>以下のToDoを削除しますか？</p>
-      <h2 class="delite-todo-name mb-6 mt-2 text-2xl font-bold">
-        todoタイトル
-      </h2>
+      <p class="mx-24 mt-12">以下のToDoを削除しますか？</p>
+      <h2
+        id="delete-todo-title"
+        class="mx-10 mb-6 mt-2 text-2xl font-bold"
+      ></h2>
     </div>
-    <div class="flex w-full max-w-sm justify-evenly">
-      <button class="bg-card-button-red h-8 w-24 rounded">削除</button>
-      <button onclick="hiddenModal(event)" class="h-8 w-24 rounded bg-stone-50">
-        キャンセル
-      </button>
-    </div>
+    <form
+      class="flex w-full items-center justify-center"
+      id="delete-form"
+      method="post"
+      action=""
+    >
+      {% csrf_token %}
+      <div class="mb-12 flex w-full max-w-sm justify-center gap-8">
+        <button type="submit" class="h-8 w-24 rounded bg-card-button-red">
+          削除
+        </button>
+        <button
+          type="button"
+          onclick="hiddenModal(event)"
+          class="h-8 w-24 rounded bg-stone-50"
+        >
+          キャンセル
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 
-<script src="{% static 'js/todo-delite.js' %}"></script>
+<script src="{% static 'js/todo-delete.js' %}"></script>
 
 {% endblock modal %}

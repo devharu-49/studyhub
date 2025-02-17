@@ -22,7 +22,6 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("user.urls")),
     path("timer/", include("timer.urls")),
     path("search/", include("map.urls")),
     path("api/", include("map.urls")),
@@ -36,5 +35,7 @@ urlpatterns = [
     path("test/map/detail", TemplateView.as_view(template_name="search_detail.html")),
     path("test/map/result", TemplateView.as_view(template_name="search_result.html")),
     path("test/map", TemplateView.as_view(template_name="search.html")),
-    path('test/main', TemplateView.as_view(template_name='main.html')),
+    path("test/main", TemplateView.as_view(template_name="main.html")),
+    path("", include("user.urls")),
+    path("todo/", include("todo.urls")),
 ]
