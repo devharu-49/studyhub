@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "widget_tweaks",
     "user",
+    "todo",
     "timer",
 ]
 
@@ -147,26 +148,23 @@ CSRF_COOKIE_SECURE = False
 
 # これ以下はログを出すための設定なので、最終的には消してください
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'development': {
-            'format': '%(asctime)s [%(levelname)s] %(message)s'
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "development": {"format": "%(asctime)s [%(levelname)s] %(message)s"},
+    },
+    "handlers": {
+        "console": {
+            "level": "NOTSET",
+            "class": "logging.StreamHandler",
+            "formatter": "development",
         },
     },
-    'handlers': {
-        'console': {
-            'level': 'NOTSET',
-            'class': 'logging.StreamHandler',
-            'formatter': 'development',
-        },
-
-    },
-    'loggers': {
-        '': {
-            'handlers': ['console'],
-            'level': 'NOTSET',
-            'propagate': True,
+    "loggers": {
+        "": {
+            "handlers": ["console"],
+            "level": "NOTSET",
+            "propagate": True,
         }
     },
 }
