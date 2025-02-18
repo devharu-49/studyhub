@@ -18,6 +18,73 @@
 
 <br />
 
+## ディレクトリ構成
+
+```
+.
+├── map
+│ ├── admin.py
+│ ├── apps.py
+│ ├── models.py
+│ ├── tests.py
+│ ├── urls.py
+│ └── views.py
+├── static
+│ ├── css
+│ ├── images
+│ └── js
+├── studyhub
+│ ├── asgi.py
+│ ├── settings.py
+│ ├── urls.py
+│ └── wsgi.py
+├── templates
+│ ├── base.html
+│ ├── login.html
+│ ├── main.html
+│ ├── search.html
+│ ├── search_detail.html
+│ ├── search_result.html
+│ ├── signup.html
+│ ├── todo.html
+│ ├── tododetail.html
+│ └── todoform.html
+├── timer
+│ ├── admin.py
+│ ├── apps.py
+│ ├── context_processors.py
+│ ├── forms.py
+│ ├── models.py
+│ ├── tests.py
+│ ├── urls.py
+│ └── views.py
+├── todo
+│ ├── admin.py
+│ ├── apps.py
+│ ├── forms.py
+│ ├── models.py
+│ ├── tests.py
+│ ├── urls.py
+│ └── views.py
+├── user
+│ ├── admin.py
+│ ├── apps.py
+│ ├── forms.py
+│ ├── models.py
+│ ├── tests.py
+│ ├── urls.py
+│ └── views.py
+├── Dockerfile
+├── README.md
+├── docker-compose.yml
+├── manage.py
+├── package-lock.json
+├── package.json
+├── requirements.txt
+├── tailwind.config.js
+└── wait-for-it.sh
+```
+
 ## ブランチ運用について
 
 ### 1.ブランチの説明
