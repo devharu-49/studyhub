@@ -17,12 +17,14 @@
       href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Rampart+One&display=swap"
       rel="stylesheet"
     />
+    <script src="{% static 'js/map.js' %}" defer></script>
+    <script src="{% static 'js/map-display.js' %}" defer></script>
   </head>
 
   <body class="h-dvh w-full bg-baseColor">
     <nav id="menubar" class="flex h-20 flex-shrink-0 items-center bg-menuColor">
       <a
-        href="#"
+        href="/"
         class="pb-2 pl-5 pr-10 font-rampartOne text-4xl text-baseColor"
         >StudyHub</a
       >
@@ -30,23 +32,21 @@
         <li
           class="flex h-full items-center justify-center hover:bg-highlightColor"
         >
-          <a href="#" class="px-8 font-kosugiMaru text-2xl text-baseColor"
+          <a href="/" class="px-8 font-kosugiMaru text-2xl text-baseColor"
             >HOME</a
           >
         </li>
         <li
           class="flex h-full items-center justify-center hover:bg-highlightColor"
         >
-          <a href="#" class="px-8 font-kosugiMaru text-2xl text-baseColor"
+          <a href="/search" class="px-8 font-kosugiMaru text-2xl text-baseColor"
             >検索</a
           >
         </li>
         <li
           class="flex h-full items-center justify-center hover:bg-highlightColor"
         >
-          <a
-            href="/test/todo"
-            class="px-8 font-kosugiMaru text-2xl text-baseColor"
+          <a href="/todo" class="px-8 font-kosugiMaru text-2xl text-baseColor"
             >ToDo</a
           >
         </li>

@@ -5,8 +5,8 @@
 .background {
   background-image: url("../images/freepik__modern-style-detailled-illustration-a-map-featurin__22191.jpeg"); /* 背景画像のURLを指定 */
   background-size: cover;
-  height: 100vh; /* ビューポートの高さに合わせる */
-  filter: opacity(0.3); /* ここでぼかしの強さを指定 */
+  background-color: rgba(255, 255, 255, 0.8);
+  background-blend-mode: lighten;
 }
 
 .content {
@@ -48,18 +48,30 @@
 
 #map {
   height: 80%;
-  width: 48%;
-  position: absolute;
-  top: 0;
-  margin-top: 8rem;
-  margin-left: 4rem;
+  width: 43%;
 }
 
 .map-card {
-  width: 41.666667%;
+  height: 80%;
+  width: 43%;
 }
 
 .main-character {
   width: 25rem;
   height: 25rem;
+}
+
+.search-character {
+  width: 14rem;
+  height: 14rem;
+}
+
+.search-result-character {
+  width: 13rem;
+  height: 13rem;
+}
+
+.search-detail-character {
+  width: 15rem;
+  height: 15rem;
 }
