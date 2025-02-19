@@ -1,10 +1,88 @@
 {% extends "base.html" %} {% load static %} {% block body %}
 <div
-  class="mx-auto flex h-[calc(100dvh-5rem)] w-[80%] flex-col pb-32 pt-[2%] font-kosugiMaru"
+  class="mx-auto flex h-[calc(100dvh-5rem)] w-[90%] flex-col pb-32 pt-[2%] font-kosugiMaru lg:w-[80%]"
 >
   <h2 class="flex-grow-0 px-8 text-center text-4xl font-bold">ToDo</h2>
-  <div class="flex flex-grow-0 items-center justify-end">
-    <form action="" class="flex w-1/3 items-center justify-end gap-4">
+  <ul
+    class="mx-2 my-2 grid flex-grow-0 grid-cols-[3fr_1fr_1fr_0.5fr_0.5fr] sm:order-2 lg:mx-6 lg:grid-cols-[7fr_1fr_1fr_1fr_0.5fr_0.5fr]"
+  >
+    <li class="flex items-center">タイトル</li>
+    <li class="flex items-center justify-center">状態</li>
+    <li class="hidden items-center justify-center lg:flex">
+      締切日<span>▼</span>
+    </li>
+    <li class="flex items-center justify-center lg:hidden">
+      締切<span>▼</span>
+    </li>
+    <li class="hidden items-center justify-center lg:flex">編集日</li>
+  </ul>
+
+  <ul
+    id="todolist"
+    class="hidden-scrollbar flex-grow overflow-y-auto sm:order-3"
+  >
+    {% for task in tasks %}
+    <li
+      class="mb-[3%] rounded border-2 border-card-border bg-stone-50 hover:bg-stone-100"
+      data-task-id="{{ task.id }}"
+    >
+      <div
+        class="mx-2 my-2 grid h-full grid-cols-[3fr_1fr_1fr_0.5fr_0.5fr] lg:mx-6 lg:grid-cols-[7fr_1fr_1fr_1fr_0.5fr_0.5fr]"
+      >
+        <a
+          href="{% url 'task_detail' task.id %}"
+          class="flex items-center py-[3%]"
+        >
+          <p class="todo-name">{{ task.title }}</p>
+        </a>
+        <button
+          onclick="showChangeModal(event)"
+          class="my-2 flex justify-center"
+          data-task-id="{{ task.id }}"
+        >
+          {% if task.is_completed %}
+          <!-- prettier-ignore -->
+          <p class="flex aspect-square items-center justify-center rounded-full border-2 border-card-border bg-highlightColor min-w-8">
+        済
+            </p>
+          {% else %}
+          <!-- prettier-ignore -->
+          <p class="flex aspect-square items-center justify-center rounded-full border-2 border-card-border min-w-8">
+              未
+            </p>
+          {% endif %}
+        </button>
+        <p class="hidden items-center justify-center lg:flex">
+          {{ task.deadline|date:"Y/m/d" }}
+        </p>
+        <p class="flex items-center justify-center lg:hidden">
+          {{ task.deadline|date:"m/d" }}
+        </p>
+        <p class="hidden items-center justify-center lg:flex">
+          {{ task.update_at|date:"Y/m/d" }}
+        </p>
+        <button
+          onclick="showDeleteModal(event)"
+          class="delite-button flex items-center justify-center"
+          data-task-id="{{ task.id }}"
+        >
+          <ion-icon
+            name="trash-outline"
+            class="pointer-events-none text-2xl"
+          ></ion-icon>
+        </button>
+        <!-- prettier-ignore -->
+        <a href="{% url 'task_edit' task.id %}" class="flex items-center justify-center">
+          <ion-icon name="brush-outline" class="text-2xl"></ion-icon>
+        </a>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <div
+    class="flex flex-grow-0 items-center justify-center sm:order-1 lg:justify-end"
+  >
+    <form action="" class="flex items-center justify-end gap-4 lg:w-1/3">
       <input type="search" class="w-1/2" />
       <select name="" id="" class="flex w-1/2 justify-center">
         <option value="">すべて</option>
@@ -14,74 +92,57 @@
       <a href="/todo/form" class="flex">
         <ion-icon
           name="add-outline"
-          class="rounded bg-card-button text-4xl"
+          class="rounded bg-card-button p-1 text-4xl"
         ></ion-icon>
       </a>
     </form>
   </div>
-  <ul
-    class="mx-6 my-2 grid flex-grow-0 grid-cols-[7fr_1fr_1fr_1fr_0.5fr_0.5fr]"
-  >
-    <li class="flex items-center">タイトル</li>
-    <li class="flex items-center justify-center">状態</li>
-    <li class="flex items-center justify-center">締切日<span>▼</span></li>
-    <li class="flex items-center justify-center">編集日</li>
-  </ul>
-
-  <ul id="todolist" class="hidden-scrollbar flex-grow overflow-y-auto">
-    {% for task in tasks %}
-    <li
-      class="mb-[3%] rounded border-2 border-card-border bg-stone-50 hover:bg-stone-100"
-      data-task-id="{{ task.id }}"
-    >
-      <div class="grid grid-cols-[10fr_0.5fr_0.5fr] pr-6">
-        <a
-          href="{% url 'task_detail' task.id %}"
-          class="grid grid-cols-[7fr_1fr_1fr_1fr] py-6 pl-6"
-        >
-          <p class="todo-name flex items-center">{{ task.title }}</p>
-          {% if task.is_completed %}
-          <!-- prettier-ignore -->
-          <p class="mx-auto flex aspect-square items-center justify-center rounded-full border-2 border-card-border bg-highlightColor p-2">
-          済
-          </p>
-          {% else %}
-          <!-- prettier-ignore -->
-          <p class="mx-auto flex aspect-square items-center justify-center rounded-full border-2 border-card-border p-2">
-          未
-          </p>
-          {% endif %}
-          <p class="flex items-center justify-center">
-            {{ task.deadline|date:"Y/m/d" }}
-          </p>
-          <p class="flex items-center justify-center">
-            {{ task.update_at|date:"Y/m/d" }}
-          </p>
-        </a>
-        <button
-          onclick="showModal(event)"
-          class="delite-button flex items-center justify-center"
-          data-task-id="{{ task.id }}"
-        >
-          <ion-icon name="trash-outline" class="pointer-events-none"></ion-icon>
-        </button>
-        <!-- prettier-ignore -->
-        <a href="{% url 'task_edit' task.id %}" class="flex items-center justify-center">
-          <ion-icon name="brush-outline"></ion-icon>
-        </a>
-      </div>
-    </li>
-    {% endfor %}
-  </ul>
 </div>
 {% endblock body %} {% block modal %}
+
 <div
-  id="todo-delete-modal"
+  id="todo-modal"
   class="fixed left-0 top-0 hidden h-dvh w-dvw items-center justify-center font-kosugiMaru"
 >
   <div class="modal-overlay fixed h-full w-full bg-slate-500 opacity-25"></div>
+  <!-- 完了/未完了変更モーダル -->
   <div
-    class="z-50 flex h-fit w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"
+    id="statusedit-modal"
+    class="z-50 hidden h-fit w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"
+  >
+    <div class="flex flex-col items-center justify-center">
+      <p class="mx-24 mt-12">以下のToDoのステータスを変更しますか？</p>
+      <h2
+        id="statusedit-todo-title"
+        class="mx-10 mb-6 mt-2 text-2xl font-bold"
+      ></h2>
+    </div>
+    <form
+      class="flex w-full items-center justify-center"
+      id="statusedit-form"
+      method="post"
+      action=""
+    >
+      {% csrf_token %}
+      <div class="mb-12 flex w-full max-w-sm justify-center gap-8">
+        <button type="submit" class="h-8 w-24 rounded bg-card-button-red">
+          変更
+        </button>
+        <button
+          type="button"
+          onclick="hiddenModal(event)"
+          class="h-8 w-24 rounded bg-stone-50"
+        >
+          キャンセル
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- 削除モーダル -->
+  <div
+    id="delete-modal"
+    class="z-50 hidden h-fit w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"
   >
     <div class="flex flex-col items-center justify-center">
       <p class="mx-24 mt-12">以下のToDoを削除しますか？</p>

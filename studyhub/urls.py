@@ -25,6 +25,8 @@ urlpatterns = [
     path("timer/", include("timer.urls")),
     path("search/", include("map.urls")),
     path("api/", include("map.urls")),
+    path("todo/", include("todo.urls")),
+    path("", include("user.urls")),
 
     path("test/base/", TemplateView.as_view(template_name="base.html")),
     path("test/login/", TemplateView.as_view(template_name="login.html")),
@@ -36,6 +38,4 @@ urlpatterns = [
     path("test/map/result", TemplateView.as_view(template_name="search_result.html")),
     path("test/map", TemplateView.as_view(template_name="search.html")),
     path("test/main", TemplateView.as_view(template_name="main.html")),
-    path("", include("user.urls")),
-    path("todo/", include("todo.urls")),
 ]
