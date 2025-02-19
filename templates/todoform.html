@@ -40,7 +40,7 @@
         name="is_completed"
         value="True"
         class="form-radio"
-        {% if form.is_completed.value == "True" %}checked{% endif %}/><label
+        {% if form.is_completed.value %}checked{% endif %}/><label
         for="completed"
         class="mr-[5%]"
         >完了</label
@@ -51,7 +51,7 @@
         name="is_completed"
         value="False"
         class="form-radio"
-        {% if form.is_completed.value == "False" %}checked{% endif %}/><label
+        {% if not form.is_completed.value %}checked{% endif %}/><label
         for="incompleted"
         >未完了</label
       >

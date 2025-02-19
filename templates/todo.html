@@ -37,7 +37,7 @@
         </a>
         <button
           onclick="showChangeModal(event)"
-          class="my-2 flex justify-center"
+          class="my-[10%] flex justify-center"
           data-task-id="{{ task.id }}"
         >
           {% if task.is_completed %}
@@ -58,7 +58,7 @@
         <p class="flex items-center justify-center lg:hidden">
           {{ task.deadline|date:"m/d" }}
         </p>
-        <p class="hidden items-center justify-center lg:flex">
+        <p class="hidden items-center justify-center xl:flex">
           {{ task.update_at|date:"Y/m/d" }}
         </p>
         <button

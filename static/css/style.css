@@ -937,6 +937,11 @@ select {
   margin-bottom: 0.5rem;
 }
 
+.my-\[10\%\] {
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -1897,6 +1902,12 @@ select {
 
   .lg\:justify-end {
     justify-content: flex-end;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:flex {
+    display: flex;
   }
 }
 
