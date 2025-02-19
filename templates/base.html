@@ -1,7 +1,7 @@
 {% load static %} {% load widget_tweaks %}
 
 <!doctype html>
-<html lang="ja">
+<html lang="ja" class="overflow-hidden">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,7 +21,7 @@
     <script src="{% static 'js/map-display.js' %}" defer></script>
   </head>
 
-  <body class="h-dvh w-full bg-baseColor">
+  <body class="h-dvh w-full overflow-hidden bg-baseColor">
     <nav id="menubar" class="flex h-20 flex-shrink-0 items-center bg-menuColor">
       <a
         href="/"
@@ -76,7 +76,7 @@
 
     <div
       id="timer-container"
-      class="absolute bottom-0 right-5 flex w-[20%] min-w-72 max-w-fit items-center"
+      class="absolute inset-x-0 bottom-0 mx-auto flex w-[20%] min-w-72 max-w-fit items-center lg:right-5 lg:mr-0"
     >
       <img
         id="timer-image"
@@ -166,7 +166,7 @@
       class="fixed left-0 top-0 hidden h-dvh w-dvw items-center justify-center font-kosugiMaru"
     >
       <div
-        class="modal-overlay fixed h-full w-full bg-slate-500 opacity-25"
+        class="timer-modal-overlay fixed h-full w-full bg-slate-500 opacity-25"
       ></div>
       <div
         class="z-50 flex h-fit w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"

@@ -21,7 +21,7 @@
     <p class="w-full overflow-y-auto">{{ task.description|linebreaksbr }}</p>
     <div class="col-span-2 mt-5 flex items-center">
       <a
-        href="/todo/form"
+        href="{% url 'task_edit' task.id %}"
         class="mr-10 box-border rounded border-2 border-card-border bg-card-button-yellow px-[10%] py-[1%]"
       >
         編集

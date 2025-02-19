@@ -5,6 +5,7 @@ from .views import (
     taskcreate_view,
     taskdelete_view,
     taskedit_view,
+    statusedit_view
 )
 
 
@@ -14,4 +15,5 @@ urlpatterns = [
     path("form/", taskcreate_view, name="task_create"),
     path("delete/<int:id>/", taskdelete_view, name="task_delete"),
     path("edit/<int:id>/", taskedit_view, name="task_edit"),
+    path("status/<int:id>/", statusedit_view, name="status_edit"),
 ]
