@@ -1,37 +1,54 @@
-FROM python:3.10-slim
+# ベースイメージ
+FROM python:3.11
 
-# 必要なパッケージをインストール
+# 作業ディレクトリを指定
+WORKDIR /app
+
+# 必要なシステムパッケージをインストール
 RUN apt-get update && apt-get install -y \
-    libmariadb-dev \
     gcc \
-    pkg-config \
-    netcat-openbsd \
+    python3-dev \
+    default-libmysqlclient-dev \
     curl \
-    && apt-get clean
+    netcat-openbsd \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Node.jsとnpmをインストール（Tailwind CSSの依存関係をインストールするために必要）
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+# 環境変数の設定
+ENV PYTHONUNBUFFERED=1
+
+# Node.js をインストール (Tailwind CSS 用)
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
 
-# 作業ディレクトリの設定
-WORKDIR /app
-
-# 依存関係をインストール
+# 依存関係のインストール
 COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && \
+    rm -rf /root/.cache/pip  # ✅ Pythonのキャッシュ削除
 
-# アプリケーションのソースコードをコピー
+# Tailwind CSS のインストール
+COPY package.json package-lock.json /app/
+RUN npm ci
+
+# アプリケーションコードをコピー
 COPY . /app/
 
-# Tailwind CSSインストール
-RUN npm install -D tailwindcss@3.4.17 @tailwindcss/forms @tailwindcss/aspect-ratio
-RUN npm install -D prettier prettier-plugin-tailwindcss
+# Tailwind CSS をビルド
+RUN npx tailwindcss -i /app/static/css/tailwind.css -o /app/static/css/style.css --minify
 
-# TailwindCSSの初期化。設定ファイルtailwind.config.jsの作成
-RUN npx tailwindcss init
+# 静的ファイルを収集
+RUN python manage.py collectstatic --noinput
 
-# 実行コマンドを指定
-CMD ["sh", "-c", "./wait-for-it.sh db:3306 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000 && npm run build"]
+# エントリポイントスクリプトをコピー
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-WORKDIR /app
+# wait-for-it.sh を追加
+COPY wait-for-it.sh /app/wait-for-it.sh
+RUN chmod +x /app/wait-for-it.sh
 
+# uWSGI の設定ファイルをコピー
+COPY ./uwsgi.ini /app/uwsgi.ini
+
+# コンテナ起動時のコマンドを指定
+CMD ["/entrypoint.sh"]

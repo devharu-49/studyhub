@@ -18,4 +18,4 @@ while ! nc -z "$HOST" "$PORT"; do
 done
 
 echo "$HOST:$PORT is available. Running the command..."
-exec $CMD  # 修正点
+exec "$@"
