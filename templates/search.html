@@ -1,14 +1,16 @@
 {% extends 'base.html' %} {% block body %}
 
-<div class="container flex min-w-full flex-wrap md:flex-nowrap">
+<div
+  class="container flex h-[calc(100dvh-5rem)] min-w-full flex-wrap items-center justify-evenly md:flex-nowrap"
+>
   <div id="map" class="rounded-lg border-4 border-card-border"></div>
   <img
-    class="search-character z-10 mt-1"
+    class="search-character absolute left-[45rem] top-[7.5rem] z-10"
     src="/static/images/doubutu_madokaraamewomirutukinowaguma.png"
     alt=""
   />
   <div
-    class="map-card ml-auto mr-16 mt-12 flex flex-col gap-16 rounded-lg border-4 border-card-border bg-card px-5"
+    class="map-card flex flex-col gap-16 rounded-lg border-4 border-card-border bg-card px-5"
   >
     <div>
       <input
@@ -106,14 +108,5 @@
     >
   </div>
 </div>
-<script>
-  var MyLatLng = new google.maps.LatLng(35.6811673, 139.7670516);
-  var Options = {
-    zoom: 15, //地図の縮尺値
-    center: MyLatLng, //地図の中心座標
-    mapTypeId: "roadmap", //地図の種類
-  };
-  var map = new google.maps.Map(document.getElementById("map"), Options);
-</script>
 
 {% endblock body %}

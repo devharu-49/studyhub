@@ -7,7 +7,7 @@ import json
 API_KEY = "AIzaSyAuDf-txlL1EEte-Iqolx0CvtvxazFkF6k"
 gmaps = googlemaps.Client(key=API_KEY)
 
-latest_location = {}
+latest_location = {'latitude': 35.6811673, 'longitude': 139.7670516}
 places_result = None
 
 # Create your views here.
@@ -22,11 +22,8 @@ def receive_location(request):
     place_type = data.get('types')
 
     latest_location = {"latitude":lat, "longitude":lon}
+    location = (float(lat), float(lon))
 
-    if lat and lon:
-      location = (float(lat), float(lon))
-    else:
-      location = (35.6811673, 139.7670516)
     distance = 3000  # 半径3km
     # デフォルトでカフェを検索
     places_result = gmaps.places_nearby(location=location, radius=distance, type=place_type)
@@ -34,46 +31,14 @@ def receive_location(request):
 
 def get_location(request):
   global latest_location
-  if not latest_location:
-     latest_location = {'latitude': 35.6811673, 'longitude': 139.7670516}
   return JsonResponse(latest_location)
 
 
 def search(request):
-  global latest_location
-
-  if not latest_location:
-    lat = 35.6811673
-    lon = 139.7670516
-  else:
-    lat = latest_location.get('latitude')
-    lon = latest_location.get('longitude')
-
-  # distance = request.GET["distance"] #半径
-  distance = 2000
-
-
-  location = (float(lat), float(lon)) # まとめる
-  places_result = gmaps.places_nearby(location=location, radius=distance, type="cafe")
-  return render(request, "search.html", {"results" : places_result["results"]})
+  return render(request, "search.html")
 
 def search_detail(request):
-  global latest_location
-
-  if not latest_location:
-    lat = 35.6811673
-    lon = 139.7670516
-  else:
-    lat = latest_location.get('latitude')
-    lon = latest_location.get('longitude')
-
-  # distance = request.GET["distance"] #半径
-  distance = 2000
-
-
-  location = (float(lat), float(lon)) # まとめる
-  places_result = gmaps.places_nearby(location=location, radius=distance, type="cafe")
-  return render(request, "search_detail.html", {"results" : places_result["results"]})
+  return render(request, "search_detail.html")
 
 def search_result(request):
   global places_result
@@ -82,12 +47,8 @@ def search_result(request):
   else:
     global latest_location
 
-    if not latest_location:
-      lat = 35.6811673
-      lon = 139.7670516
-    else:
-      lat = latest_location.get('latitude')
-      lon = latest_location.get('longitude')
+    lat = latest_location.get('latitude')
+    lon = latest_location.get('longitude')
 
     # distance = request.GET["distance"] #半径
     distance = 3000
