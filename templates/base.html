@@ -114,7 +114,7 @@
       <div
         id="timer-controls"
         class="absolute flex h-[80%] w-full items-center justify-between px-[3%]"
-        data-url="{% url 'timer:default' %}"
+        data-url="{% url 'timer:worktime' %}"
       >
         <div
           id="timer-display"
@@ -126,7 +126,7 @@
           >
             半角数字で入力してください
           </p>
-          <p id="time" class="block text-4xl font-medium">{{ default_time }}</p>
+          <p id="time" class="block text-4xl font-medium">{{ work_time }}</p>
           <div
             id="edit-time"
             class="hidden w-11/12 items-center justify-center"

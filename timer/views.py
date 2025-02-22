@@ -6,7 +6,7 @@ import datetime
 import json
 
 # デフォルトのタイマー時間を変更
-def update_default_time(request):
+def update_worktime(request):
     if not request.user.is_authenticated:
         data = {"message": "ERROR"}
         return JsonResponse(data)
@@ -18,7 +18,7 @@ def update_default_time(request):
         totalsec = (timeparts[0]*3600) + (timeparts[1]*60) + (timeparts[2])
 
         current_user = CustomUser.objects.get(user_id = current_user_id)
-        current_user.default_time = datetime.timedelta(seconds=totalsec)
+        current_user.work_time = datetime.timedelta(seconds=totalsec)
         current_user.save()
 
     else:

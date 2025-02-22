@@ -5,6 +5,6 @@ from . import views
 app_name = "timer"
 
 urlpatterns = [
-    path("default/", views.update_default_time, name="default"),
+    path("worktime/", views.update_worktime, name="worktime"),
     path("save/", views.save_time, name="save"),
 ]

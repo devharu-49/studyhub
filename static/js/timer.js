@@ -63,7 +63,7 @@ function startTimer() {
 
   if (times.passedTime == 0) {
     console.log("update!!");
-    updateDefaultTime();
+    updateworkTime();
   }
   toggleButton(); // ボタン切り替え
   isRunning = true; // 稼働中に変更
@@ -268,8 +268,8 @@ function getCookie(name) {
   return cookieValue;
 }
 
-// defaulttime更新
-function updateDefaultTime() {
+// worktime更新
+function updateworkTime() {
   const url = document
     .getElementById("timer-controls")
     .getAttribute("data-url");
