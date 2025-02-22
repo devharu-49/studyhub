@@ -3,12 +3,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function getSelectedTypes() {
-  // const selectedTypes = Array.from(
-  //   document.querySelectorAll('input[name="placeType"]:checked')
-  // )
-  //   .map((input) => input.value)
-  //   .join(","); // カンマ区切りで送信
-  const selectedTypes = ["primary_school"];
+  const selectedTypes = Array.from(
+    document.querySelectorAll('input[name="place"]:checked')
+  ); // カンマ区切りで送信
+  console.log("場所のタイプ：", selectedTypes);
+  // const selectedTypes = ["primary_school"];
   return selectedTypes;
 }
 

@@ -4,13 +4,22 @@
   class="container flex h-[calc(100dvh-5rem)] min-w-full flex-wrap items-center justify-evenly md:flex-nowrap"
 >
   <div id="map" class="rounded-lg border-4 border-card-border"></div>
+  <!-- <div class="absolute left-0 top-0 h-full w-1/2">
+    <img
+      class="search-character absolute right-[1.15rem] top-[7.6rem]"
+      src="/static/images/doubutu_madokaraamewomirutukinowaguma.png"
+      alt=""
+    />
+  </div> -->
   <img
-    class="search-character absolute left-[45rem] top-[7.5rem] z-10"
+    class="search-character absolute left-[44.8rem] top-[7.6rem]"
     src="/static/images/doubutu_madokaraamewomirutukinowaguma.png"
     alt=""
   />
-  <div
+  <form
     class="map-card flex flex-col gap-16 rounded-lg border-4 border-card-border bg-card px-5"
+    action="{% url 'map:search_result' %}"
+    method="GET"
   >
     <div>
       <input
@@ -19,71 +28,38 @@
         placeholder="検索ワード"
       />
     </div>
-    <div class="space-y-8">
-      <div class="toggle-margin flex justify-between">
-        <label class="inline-flex cursor-pointer items-center">
-          <span class="mr-3 font-kosugiMaru text-2xl font-bold">図書館</span>
-          <input type="checkbox" value="" class="peer sr-only" checked />
-          <div
-            class="peer relative h-6 w-11 rounded-full bg-gray-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
-          ></div>
-        </label>
+    <div>
+      <div class="flex justify-evenly">
         <label class="inline-flex cursor-pointer items-center">
           <span class="mr-3 font-kosugiMaru text-2xl font-bold">カフェ</span>
-          <input type="checkbox" value="" class="peer sr-only" checked />
-          <div
-            class="peer relative h-6 w-11 rounded-full bg-gray-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
-          ></div>
-        </label>
-        <label class="inline-flex cursor-pointer items-center">
-          <span class="mr-3 font-kosugiMaru text-2xl font-bold">StudyHub</span>
-          <input type="checkbox" value="" class="peer sr-only" checked />
-          <div
-            class="peer relative h-6 w-11 rounded-full bg-gray-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
-          ></div>
-        </label>
-      </div>
-      <div class="toggle-margin flex justify-between">
-        <label class="inline-flex cursor-pointer items-center">
-          <span class="mr-3 font-kosugiMaru text-2xl font-bold">図書館</span>
-          <input type="checkbox" value="" class="peer sr-only" checked />
+          <input
+            type="radio"
+            name="place"
+            value="cafe"
+            class="peer sr-only"
+            checked
+          />
           <div
             class="peer relative h-6 w-11 rounded-full bg-gray-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
           ></div>
         </label>
         <label class="inline-flex cursor-pointer items-center">
           <span class="mr-3 font-kosugiMaru text-2xl font-bold">図書館</span>
-          <input type="checkbox" value="" class="peer sr-only" checked />
+          <input
+            type="radio"
+            name="place"
+            value="library"
+            class="peer sr-only"
+          />
           <div
             class="peer relative h-6 w-11 rounded-full bg-gray-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
           ></div>
         </label>
         <label class="inline-flex cursor-pointer items-center">
-          <span class="mr-3 font-kosugiMaru text-2xl font-bold">図書館</span>
-          <input type="checkbox" value="" class="peer sr-only" checked />
-          <div
-            class="peer relative h-6 w-11 rounded-full bg-gray-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
-          ></div>
-        </label>
-      </div>
-      <div class="toggle-margin flex justify-between">
-        <label class="inline-flex cursor-pointer items-center">
-          <span class="mr-3 font-kosugiMaru text-2xl font-bold">図書館</span>
-          <input type="checkbox" value="" class="peer sr-only" checked />
-          <div
-            class="peer relative h-6 w-11 rounded-full bg-gray-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
-          ></div>
-        </label>
-        <label class="inline-flex cursor-pointer items-center">
-          <span class="mr-3 font-kosugiMaru text-2xl font-bold">図書館</span>
-          <input type="checkbox" value="" class="peer sr-only" checked />
-          <div
-            class="peer relative h-6 w-11 rounded-full bg-gray-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
-          ></div>
-        </label>
-        <label class="inline-flex cursor-pointer items-center">
-          <span class="mr-3 font-kosugiMaru text-2xl font-bold">図書館</span>
-          <input type="checkbox" value="" class="peer sr-only" checked />
+          <span class="mr-3 font-kosugiMaru text-2xl font-bold"
+            >ファストフード</span
+          >
+          <input type="radio" name="place" value="food" class="peer sr-only" />
           <div
             class="peer relative h-6 w-11 rounded-full bg-gray-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
           ></div>
@@ -91,22 +67,30 @@
       </div>
     </div>
     <div>
-      <input type="range" min="0" max="100" value="40" class="w-full" />
+      <input
+        name="distance"
+        type="range"
+        min="1000"
+        step="1000"
+        max="5000"
+        class="slider w-full"
+      />
       <div
         class="flex w-full justify-between px-2 font-kosugiMaru text-xl font-bold"
       >
-        <span>0km</span>
+        <span>1km</span>
         <span>5km</span>
       </div>
     </div>
     <a href="#"
       ><button
         class="mb-10 w-full rounded-xl bg-card-button py-4 font-kosugiMaru text-xl font-bold text-white underline"
+        type="submit"
       >
         検索
       </button></a
     >
-  </div>
+  </form>
 </div>
 
 {% endblock body %}

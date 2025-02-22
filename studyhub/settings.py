@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "user",
     "todo",
     "timer",
+    "map",
 ]
 
 MIDDLEWARE = [
