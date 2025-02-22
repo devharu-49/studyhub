@@ -31,5 +31,9 @@ docker-compose.override.yml
 *.bak
 *.tmp
 
-# Node.js
+#  🔹 Node.js
 node_modules/
+
+# 🔹 開発用のDocker関連
+docker-compose-local.yml
+Dockerfile-local

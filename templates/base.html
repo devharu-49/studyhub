@@ -22,61 +22,88 @@
   </head>
 
   <body class="h-dvh w-full overflow-hidden bg-baseColor">
-    <nav id="menubar" class="flex h-20 flex-shrink-0 items-center bg-menuColor">
+    <header
+      id="menubar"
+      class="flex h-20 items-center bg-menuColor max-md:justify-between"
+    >
       <a
         href="/"
         class="pb-2 pl-5 pr-10 font-rampartOne text-4xl text-baseColor"
         >StudyHub</a
       >
-      <ul class="flex h-full items-center">
-        <li
-          class="flex h-full items-center justify-center hover:bg-highlightColor"
-        >
-          <a href="/" class="px-8 font-kosugiMaru text-2xl text-baseColor"
-            >HOME</a
-          >
-        </li>
-        <li
-          class="flex h-full items-center justify-center hover:bg-highlightColor"
-        >
-          <a href="/search" class="px-8 font-kosugiMaru text-2xl text-baseColor"
-            >検索</a
-          >
-        </li>
-        <li
-          class="flex h-full items-center justify-center hover:bg-highlightColor"
-        >
-          <a href="/todo" class="px-8 font-kosugiMaru text-2xl text-baseColor"
-            >ToDo</a
-          >
-        </li>
-        <li>
-          <p class="px-8 font-kosugiMaru text-xl font-medium text-baseColor">
-            マイペー<span class="text-xs">ジ</span
-            ><ion-icon name="hammer-outline" class="scale-x-[-1]"></ion-icon>
-          </p>
-        </li>
-      </ul>
-      <form
-        method="POST"
-        action="{% url 'logout' %}"
-        class="ml-auto flex h-full items-center justify-center"
+      <button
+        type="button"
+        class="z-10 mr-5 flex flex-col space-y-2 md:hidden"
+        id="hamburger"
       >
-        {% csrf_token %}
-        <button
-          type="submit"
-          class="h-full p-5 text-4xl text-white hover:bg-highlightColor"
-        >
-          <ion-icon name="exit-outline" class="pl-3 text-4xl"></ion-icon>
-        </button>
-      </form>
-    </nav>
+        <span class="h-0.5 w-8 bg-baseColor duration-150"></span>
+        <span class="h-0.5 w-8 bg-baseColor duration-150"></span>
+        <span class="h-0.5 w-8 bg-baseColor duration-150"></span>
+      </button>
+      <nav
+        id="nav"
+        class="nav-md right-[-100%] md:flex md:w-full md:text-baseColor"
+      >
+        <ul class="flex h-full w-full items-center max-md:flex-col">
+          <li class="nav-item">
+            <a
+              href="/"
+              class="flex h-full items-center px-8 font-kosugiMaru text-2xl"
+              >HOME</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="/search"
+              class="flex h-full items-center px-8 font-kosugiMaru text-2xl"
+              >検索</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="/todo"
+              class="flex h-full items-center px-8 font-kosugiMaru text-2xl"
+              >ToDo</a
+            >
+          </li>
+          <li class="nav-item hover:bg-menuColor">
+            <p
+              class="flex h-full items-center px-2 font-kosugiMaru text-xl font-medium"
+            >
+              マイペー<span class="text-xs">ジ</span
+              ><ion-icon name="hammer-outline" class="scale-x-[-1]"></ion-icon>
+            </p>
+          </li>
+          <li class="nav-item ml-auto">
+            <form
+              method="POST"
+              action="{% url 'logout' %}"
+              class="flex h-full items-center justify-center"
+            >
+              {% csrf_token %}
+              <button
+                type="submit"
+                class="flex h-full items-center justify-center p-5 hover:bg-highlightColor"
+              >
+                <ion-icon
+                  name="exit-outline"
+                  class="hidden pl-3 text-4xl md:flex"
+                ></ion-icon>
+                <p class="px-8 font-kosugiMaru text-xl font-medium md:hidden">
+                  ログアウト
+                </p>
+              </button>
+            </form>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
-    {{test}} {% block body %} {% endblock body %}
+    {% block body %} {% endblock body %}
 
     <div
       id="timer-container"
-      class="absolute inset-x-0 bottom-0 mx-auto flex w-[20%] min-w-72 max-w-fit items-center lg:right-5 lg:mr-0"
+      class="absolute inset-x-0 bottom-0 mx-auto flex w-[20%] min-w-72 max-w-fit items-center sm:right-5 sm:mr-0"
     >
       <img
         id="timer-image"
@@ -216,6 +243,7 @@
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
 
+    <script src="{% static 'js/base.js' %}"></script>
     <script src="{% static 'js/timer.js' %}"></script>
   </body>
 </html>
