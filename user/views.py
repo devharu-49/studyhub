@@ -36,8 +36,8 @@ def login_view(request):
                 return redirect("main")
             else:
                 form.add_error(None, "無効なメールアドレスまたはパスワードです。")
-        else:
-            form = LoginForm()
+        # else:
+        #     form = LoginForm()
 
     return render(request, "login.html", {"form": form})
 
