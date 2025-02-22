@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .forms import SaveTimeForm
 from user.models import CustomUser
-import datetime
+from datetime import timedelta
 import json
 
 # デフォルトのタイマー時間を変更
@@ -18,7 +18,7 @@ def update_worktime(request):
         totalsec = (timeparts[0]*3600) + (timeparts[1]*60) + (timeparts[2])
 
         current_user = CustomUser.objects.get(user_id = current_user_id)
-        current_user.work_time = datetime.timedelta(seconds=totalsec)
+        current_user.work_time = timedelta(seconds=totalsec)
         current_user.save()
 
     else:
@@ -37,7 +37,7 @@ def save_time(request):
         post_data = request.POST.copy()
         timeparts = [int(part) for part in post_data.get("count_time").split(":")]
         totalsec = (timeparts[0]*3600) + (timeparts[1]*60) + (timeparts[2])
-        post_data["count_time"] =  datetime.timedelta(seconds=totalsec)
+        post_data["count_time"] =  timedelta(seconds=totalsec)
 
         form = SaveTimeForm(post_data)
 
