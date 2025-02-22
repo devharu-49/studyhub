@@ -7,17 +7,23 @@ from .forms import TaskForm
 def tasklist_view(request):
     # 現在ログインしているユーザーに関連するタスクを選択
     # select_relatedを使って、tasksに関連するuser情報も一度に取得する（クエリ数を減らすため）
-    tasks = Tasks.objects.select_related("user").filter(user=request.user).order_by("deadline")
+    tasks = (
+        Tasks.objects.select_related("user")
+        .filter(user=request.user)
+        .order_by("deadline")
+    )
     return render(request, "todo.html", {"tasks": tasks})
 
 
 # タスク詳細取得
 def taskdetail_view(request, id):
-    referer_url = request.META['HTTP_REFERER']
+    referer_url = request.META["HTTP_REFERER"]
     # Tasksテーブルからidが一致し、かつuserがログイン中のユーザーのタスクを取得する。
     # データが存在しない場合は自動的に「404エラー」
     task = get_object_or_404(Tasks, id=id, user=request.user)
-    return render(request, "tododetail.html", {"task": task, "referer_url":referer_url})
+    return render(
+        request, "tododetail.html", {"task": task, "referer_url": referer_url}
+    )
 
 
 # タスク作成
@@ -73,6 +79,7 @@ def taskedit_view(request, id):
 
     return render(request, "todoform.html", {"form": form, "task": task})
 
+
 def statusedit_view(request, id):
     if not request.user.is_authenticated:
         return redirect("login")  # 未ログインならログインページへリダイレクト
@@ -88,3 +95,28 @@ def statusedit_view(request, id):
     return redirect("task_list")  # 一覧ページへリダイレクト
 
 
+# Todoタイトル検索、完了未完了ソート機能
+def tasksearch_view(request):
+    query = request.GET.get("q", "")  # 検索キーワード取得
+    status = request.GET.get("status", "")  # 完了・未完了の状態を取得
+
+    tasks = Tasks.objects.filter(
+        user=request.user
+    )  # ユーザーに関連するタスクのみをフィルタリングして取得
+
+    if query:
+        tasks = tasks.filter(
+            title__icontains=query
+        )  # 検索ワードが空でない場合、タイトルに部分一致するタスクをフィルタリングして取得
+
+    # 完了・未完了の状態が指定されている場合、その状態でフィルタリング
+    if status == "completed":
+        tasks = tasks.filter(is_completed=True)  # 完了タスクのみ
+    elif status == "incomplete":
+        tasks = tasks.filter(is_completed=False)  # 未完了タスクのみ
+
+    tasks = tasks.order_by("deadline")  # タスクを締切日順に昇順に並び替え
+
+    return render(
+        request, "todo.html", {"tasks": tasks, "query": query, "status": status}
+    )  # tasks（タスク一覧）、query（検索キーワード）、status（選択された状態）をコンテキストとしてtodo.htmlへ渡してレンダリング

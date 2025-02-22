@@ -33,3 +33,7 @@ docker-compose.override.yml
 
 # Node.js
 node_modules/
+
+#　開発用dockerfile
+docker-compose-local.yml
+Dockerfile-local

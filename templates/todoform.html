@@ -14,7 +14,7 @@
         type="text"
         name="title"
         value="{{ form.title.value|default:'' }}"
-        class="w-full rounded border-2 border-card-border"
+        class="w-full rounded-lg border-4 border-card-border"
       />
       {% if form.title.errors %}
       <div class="text-red-500">{{ form.title.errors }}</div>
@@ -29,7 +29,7 @@
         id="id_deadline"
         value="{{ form.deadline.value|date:'Y-m-d'|default:'' }}"
         placeholder="0000/00/00"
-        class="rounded border-2 border-card-border"
+        class="rounded-lg border-4 border-card-border"
       />
     </div>
     <div class="mb-[3%] flex items-center">
@@ -61,20 +61,20 @@
       <textarea
         name="description"
         id="description"
-        class="h-[30%] w-full rounded border-2 border-card-border"
+        class="h-[30%] w-full rounded-lg border-4 border-card-border"
       >
 {{form.description.value|default:''}}</textarea
       >
     </div>
     <button
       type="submit"
-      class="mr-10 rounded border-2 border-card-border bg-card-button-yellow px-[10%] py-[1%]"
+      class="mr-10 rounded border-card-border bg-card-button-yellow px-[10%] py-[1%]"
     >
       {% if task %}更新{% else %}作成{% endif %}
     </button>
     <a
       href="{% url 'task_list' %}"
-      class="rounded border-2 border-card-border bg-card-button px-[10%] py-[1%]"
+      class="rounded border-card-border bg-card-button px-[10%] py-[1%]"
     >
       戻る
     </a>
