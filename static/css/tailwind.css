@@ -81,5 +81,5 @@
 }
 
 .nav-item {
-  @apply flex h-20 items-center justify-center py-4 hover:bg-highlightColor max-md:w-full max-md:shadow;
+  @apply flex h-20 items-center justify-center hover:bg-highlightColor max-md:w-full max-md:shadow;
 }
