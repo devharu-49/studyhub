@@ -55,7 +55,7 @@
         決定
       </button>
       <a
-        href="{{ referer_url }}"
+        href="{{ request.META.HTTP_REFERER }}"
         class="rounded border-2 border-card-border bg-card-button px-[10%] py-[1%]"
       >
         戻る

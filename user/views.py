@@ -84,10 +84,9 @@ def mypage_view(request, id):
         
     else:
         form = MypageForm(instance=user_info)
-        referer_url = request.META['HTTP_REFERER']
 
         work_time_list = Times.objects.filter(user_id = id).values_list("count_time")
         work_time_values = [item[0] for item in work_time_list]
         work_time_sum = sum(work_time_values, timedelta())
         
-    return render(request, "mypage.html", {"form":form, "work_time_sum":work_time_sum, "referer_url":referer_url})
+    return render(request, "mypage.html", {"form":form, "work_time_sum":work_time_sum})
