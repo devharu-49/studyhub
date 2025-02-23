@@ -75,3 +75,11 @@
   width: 15rem;
   height: 15rem;
 }
+
+.nav-md {
+  @apply top-20 h-full w-2/3 text-menuColor transition-all max-md:fixed max-md:rounded max-md:border-s-2 max-md:bg-stone-100;
+}
+
+.nav-item {
+  @apply flex h-20 items-center justify-center hover:bg-highlightColor max-md:w-full max-md:shadow;
+}
