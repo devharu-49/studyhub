@@ -76,7 +76,7 @@ function startTimer() {
 
   if (isTimerEdited && times.passedTime == 0) {
     console.log("update!!");
-    updatSetTime();
+    updateSetTime();
   }
 
   toggleButton(); // ボタン切り替え
@@ -120,8 +120,12 @@ function startEditTime() {
   timeEditer = document.getElementById("edit-time");
   if (timeEditer.classList.contains("flex")) return;
 
+  console.log(currentTimerValue.innerHTML);
   const timeParts = currentTimerValue.innerHTML.split(":");
+  console.log("ここからここから");
+  console.log(timeParts);
   const inputs = timeEditer.querySelectorAll(".input-time"); // 出力はNodeList
+  console.log(inputs);
   [...inputs].map((input, index) => {
     input.value = timeParts[index];
     // 編集箇所以外がクリックされたとき非表示にする
@@ -255,6 +259,15 @@ function resetTime() {
     passedTime: 0, // 経過時間
   };
   toggleTimerModal();
+}
+
+// マイページ更新前処理
+function updateMyPage() {
+  const pomodoroMode = document.querySelector(
+    'input[name="is_pomodoro"]:checked'
+  )?.value;
+  if (!isWorking && !(pomodoroMode === "True")) resetTime();
+  document.updateMyPageForm.submit();
 }
 
 // sessionstrageへの保存

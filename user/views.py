@@ -74,23 +74,20 @@ def mypage_view(request, id):
     user_info = get_object_or_404(CustomUser, user_id=id)
 
     if request.method == "POST":
-        form = MypageForm(request.POST, instance=user_info)
+        form = MypageForm(request.POST, instance=user_info)      
         if form.is_valid():
+            is_pomodoro = form.cleaned_data["is_pomodoro"]
             form.save()
+            if not is_pomodoro:
+                request.session["is_working"] = False
             return redirect("mypage", id=request.user.user_id)
         
     else:
         form = MypageForm(instance=user_info)
-
         referer_url = request.META['HTTP_REFERER']
 
         work_time_list = Times.objects.filter(user_id = id).values_list("count_time")
         work_time_values = [item[0] for item in work_time_list]
         work_time_sum = sum(work_time_values, timedelta())
-        
-        print(work_time_list)
-        print(work_time_values)
-        print("あああ")
-        print(work_time_sum)
         
     return render(request, "mypage.html", {"form":form, "work_time_sum":work_time_sum, "referer_url":referer_url})

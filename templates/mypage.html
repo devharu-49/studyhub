@@ -4,6 +4,7 @@
 >
   <h2 class="mb-[2%] h-[5%] text-center text-4xl font-bold">マイページ</h2>
   <form
+    name="updateMyPageForm"
     action="{% url 'mypage' user.user_id %}"
     method="post"
     class="grid h-[93%] grid-cols-[1fr_8fr] grid-rows-6"
@@ -47,7 +48,8 @@
 
     <div class="col-span-2 mt-5 flex items-center">
       <button
-        type="submit"
+        type="button"
+        onclick="updateMyPage()"
         class="mr-10 box-border rounded border-2 border-card-border bg-card-button-yellow px-[10%] py-[1%]"
       >
         決定

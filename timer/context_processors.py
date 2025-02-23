@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import SaveTimeForm
 from user.models import CustomUser
+from django.core.exceptions import ObjectDoesNotExist
 
 # 作業時間登録フォームを渡す
 def timer_modal_form(request):
@@ -24,11 +25,15 @@ def format_time(time):
 # 作業時間、休憩時間、ポモドーロON/OFF, 現在のフェーズを渡す
 def get_set_time(request):
   if not request.user.is_authenticated:
-        # return redirect("login")
-        return {"work_time": "00:00:30"}
+        return {"set_time": "00:00:30", "is_pomodoro": False, "is_working": True}
 
   user_id = request.user.user_id
-  currentuser = CustomUser.objects.get(user_id = user_id)
+
+  try:
+    currentuser = CustomUser.objects.get(user_id=user_id)
+  except ObjectDoesNotExist:
+    return {"set_time": "00:00:30", "is_pomodoro": False, "is_working": True}
+  
   is_pomodoro = currentuser.is_pomodoro
   if not is_pomodoro:
      request.session["is_working"] = True
@@ -40,6 +45,6 @@ def get_set_time(request):
   else:  
     set_time = format_time(currentuser.break_time.total_seconds())
   
-
+  print("set_time", set_time, type(set_time))
   return {"set_time": set_time, "is_pomodoro": is_pomodoro, "is_working": is_working}
   
