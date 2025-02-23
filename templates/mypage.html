@@ -7,14 +7,14 @@
     name="updateMyPageForm"
     action="{% url 'mypage' user.user_id %}"
     method="post"
-    class="grid h-[93%] grid-cols-[1fr_8fr] grid-rows-6"
+    class="grid h-[93%] grid-cols-[1fr_8fr] grid-rows-6 items-center"
   >
     {% csrf_token %}
     <label for="username" class="min-w-24">ユーザー名</label>
     <div class="w-full">{{ form.name }}</div>
 
     <label for="pomodoro" class="inline-block min-w-24">ポモドーロ</label>
-    <div class="flex items-center">
+    <div class="">
       <!-- prettier-ignore -->
       <input
         type="radio"

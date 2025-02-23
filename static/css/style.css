@@ -1038,6 +1038,14 @@ select {
   margin-top: 2rem;
 }
 
+.mb-\[4rem\] {
+  margin-bottom: 4rem;
+}
+
+.mb-\[4\.5rem\] {
+  margin-bottom: 4.5rem;
+}
+
 .box-border {
   box-sizing: border-box;
 }
@@ -1251,6 +1259,16 @@ select {
 .rotate-45 {
   --tw-rotate: 45deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .cursor-pointer {

@@ -121,10 +121,16 @@
         >
           <p
             id="time-edit-error"
-            class="fixed mb-20 hidden text-xs text-card-button-red"
+            class="fixed mb-[4.5rem] hidden text-xs text-card-button-red"
           >
             半角数字で入力してください
           </p>
+
+          {% if is_working and is_pomodoro %}
+          <p class="fixed mb-[4.5rem] animate-pulse text-xs">Working Time</p>
+          {% elif not is_working and is_pomodoro %}
+          <p class="fixed mb-[4.5rem] animate-pulse text-xs">Break Time</p>
+          {% endif %}
           <!-- prettier-ignore -->
           <p
             id="time"
