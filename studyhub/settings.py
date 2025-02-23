@@ -69,7 +69,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "timer.context_processors.timer_modal_form",
-                "timer.context_processors.get_work_time",
+                "timer.context_processors.get_set_time",
             ],
         },
     },

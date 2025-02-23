@@ -83,3 +83,11 @@
 .nav-item {
   @apply flex h-20 items-center justify-center hover:bg-highlightColor max-md:w-full max-md:shadow;
 }
+
+.modal-container {
+  @apply fixed left-0 top-0 z-50 h-dvh w-dvw items-center justify-center font-kosugiMaru;
+}
+
+.modal-overlay {
+  @apply fixed h-full w-full bg-slate-500 opacity-25;
+}
