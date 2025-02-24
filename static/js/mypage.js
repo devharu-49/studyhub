@@ -47,3 +47,9 @@ const myChart = new Chart(ctx, {
   data: data,
   options: options,
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  select = document.getElementById("graph-range");
+  document.getElementById("sum_range_text").innerHTML =
+    select.options[select.selectedIndex].label;
+});

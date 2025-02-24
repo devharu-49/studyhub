@@ -44,7 +44,9 @@
       <label for="" class="inline-block min-w-24">休憩時間：</label>
       <div>{{ form.break_time}}</div>
 
-      <label for="" class="inline-block min-w-24">過去1週間の作業時間：</label>
+      <label for="" class="inline-block min-w-24"
+        ><span id="sum_range_text">過去7日間</span>の合計作業時間：</label
+      >
       <p class="w-full overflow-y-auto">{{ work_time_sum }}</p>
 
       <div class="col-span-2 mt-5 flex items-center">
@@ -63,12 +65,24 @@
         </a>
       </div>
     </form>
-    <div class="w-full">
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script type="text/javascript">
-        let durationData = {{ duration_data | safe }}
-      </script>
-      <canvas id="myChart" class="w-1/2"></canvas>
+    <div class="h-full w-full">
+      <!-- prettier-ignore -->
+      <form action="{% url 'mypage' user.user_id %}" method="get">
+        <select id="graph-range" name="range" onchange="this.form.submit()">
+          <option value="week" {% if range == "week" %}selected{% endif %}>過去7日間</option>
+          <option value="month" {% if range == "month" %}selected{% endif %}>過去1か月間</option>
+          <option value="year" {% if range == "year" %}selected{% endif %}>過去1年間</option>
+          <option value="all" {% if range == "all" %}selected{% endif %}>全期間</option>
+        </select>
+      </form>
+
+      <div class="h-full">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script type="text/javascript">
+          let durationData = {{ duration_data | safe }}
+        </script>
+        <canvas id="myChart" class="w-1/2"></canvas>
+      </div>
     </div>
   </div>
 </div>

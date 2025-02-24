@@ -86,10 +86,14 @@ def mypage_view(request, id):
     else:
         form = MypageForm(instance=user_info)
 
-    duration_data = get_duration_data(request.user.user_id)
+    range = request.GET.get("range", "week")
+
+    duration_data = get_duration_data(request.user.user_id, range)
     work_time_sum = minutes_to_hms(sum(duration_data["times"]))
+
+    context = {"form":form, "work_time_sum":work_time_sum, "duration_data":duration_data, "range":range}
         
-    return render(request, "mypage.html", {"form":form, "work_time_sum":work_time_sum, "duration_data":duration_data})
+    return render(request, "mypage.html", context)
 
 
 # 指定期間の作業時間データを収集
@@ -120,7 +124,13 @@ def get_duration_data(user_id, range='week'):
     # グラフ用に整形
     count_times_par_date = []
 
-    date = start_date
+    if start_date:
+        date = start_date
+    else:
+        current_user = CustomUser.objects.get(user_id = user_id)
+        print("ゆーざー", current_user.created_at.date())
+        date = current_user.created_at.date()
+
     while date <= now:
         count_times_par_date.append({"create_date": date, "count_time": 0})
         date += timedelta(days=1)
@@ -128,16 +138,14 @@ def get_duration_data(user_id, range='week'):
     for time in count_times:
         create_date = time.created_at.date()
         count_second = time.count_time.total_seconds()
-        print("あああ",create_date, count_second)
 
         for date in count_times_par_date:
-            print("あああ")
-            print(date)
             if date["create_date"] and date["create_date"] == create_date:
                 date["count_time"] += count_second
                 break
         else:
             count_times_par_date.append({"create_date": create_date, "count_time": count_second})
+        
 
     dates = [date["create_date"].strftime("%m/%d") for date in count_times_par_date]
     times = [date['count_time']/60 for date in count_times_par_date]
