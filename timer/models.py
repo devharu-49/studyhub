@@ -15,5 +15,5 @@ class Times(models.Model):
         verbose_name_plural = "Times"
 
     def __str__(self):
-        return self.count_time
+        return str(self.count_time)
     
