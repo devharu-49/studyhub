@@ -80,7 +80,7 @@
           ></ion-icon>
         </button>
         <!-- prettier-ignore -->
-        <a href="{% url 'task_edit' task.id %}" class="flex items-center justify-center">
+        <a href="{% url 'task_edit' task.id %}?next={{ request.get_full_path|urlencode }}" class="flex items-center justify-center">
           <ion-icon name="brush-outline" class="text-2xl"></ion-icon>
         </a>
       </div>
@@ -121,7 +121,10 @@
         <!-- prettier-ignore -->
         <option value="incomplete" {% if status == "incomplete" %}selected{% endif %}>未完了</option>
       </select>
-      <a href="/todo/form" class="flex">
+      <a
+        href="{% url 'task_create' %}?next={{ request.get_full_path|urlencode }}"
+        class="flex"
+      >
         <ion-icon
           name="add-outline"
           class="rounded-xl bg-card-button p-1 text-4xl hover:bg-gray-400 hover:text-gray-100"

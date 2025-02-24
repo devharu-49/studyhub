@@ -17,13 +17,10 @@ def tasklist_view(request):
 
 # タスク詳細取得
 def taskdetail_view(request, id):
-    referer_url = request.META["HTTP_REFERER"]
     # Tasksテーブルからidが一致し、かつuserがログイン中のユーザーのタスクを取得する。
     # データが存在しない場合は自動的に「404エラー」
     task = get_object_or_404(Tasks, id=id, user=request.user)
-    return render(
-        request, "tododetail.html", {"task": task, "referer_url": referer_url}
-    )
+    return render(request, "tododetail.html", {"task": task})
 
 
 # タスク作成

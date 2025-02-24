@@ -72,12 +72,13 @@
     >
       {% if task %}更新{% else %}作成{% endif %}
     </button>
-    <a
-      href="{% url 'task_list' %}"
+    <button
+      type="button"
+      onclick="location.href='{{ request.GET.next|default:'/todo/' }}'"
       class="rounded border-card-border bg-card-button px-[10%] py-[1%]"
     >
       戻る
-    </a>
+    </button>
   </form>
 </div>
 
