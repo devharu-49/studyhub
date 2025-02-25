@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block body %}
+<div
+  class="mx-auto h-[calc(100dvh-5rem)] w-[60%] pb-32 pt-[2%] font-kosugiMaru"
+>
+  <h2 class="mb-[2%] h-[5%] text-center text-4xl font-bold">マイページ</h2>
+  <form
+    name="updateMyPageForm"
+    action="{% url 'mypage' user.user_id %}"
+    method="post"
+    class="grid h-[93%] grid-cols-[1fr_8fr] grid-rows-6 items-center"
+  >
+    {% csrf_token %}
+    <label for="username" class="min-w-24">ユーザー名</label>
+    <div class="w-full">{{ form.name }}</div>
+
+    <label for="pomodoro" class="inline-block min-w-24">ポモドーロ</label>
+    <div class="">
+      <!-- prettier-ignore -->
+      <input
+        type="radio"
+        name="is_pomodoro"
+        value="True"
+        class="form-radio"
+        {% if form.is_pomodoro.value %}checked{% endif %}/><label
+        for="on"
+        class="mr-[5%]"
+        >ON</label
+      >
+      <!-- prettier-ignore -->
+      <input
+        type="radio"
+        name="is_pomodoro"
+        value="False"
+        class="form-radio"
+        {% if not form.is_pomodoro.value %}checked{% endif %}/><label for="off"
+        >OFF</label
+      >
+    </div>
+
+    <label for="" class="inline-block min-w-24">作業時間：</label>
+    <div>{{ form.work_time}}</div>
+
+    <label for="" class="inline-block min-w-24">休憩時間：</label>
+    <div>{{ form.break_time}}</div>
+
+    <label for="" class="inline-block min-w-24">累積作業時間：</label>
+    <p class="w-full overflow-y-auto">{{ work_time_sum }}</p>
+
+    <div class="col-span-2 mt-5 flex items-center">
+      <button
+        type="button"
+        onclick="updateMyPage()"
+        class="mr-10 box-border rounded border-2 border-card-border bg-card-button-yellow px-[10%] py-[1%]"
+      >
+        決定
+      </button>
+      <a
+        href="{{ request.META.HTTP_REFERER }}"
+        class="rounded border-2 border-card-border bg-card-button px-[10%] py-[1%]"
+      >
+        戻る
+      </a>
+    </div>
+  </form>
+</div>
+
+{% endblock body %}
