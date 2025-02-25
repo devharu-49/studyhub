@@ -23,9 +23,11 @@ function initMap(latitude, longitude) {
         lat: place.geometry.location.lat,
         lng: place.geometry.location.lng,
       };
-      addMarker(position, place.name);
+      addMarker(position, place.name, place.place_id);
     }
   });
+
+  localStorage.setItem("markers", JSON.stringify(markers));
 
   markers.forEach((marker) => {
     marker.setMap(map);
@@ -52,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // 📍 マーカーを追加（赤ピン）
-function addMarker(location, title) {
+function addMarker(location, title, place_id) {
   const marker = new google.maps.Marker({
     position: location,
     map: map,
@@ -62,6 +64,12 @@ function addMarker(location, title) {
     },
   });
 
+  // マーカーがクリックされたときに詳細ページに遷移する
+  marker.addListener("click", function () {
+    window.location.href = `/search/detail/${location.lat}/${location.lng}/${place_id}`;
+  });
+
+  // マーカーを配列に追加
   markers.push(marker);
 }
 

@@ -3,12 +3,21 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function getSelectedTypes() {
-  const selectedTypes = Array.from(
-    document.querySelectorAll('input[name="place"]:checked')
-  ); // カンマ区切りで送信
-  console.log("場所のタイプ：", selectedTypes);
-  // const selectedTypes = ["primary_school"];
-  return selectedTypes;
+  if (localStorage.getItem("selectedTypes") !== null) {
+    const selectedTypes = JSON.parse(localStorage.getItem("selectedTypes"));
+    return selectedTypes[0];
+  } else {
+    return "cafe";
+  }
+}
+
+function getDistance() {
+  if (localStorage.getItem("distance") !== null) {
+    const distance = JSON.parse(localStorage.getItem("distance"));
+    return distance[0];
+  } else {
+    return 3000;
+  }
 }
 
 function getLocationAndSendToDjango() {
@@ -20,9 +29,10 @@ function getLocationAndSendToDjango() {
           longitude: position.coords.longitude,
         };
         const selectedTypes = getSelectedTypes();
+        const distance = getDistance();
 
         // 現在地と選択されたタイプをDjangoに送信
-        fetchPlacesFromDjango(userLocation, selectedTypes);
+        fetchPlacesFromDjango(userLocation, selectedTypes, distance);
       },
       (error) => {
         console.error("位置情報の取得に失敗しました", error);
@@ -34,12 +44,13 @@ function getLocationAndSendToDjango() {
   }
 }
 
-function fetchPlacesFromDjango(location, placeTypes) {
+function fetchPlacesFromDjango(location, placeTypes, distance) {
   const url = `/api/send_location/`;
   const data = {
     latitude: location.latitude,
     longitude: location.longitude,
     types: placeTypes,
+    distance: distance,
   };
 
   fetch(url, {

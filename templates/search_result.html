@@ -10,14 +10,18 @@
                 {% if results %}
                 <div class="flex flex-col space-y-3 overflow-y-auto hidden-scrollbar h-[90%]">
                     {% for result, distance in results|zip_lists:distances %}
-                    <div class="border-4 border-card-border rounded-lg py-4 px-4 bg-white space-y-2">
-                        <h1 class="font-kosugiMaru font-bold text-lg">{{ result.name }}</h1>
-                        <div class="flex justify-between mr-8 items-center">
-                            <p class="font-kosugiMaru font-bold text-lg">{{ result.vicinity }}</p>
-                            <p class="font-kosugiMaru font-bold text-xl">{{ distance.walking_distance }}</p>
+                    {% with lat=result.geometry.location.lat|stringformat:"s" lng=result.geometry.location.lng|stringformat:"s" place_id=result.place_id %}
+                    <a href="{% url 'map:search_detail' lat lng place_id %}">
+                        <div class="border-4 border-card-border rounded-lg py-4 px-4 bg-white space-y-2">
+                            <h1 class="font-kosugiMaru font-bold text-lg">{{ result.name }}</h1>
+                            <div class="flex justify-between mr-8 items-center">
+                                <p class="font-kosugiMaru font-bold text-lg">{{ result.vicinity }}</p>
+                                <p class="font-kosugiMaru font-bold text-xl">{{ distance.walking_distance }}</p>
+                            </div>
+                            <p class="font-kosugiMaru font-bold text-lg"><span class="text-yellow-400">★</span>{{ result.rating }}</p>
                         </div>
-                        <p class="font-kosugiMaru font-bold text-lg"><span class="text-yellow-400">★</span>{{ result.rating }}</p>
-                    </div>
+                    </a>
+                    {% endwith %}
                     {% endfor %}
                 </div>
                 <div class="max-lg:hidden absolute bottom-1 w-56 h-32 flex items-center justify-center overflow-hidden">
