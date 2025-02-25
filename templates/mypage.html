@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% load static %} {% block body %}
+{% extends "base.html" %} {% load static %} {% load widget_tweaks %}
+<!-- prettier-ignore -->
+{% block body %}
 <div
   class="mx-auto h-[calc(100dvh-5rem)] w-[60%] pb-32 pt-[2%] font-kosugiMaru"
 >
@@ -8,13 +10,14 @@
       name="updateMyPageForm"
       action="{% url 'mypage' user.user_id %}"
       method="post"
-      class="grid h-[93%] grid-cols-[1fr_8fr] grid-rows-6 items-center"
+      class="grid h-[93%] w-1/2 grid-cols-[2fr_6fr] grid-rows-6 items-center"
     >
       {% csrf_token %}
-      <label for="username" class="min-w-24">ユーザー名</label>
-      <div class="w-full">{{ form.name }}</div>
+      <label for="username" class="min-w-24">ユーザー名:</label>
+      <!-- prettier-ignore -->
+      <div class="w-full">{{ form.name|add_class:"rounded-lg border-4 border-card-border" }}</div>
 
-      <label for="pomodoro" class="inline-block min-w-24">ポモドーロ</label>
+      <label for="pomodoro" class="inline-block min-w-24">ポモドーロ:</label>
       <div class="">
         <!-- prettier-ignore -->
         <input
@@ -39,36 +42,39 @@
       </div>
 
       <label for="" class="inline-block min-w-24">作業時間：</label>
-      <div>{{ form.work_time}}</div>
+      <!-- prettier-ignore -->
+      <div>{{ form.work_time|add_class:"rounded-lg border-4 border-card-border"}}</div>
 
       <label for="" class="inline-block min-w-24">休憩時間：</label>
-      <div>{{ form.break_time}}</div>
+      <!-- prettier-ignore -->
+      <div>{{ form.break_time|add_class:"rounded-lg border-4 border-card-border"}}</div>
 
       <label for="" class="inline-block min-w-24"
-        ><span id="sum_range_text">過去7日間</span>の合計作業時間：</label
+        >合計作業時間:<br />(<span id="sum_range_text">過去7日間</span>)</label
       >
+      <!-- prettier-ignore -->
       <p class="w-full overflow-y-auto">{{ work_time_sum }}</p>
 
-      <div class="col-span-2 mt-5 flex items-center">
+      <div class="col-span-2 mt-5 flex w-full items-center">
         <button
           type="button"
           onclick="updateMyPage()"
-          class="mr-10 box-border rounded border-2 border-card-border bg-card-button-yellow px-[10%] py-[1%]"
+          class="mr-10 box-border rounded bg-card-button-yellow px-[10%] py-[1%]"
         >
           決定
         </button>
         <a
           href="{{ request.META.HTTP_REFERER }}"
-          class="rounded border-2 border-card-border bg-card-button px-[10%] py-[1%]"
+          class="rounded bg-card-button px-[10%] py-[1%]"
         >
           戻る
         </a>
       </div>
     </form>
-    <div class="h-full w-full">
+    <div class="flex h-[93%] w-[50%] flex-col">
       <!-- prettier-ignore -->
-      <form action="{% url 'mypage' user.user_id %}" method="get">
-        <select id="graph-range" name="range" onchange="this.form.submit()">
+      <form action="{% url 'mypage' user.user_id %}" method="get" class="flex justify-end h-12 ">
+        <select id="graph-range" name="range" onchange="this.form.submit()" class="rounded-xl border-4 border-card-border">
           <option value="week" {% if range == "week" %}selected{% endif %}>過去7日間</option>
           <option value="month" {% if range == "month" %}selected{% endif %}>過去1か月間</option>
           <option value="year" {% if range == "year" %}selected{% endif %}>過去1年間</option>
@@ -76,7 +82,7 @@
         </select>
       </form>
 
-      <div class="h-full">
+      <div class="flex-grow">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script type="text/javascript">
           let durationData = {{ duration_data | safe }}

@@ -47,28 +47,28 @@
           <li class="nav-item">
             <a
               href="/"
-              class="flex h-full items-center px-8 font-kosugiMaru text-2xl"
+              class="flex h-full items-center px-6 font-kosugiMaru text-2xl"
               >HOME</a
             >
           </li>
           <li class="nav-item">
             <a
               href="{% url 'map:search' %}"
-              class="flex h-full items-center px-8 font-kosugiMaru text-2xl"
+              class="flex h-full items-center px-6 font-kosugiMaru text-2xl"
               >検索</a
             >
           </li>
           <li class="nav-item">
             <a
               href="{% url 'task_list'%}"
-              class="flex h-full items-center px-8 font-kosugiMaru text-2xl"
+              class="flex h-full items-center px-6 font-kosugiMaru text-2xl"
               >ToDo</a
             >
           </li>
           <li class="nav-item">
             <a
               href="{% url 'mypage' user.user_id %}"
-              class="flex h-full items-center px-8 font-kosugiMaru text-2xl"
+              class="flex h-full items-center px-4 font-kosugiMaru text-2xl"
               >マイページ</a
             >
           </li>
@@ -87,7 +87,7 @@
                   name="exit-outline"
                   class="hidden pl-3 text-4xl md:flex"
                 ></ion-icon>
-                <p class="px-8 font-kosugiMaru text-xl font-medium md:hidden">
+                <p class="px-8 font-kosugiMaru text-2xl font-medium md:hidden">
                   ログアウト
                 </p>
               </button>

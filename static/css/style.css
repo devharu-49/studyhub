@@ -1074,6 +1074,10 @@ select {
   height: 0.125rem;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .h-14 {
   height: 3.5rem;
 }
@@ -1159,10 +1163,6 @@ select {
   width: 25%;
 }
 
-.w-44 {
-  width: 11rem;
-}
-
 .w-56 {
   width: 14rem;
 }
@@ -1177,6 +1177,10 @@ select {
 
 .w-\[30\%\] {
   width: 30%;
+}
+
+.w-\[50\%\] {
+  width: 50%;
 }
 
 .w-\[60\%\] {
@@ -1277,6 +1281,10 @@ select {
 
 .grid-cols-\[1fr_8fr\] {
   grid-template-columns: 1fr 8fr;
+}
+
+.grid-cols-\[2fr_6fr\] {
+  grid-template-columns: 2fr 6fr;
 }
 
 .grid-cols-\[3fr_1fr_1fr_0\.5fr_0\.5fr\] {
@@ -1533,6 +1541,11 @@ select {
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .px-8 {
