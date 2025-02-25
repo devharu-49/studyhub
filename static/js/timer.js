@@ -6,7 +6,7 @@ let isRunning; // タイマーの稼働状況
 let isWorking = true; // ポモドーロのフェーズ
 let isPomodoro; //ポモドーロON/OFF
 let remainingTime; // タイマー残り時間(ミリ秒)
-let isTimerEdited = false; // タイマー編集履歴
+let isTimerEdited; // タイマー編集履歴
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("sessionstrage", sessionStorage);
@@ -47,6 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // 編集履歴の有無
+  isTimerEdited = sessionStorage.getItem("isTimerEdited") === "true";
+
   // 時間表示部分がクリックされたとき編集できるようにする
   currentTimerValue.addEventListener("click", () => {
     startEditTime();
@@ -74,7 +77,7 @@ function startTimer() {
   if (isRunning) return;
   console.log("start!!");
 
-  if (isTimerEdited && times.passedTime == 0) {
+  if (isTimerEdited && times.passedTime == 0 && isWorking) {
     console.log("update!!");
     updateSetTime();
   }
@@ -266,7 +269,11 @@ function updateMyPage() {
   const pomodoroMode = document.querySelector(
     'input[name="is_pomodoro"]:checked'
   )?.value;
-  if (!isWorking && !(pomodoroMode === "True")) resetTime();
+  if (!isWorking && !(pomodoroMode === "True")) {
+    resetTime();
+    isRunning = false;
+    isTimerEdited = false;
+  }
   document.updateMyPageForm.submit();
 }
 
@@ -275,8 +282,13 @@ function saveSessionlStrage() {
   sessionStorage.setItem("times", JSON.stringify(times));
   sessionStorage.setItem("isRunning", isRunning);
   console.log("saveSessionlStrage", isRunning);
-  if (times.passedTime !== 0)
+  if (
+    (!isRunning && times.passedTime !== 0) ||
+    (isTimerEdited && times.passedTime == 0)
+  ) {
     sessionStorage.setItem("displayTime", currentTimerValue.innerHTML);
+    sessionStorage.setItem("isTimerEdited", isTimerEdited);
+  }
 }
 
 // ページ遷移時sessionstrageに保存
@@ -335,4 +347,6 @@ function updateSetTime() {
       console.log(data);
     })
     .catch((error) => console.log(error));
+
+  isTimerEdited = false;
 }
