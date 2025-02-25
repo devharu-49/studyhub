@@ -960,6 +960,10 @@ select {
   z-index: 10;
 }
 
+.z-40 {
+  z-index: 40;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -1080,6 +1084,14 @@ select {
 
 .mt-8 {
   margin-top: 2rem;
+}
+
+.mb-\[4rem\] {
+  margin-bottom: 4rem;
+}
+
+.mb-\[4\.5rem\] {
+  margin-bottom: 4.5rem;
 }
 
 .box-border {
@@ -1301,9 +1313,14 @@ select {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.scale-x-\[-1\] {
-  --tw-scale-x: -1;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .cursor-pointer {
@@ -1320,6 +1337,10 @@ select {
 
 .grid-cols-\[3fr_1fr_1fr_0\.5fr_0\.5fr\] {
   grid-template-columns: 3fr 1fr 1fr 0.5fr 0.5fr;
+}
+
+.grid-rows-6 {
+  grid-template-rows: repeat(6, minmax(0, 1fr));
 }
 
 .grid-rows-\[0\.5fr_1fr_1fr_1fr\] {
@@ -1938,6 +1959,27 @@ select {
   }
 }
 
+.modal-container {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  z-index: 50;
+  height: 100dvh;
+  width: 100dvw;
+  align-items: center;
+  justify-content: center;
+  font-family: Kosugi Maru, sans-serif;
+}
+
+.modal-overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(100 116 139 / var(--tw-bg-opacity, 1));
+  opacity: 0.25;
+}
+
 .after\:absolute::after {
   content: var(--tw-content);
   position: absolute;
@@ -2002,6 +2044,7 @@ select {
   background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
 }
 
+
 .hover\:bg-menuColor:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(128 167 145 / var(--tw-bg-opacity, 1));
@@ -2012,7 +2055,7 @@ select {
   background-color: rgb(159 199 170 / var(--tw-bg-opacity, 1));
 }
 
-.hover\:bg-gray-500:hover {
+.hover\:bg-stone-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(107 114 128 / var(--tw-bg-opacity, 1));
 }

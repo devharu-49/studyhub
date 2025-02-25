@@ -41,7 +41,9 @@ class CustomUser(AbstractUser):
     user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=255)
-    default_time = models.DurationField(default=datetime.timedelta(minutes=30))
+    work_time = models.DurationField(default=datetime.timedelta(minutes=25))
+    break_time = models.DurationField(default=datetime.timedelta(minutes=5))
+    is_pomodoro = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
