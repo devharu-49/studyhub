@@ -8,7 +8,7 @@ class CustomUserAdmin(admin.ModelAdmin):
     list_display = ("user_id", "email", "name")
     readonly_fields = ["user_id"]
     fieldsets = (
-        (None, {"fields": ("user_id", "password", "name", "email", "default_time")}),
+        (None, {"fields": ("user_id", "password", "name", "email", "work_time")}),
     )
     add_fieldsets = (
         (

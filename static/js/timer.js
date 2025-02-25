@@ -1,13 +1,21 @@
 let currentTimerValue; // 現在のタイマー表示時間
 let timerInterval; //
 let timeEditer; // タイマー編集要素
-let times;
-let isRunning = false;
+let times; //稼働中タイマーの時間管理
+let isRunning; // タイマーの稼働状況
+let isWorking = true; // ポモドーロのフェーズ
+let isPomodoro; //ポモドーロON/OFF
 let remainingTime; // タイマー残り時間(ミリ秒)
+let isTimerEdited = false; // タイマー編集履歴
 
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("sessionstrage", sessionStorage);
   currentTimerValue = document.getElementById("time");
   timeEditer = document.getElementById("edit-time");
+  isWorking =
+    document.getElementById("time").getAttribute("data-working") === "True";
+  isPomodoro =
+    document.getElementById("time").getAttribute("data-pomodoro") === "True";
 
   // sessionStorage に保存されたデータがあるか確認
   if (sessionStorage.getItem("times")) {
@@ -23,10 +31,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // isRunnigにtrueが保存されているか確認
   if (sessionStorage.getItem("isRunning") === "true") {
-    timerInterval = setInterval(() => updateTimer(times.targetTime), 500); //1秒間隔でタイマー更新関数実行
+    console.log(times);
+    if (Object.values(times).every((value) => value === 0)) {
+      startTimer();
+    } else {
+      timerInterval = setInterval(() => updateTimer(times.targetTime), 500); //1秒間隔でタイマー更新関数実行
+      isRunning = true;
+      toggleButton();
+    }
     // requestAnimationFrame(updateTimer(times.targetTime));
-    isRunning = true;
-    toggleButton();
   } else {
     // タイマー表示時間が保存されているか確認
     if (sessionStorage.getItem("displayTime")) {
@@ -58,13 +71,14 @@ function updateTimer(targetTime) {
 
 //タイマー開始
 function startTimer() {
-  console.log("start!!");
   if (isRunning) return;
+  console.log("start!!");
 
-  if (times.passedTime == 0) {
+  if (isTimerEdited && times.passedTime == 0) {
     console.log("update!!");
-    updateDefaultTime();
+    updateSetTime();
   }
+
   toggleButton(); // ボタン切り替え
   isRunning = true; // 稼働中に変更
   times.startTime = new Date().getTime(); // 開始時間を格納
@@ -88,10 +102,14 @@ function stopTimer() {
 //タイマー終了
 function finishTimer() {
   stopTimer();
-  document.getElementById("registered-time").value = millisecondsToTime(
-    times.passedTime
-  );
-  toggleTimerModal();
+  if (isWorking) {
+    document.getElementById("registered-time").value = millisecondsToTime(
+      times.passedTime
+    );
+    toggleTimerModal();
+  } else {
+    toggleBreakTimeModal();
+  }
 }
 
 // タイマー編集開始
@@ -102,8 +120,12 @@ function startEditTime() {
   timeEditer = document.getElementById("edit-time");
   if (timeEditer.classList.contains("flex")) return;
 
+  console.log(currentTimerValue.innerHTML);
   const timeParts = currentTimerValue.innerHTML.split(":");
+  console.log("ここからここから");
+  console.log(timeParts);
   const inputs = timeEditer.querySelectorAll(".input-time"); // 出力はNodeList
+  console.log(inputs);
   [...inputs].map((input, index) => {
     input.value = timeParts[index];
     // 編集箇所以外がクリックされたとき非表示にする
@@ -132,6 +154,7 @@ function endEditTime() {
     document.getElementById("time-edit-error").classList.add("hidden");
   }
   toggleTimeEditer();
+  isTimerEdited = true;
   document.removeEventListener("click", clickOutsideTimer); // イベントリスナーの削除
 }
 
@@ -161,10 +184,16 @@ function toggleButton() {
   stopButtonClass.toggle("hidden");
 }
 
-// モーダル表示
+// タイマー終了モーダル表示
 function toggleTimerModal() {
   document.getElementById("timer-modal").classList.toggle("flex");
   document.getElementById("timer-modal").classList.toggle("hidden");
+}
+
+// 休憩終了モーダル表示
+function toggleBreakTimeModal() {
+  document.getElementById("breaktime-modal").classList.toggle("flex");
+  document.getElementById("breaktime-modal").classList.toggle("hidden");
 }
 
 // タイマー編集切り替え
@@ -207,11 +236,17 @@ function timeToMilliseconds(timeString) {
 
 // 勉強時間登録
 function saveTime() {
+  console.log(times);
   if (times.passedTime == 0) {
     toggleTimerModal();
     return;
   }
+
   resetTime();
+  if (isPomodoro) {
+    isRunning = true;
+    console.log("isRunning", isRunning);
+  }
   document.saveTimeForm.submit();
   console.log("save!!");
 }
@@ -226,22 +261,32 @@ function resetTime() {
   toggleTimerModal();
 }
 
+// マイページ更新前処理
+function updateMyPage() {
+  const pomodoroMode = document.querySelector(
+    'input[name="is_pomodoro"]:checked'
+  )?.value;
+  if (!isWorking && !(pomodoroMode === "True")) resetTime();
+  document.updateMyPageForm.submit();
+}
+
 // sessionstrageへの保存
-function saveToLocalStrage() {
+function saveSessionlStrage() {
   sessionStorage.setItem("times", JSON.stringify(times));
   sessionStorage.setItem("isRunning", isRunning);
+  console.log("saveSessionlStrage", isRunning);
   if (times.passedTime !== 0)
     sessionStorage.setItem("displayTime", currentTimerValue.innerHTML);
 }
 
 // ページ遷移時sessionstrageに保存
 window.addEventListener("unload", () => {
-  saveToLocalStrage();
+  saveSessionlStrage();
 });
 
 // 更新時sessionstrageに保存
 window.addEventListener("popstate", () => {
-  saveToLocalStrage();
+  saveSessionlStrage();
 });
 
 // sessionstrageクリア
@@ -268,8 +313,8 @@ function getCookie(name) {
   return cookieValue;
 }
 
-// defaulttime更新
-function updateDefaultTime() {
+// worktime更新
+function updateSetTime() {
   const url = document
     .getElementById("timer-controls")
     .getAttribute("data-url");

@@ -7,7 +7,7 @@ from .forms import TaskForm
 def tasklist_view(request):
     # 現在ログインしているユーザーに関連するタスクを選択
     # select_relatedを使って、tasksに関連するuser情報も一度に取得する（クエリ数を減らすため）
-    tasks = Tasks.objects.select_related("user").filter(user=request.user)
+    tasks = Tasks.objects.select_related("user").filter(user=request.user).order_by("deadline")
     return render(request, "todo.html", {"tasks": tasks})
 
 
@@ -72,3 +72,19 @@ def taskedit_view(request, id):
         form = TaskForm(instance=task)  # 既存のデータをフォームにセット
 
     return render(request, "todoform.html", {"form": form, "task": task})
+
+def statusedit_view(request, id):
+    if not request.user.is_authenticated:
+        return redirect("login")  # 未ログインならログインページへリダイレクト
+
+    task = get_object_or_404(
+        Tasks, id=id, user_id=request.user.user_id
+    )  # 自分のタスクのみ編集可能
+
+    if request.method == "POST":
+        task.is_completed = not task.is_completed
+        task.save(update_fields=["is_completed", "update_at"])
+
+    return redirect("task_list")  # 一覧ページへリダイレクト
+
+

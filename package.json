@@ -8,6 +8,6 @@
   },
   "scripts": {
     "watch": "tailwind -i ./static/css/tailwind.css -o ./static/css/style.css --watch --poll",
-    "build": "npx tailwindcss -i ./static/css/tailwind.css -o ./static/css/style.css --watch"
+    "build": "npx tailwindcss -i ./static/css/tailwind.css -o ./static/css/style.css --minify"
   }
 }
