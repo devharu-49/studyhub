@@ -5,7 +5,8 @@ from .views import (
     taskcreate_view,
     taskdelete_view,
     taskedit_view,
-    statusedit_view
+    statusedit_view,
+    tasksearch_view,
 )
 
 
@@ -16,4 +17,5 @@ urlpatterns = [
     path("delete/<int:id>/", taskdelete_view, name="task_delete"),
     path("edit/<int:id>/", taskedit_view, name="task_edit"),
     path("status/<int:id>/", statusedit_view, name="status_edit"),
+    path("task/search/", tasksearch_view, name="task_search"),
 ]

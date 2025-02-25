@@ -73,11 +73,11 @@
     {% for task in tasks %}
     <a href="{% url 'task_detail' task.id %}">
       <div
-        class="space-y-8 rounded-lg border-4 border-card-border bg-white px-4 py-9 text-center"
+        class="space-y-8 rounded-lg border-4 border-card-border bg-white px-4 py-9 text-center hover:bg-stone-100"
       >
         <p class="font-kosugiMaru text-lg font-bold">{{ task.title }}</p>
         <p class="font-kosugiMaru text-lg font-bold">
-          {{ task.deadline|date:"Y/m/d" }}
+          {{ task.deadline|date:"Y/m/d" }} まで
         </p>
       </div>
     </a>
