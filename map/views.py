@@ -36,9 +36,10 @@ def get_location(request):
 def search(request):
   return render(request, "search.html")
 
-def search_detail(request, lat, lng, place_id):
-  lat = float(lat)
-  lng = float(lng)
+def search_detail(request):
+  place_id = (request.GET.get("place_id"))
+  lat = float(request.GET.get("lat"))
+  lng = float(request.GET.get("lng"))
 
   if not lat or not lng:
       return render(request, "error.html", {"message": "位置情報が不足しています。"})
@@ -98,3 +99,41 @@ def search_result(request):
 
       distances.append(place)
   return render(request, "search_result.html", {"results" : places_result["results"], "distances" : distances})
+
+
+def search_near_place():
+  # global places_result
+  # query = request.GET.get('query', '')  # 検索ワード
+  place = 'cafe'  # 選ばれた場所
+  distance = 3000  # 距離（デフォルトで3000）
+  global latest_location
+
+  lat = latest_location.get('latitude')
+  lon = latest_location.get('longitude')
+
+  location = (float(lat), float(lon)) # まとめる
+  places_result = gmaps.places_nearby(location=location, radius=distance, language="ja", type=place)
+
+  distances = []  # 距離を格納するリスト
+
+  # 各検索結果に対して徒歩の距離を計算
+  for place in places_result["results"]:
+      place_lat = place["geometry"]["location"]["lat"]
+      place_lon = place["geometry"]["location"]["lng"]
+
+      # 現在地と検索場所の間の徒歩距離を計算
+      origin = (lat, lon)
+      destination = (place_lat, place_lon)
+
+      # Google Distance Matrix APIを使って徒歩の距離を計算
+      distance_matrix_result = gmaps.distance_matrix(origins=[origin], destinations=[destination], mode="walking", language="ja")
+
+      # 徒歩距離を取得
+      if distance_matrix_result["status"] == "OK":
+          distance_text = distance_matrix_result["rows"][0]["elements"][0]["distance"]["text"]
+          place["walking_distance"] = distance_text  # 徒歩距離をplaceの情報に追加
+
+      distances.append(place)
+
+      
+  return {"results" : places_result["results"], "distances" : distances}

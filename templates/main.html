@@ -8,60 +8,34 @@
     <h1 class="mb-10 mt-2 text-center font-kosugiMaru text-3xl font-bold">
       近くのStudyHub
     </h1>
-    <a href="/search/detail"
-      ><div
-        class="space-y-4 rounded-lg border-4 border-card-border bg-white px-4 py-4"
+    {% if results %}
+    <!-- prettier-ignore -->
+    {% for result in results %}
+      {% with lat=result.lat lng=result.lng place_id=result.place_id %}
+    <a
+      href="{% url 'map:search_detail' %}?lat={{ lat }}&lng={{ lng }}&place_id={{ place_id }}"
+      class="w-full"
+    >
+      <div
+        class="space-y-2 rounded-lg border-4 border-card-border bg-white px-4 py-4 text-center"
       >
-        <h3 class="text-center font-kosugiMaru text-lg font-bold">
-          マクドナルド八王子店
-        </h3>
+        <h1 class="text-center font-kosugiMaru text-lg font-bold">
+          {{ result.name }}
+        </h1>
         <div class="text-center">
-          <p class="font-kosugiMaru text-lg font-bold">
-            東京都八王子市八王子1-1-1
+          <p class="truncate font-kosugiMaru text-lg font-bold">
+            {{ result.vicinity }}
           </p>
-          <p class="font-kosugiMaru text-lg font-bold">
-            <span class="text-yellow-400">★★★★☆</span> 4.1
+          <p class="font-kosugiMaru text-xl font-bold">
+            {{ result.walking_distance }}
           </p>
-          <p class="font-kosugiMaru text-xl font-bold">500m</p>
         </div>
+        <p class="font-kosugiMaru text-lg font-bold">
+          <span class="text-yellow-400">★</span>{{ result.rating }}
+        </p>
       </div>
     </a>
-    <a href="/search/detail"
-      ><div
-        class="space-y-4 rounded-lg border-4 border-card-border bg-white px-4 py-4"
-      >
-        <h3 class="text-center font-kosugiMaru text-lg font-bold">
-          マクドナルド八王子店
-        </h3>
-        <div class="text-center">
-          <p class="font-kosugiMaru text-lg font-bold">
-            東京都八王子市八王子1-1-1
-          </p>
-          <p class="font-kosugiMaru text-lg font-bold">
-            <span class="text-yellow-400">★★★★☆</span> 4.1
-          </p>
-          <p class="font-kosugiMaru text-xl font-bold">500m</p>
-        </div>
-      </div>
-    </a>
-    <a href="/search/detail"
-      ><div
-        class="space-y-4 rounded-lg border-4 border-card-border bg-white px-4 py-4"
-      >
-        <h3 class="text-center font-kosugiMaru text-lg font-bold">
-          マクドナルド八王子店
-        </h3>
-        <div class="text-center">
-          <p class="font-kosugiMaru text-lg font-bold">
-            東京都八王子市八王子1-1-1
-          </p>
-          <p class="font-kosugiMaru text-lg font-bold">
-            <span class="text-yellow-400">★★★★☆</span> 4.1
-          </p>
-          <p class="font-kosugiMaru text-xl font-bold">500m</p>
-        </div>
-      </div>
-    </a>
+    {% endwith %} {% endfor %} {% endif %}
   </div>
 
   <div

@@ -6,6 +6,7 @@ from todo.models import Tasks
 from timer.models import Times
 from .models import CustomUser
 from .forms import CustomSignupForm, LoginForm, MypageForm
+from map.views import search_near_place
 
 from datetime import timedelta
 
@@ -63,7 +64,28 @@ def main_view(request):
         .exclude(is_completed=True)
         .order_by("deadline")[:3]
     )
-    return render(request, "main.html", {"tasks": tasks})
+
+    near_place = search_near_place()
+    # print("あああ", near_place)
+
+    keys = ["name", "geometry", "rating", "place_id", "walking_distance","vicinity"]
+    filtered_by_key = [{k: r[k] for k in keys} for r in near_place["results"]]
+    transformed_data = [{"name": item['name'], "lat": str(item['geometry']['location']['lat']), "lng": str(item['geometry']['location']['lng']), "rating":item["rating"], "place_id":item["place_id"], "walking_distance":item["walking_distance"], "vicinity":item["vicinity"]}
+    for item in filtered_by_key]
+
+    # print("トランスフォーマー", transformed_data)
+    # print(type(transformed_data))
+    # print(transformed_data[0:3])
+
+    sorted_data = sorted(transformed_data, key=lambda x: float(x['walking_distance'].split()[0]))
+
+    # 上位3つを取得
+    top_3 = sorted_data[:3]
+
+    print(top_3)
+
+    return render(request, "main.html", {"tasks": tasks, "results" : top_3})
+
 
 
 # mypage表示

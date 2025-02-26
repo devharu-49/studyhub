@@ -1,39 +1,64 @@
-// マーカーの表示を管理する関数
-function displayDetailMarker(marker) {
-  // マーカーの位置を再設定
-  const position = marker.getPosition();
+let lngFromUrl;
+let latFromUrl;
+let placeIdFromUrl;
+let userLocation;
 
-  // 新しいマーカーを追加
-  const detailMarker = new google.maps.Marker({
-    position: position,
-    map: map, // mapは事前に初期化されているものと仮定
-    title: marker.getTitle(),
+document.addEventListener("DOMContentLoaded", () => {
+  // 詳細ページのURLから取得したplace_idまたは緯度経度に基づいてマーカーを表示
+  placeIdFromUrl = new URLSearchParams(window.location.search).get("place_id");
+  latFromUrl = parseFloat(
+    new URLSearchParams(window.location.search).get("lat")
+  );
+  lngFromUrl = parseFloat(
+    new URLSearchParams(window.location.search).get("lng")
+  );
+
+  getLocation((userLocation) => {
+    console.log("userLocation", userLocation);
+    initMap(
+      userLocation.latitude,
+      userLocation.longitude,
+      latFromUrl,
+      lngFromUrl
+    );
   });
+});
 
-  // 他のマーカーを消す
-  markers.forEach((m) => m.setMap(null));
+// 現在地取得
+function getLocation(callback) {
+  console.log("getLocation");
 
-  // 詳細マーカーのみを表示
-  detailMarker.setMap(map);
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      userLocation = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      };
+      callback(userLocation); // 取得後にコールバック関数を実行
+    });
+  } else {
+    alert("このブラウザでは位置情報を取得できません");
+  }
 }
 
-// 詳細ページのURLから取得したplace_idまたは緯度経度に基づいてマーカーを表示
-const placeIdFromUrl = new URLSearchParams(window.location.search).get(
-  "place_id"
-);
-const latFromUrl = parseFloat(
-  new URLSearchParams(window.location.search).get("lat")
-);
-const lngFromUrl = parseFloat(
-  new URLSearchParams(window.location.search).get("lng")
-);
+// map描画
+function initMap(userLatitude, userLongitude, latitude, longitude) {
+  var MyLatLng = new google.maps.LatLng(userLatitude, userLongitude);
+  var Options = {
+    zoom: 15,
+    center: MyLatLng,
+    mapTypeId: "roadmap",
+  };
+  map = new google.maps.Map(document.getElementById("map"), Options);
 
-// ここではplace_idや緯度経度から、markers内で一致するものを探し、表示
-markers.forEach((marker) => {
-  if (
-    marker.getPosition().lat() === latFromUrl &&
-    marker.getPosition().lng() === lngFromUrl
-  ) {
-    displayDetailMarker(marker);
-  }
-});
+  // 📍 マーカーを追加（赤ピン）
+  const marker = new google.maps.Marker({
+    position: { lat: latitude, lng: longitude },
+    map: map,
+    // title: title,
+    icon: {
+      url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // 🔴 赤ピン
+    },
+  });
+  marker.setMap(map);
+}
