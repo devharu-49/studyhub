@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% block body %}
+{% extends 'base.html' %} {% load static %} {% block header %}
+<script src="{% static 'js/map.js' %}" defer></script>
+<script src="{% static 'js/map-display.js' %}" defer></script>
+{% endblock header %}{% block body %}
 <div
   class="background container flex h-[calc(100dvh-5rem)] min-w-full items-center justify-evenly"
 >

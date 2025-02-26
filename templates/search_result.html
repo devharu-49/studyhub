@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load custom_filters %}
+{% block header %}
+<script src="{% static 'js/map.js' %}" defer></script>
+<script src="{% static 'js/map-display.js' %}" defer></script>
+{% endblock header %}
 {% block body %}
 
 
