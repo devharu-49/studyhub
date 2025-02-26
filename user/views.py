@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Sum
+from django.utils import timezone
 
 from todo.models import Tasks
 from timer.models import Times
@@ -11,6 +11,7 @@ from map.views import search_near_place
 from datetime import timedelta
 
 
+# サインアップ
 def signup_view(request):
     if request.method == "POST":  # フォームがPOSTで送信されたとき
         form = CustomSignupForm(
@@ -27,7 +28,7 @@ def signup_view(request):
         request, "signup.html", {"form": form}
     )  # signup.htmlテンプレートをレンダリングし、フォームを渡す
 
-
+# ログイン
 def login_view(request):
 
     form = LoginForm()  # ここで事前にformを定義（GETリクエスト時のフォーム）
@@ -48,12 +49,12 @@ def login_view(request):
 
     return render(request, "login.html", {"form": form})
 
-
+# ログアウト
 def logout_view(request):
     logout(request)
     return redirect("login")  # ログインページにリダイレクト
 
-
+# メインページ
 def main_view(request):
     if not request.user.is_authenticated:
         return redirect("login")  # ログインしていない場合、ログインページへリダイレクト
@@ -88,10 +89,10 @@ def main_view(request):
 
 
 
-# mypage表示
+# マイページ
 def mypage_view(request, id):
     if not request.user.is_authenticated:
-        return redirect("login")  # ログインしていない場合、ログインページへリダイレクト
+        return redirect("login")
     
     user_info = get_object_or_404(CustomUser, user_id=id)
 
@@ -107,8 +108,78 @@ def mypage_view(request, id):
     else:
         form = MypageForm(instance=user_info)
 
-        work_time_list = Times.objects.filter(user_id = id).values_list("count_time")
-        work_time_values = [item[0] for item in work_time_list]
-        work_time_sum = sum(work_time_values, timedelta())
+    range = request.GET.get("range", "week")
+
+    duration_data = get_duration_data(request.user.user_id, range)
+    work_time_sum = minutes_to_hms(sum(duration_data["times"]))
+
+    context = {"form":form, "work_time_sum":work_time_sum, "duration_data":duration_data, "range":range}
         
-    return render(request, "mypage.html", {"form":form, "work_time_sum":work_time_sum})
+    return render(request, "mypage.html", context)
+
+
+# 指定期間の作業時間データを収集
+def get_duration_data(user_id, range='week'):
+    # 今を取得
+    now = timezone.localdate()
+ 
+    # 週、月、年、全部の選択肢によって場合分け
+    # 各選択肢ごとに取得する期間の幅を取得
+    if range == "week":
+        start_date = now - timedelta(days=6)
+    elif range == "month":
+        start_date = now - timedelta(days=30)
+    elif range == "year":
+        start_date = now - timedelta(days=365)
+    else:
+        start_date = None
+    print("たいむs", start_date)
+    # print(start_date.date())
+    
+    # その幅を使ってDBからデータをとってくる
+    if start_date:
+        count_times = Times.objects.filter(user_id = user_id, created_at__gte = start_date).order_by("created_at")
+    else:
+        count_times = Times.objects.filter(user_id = user_id).order_by("created_at")
+    print("わーくたいむs", count_times.values)
+
+    # グラフ用に整形
+    count_times_par_date = []
+
+    if start_date:
+        date = start_date
+    else:
+        current_user = CustomUser.objects.get(user_id = user_id)
+        print("ゆーざー", current_user.created_at.date())
+        date = current_user.created_at.date()
+
+    while date <= now:
+        count_times_par_date.append({"create_date": date, "count_time": 0})
+        date += timedelta(days=1)
+
+    for time in count_times:
+        create_date = time.created_at.date()
+        count_second = time.count_time.total_seconds()
+
+        for date in count_times_par_date:
+            if date["create_date"] and date["create_date"] == create_date:
+                date["count_time"] += count_second
+                break
+        else:
+            count_times_par_date.append({"create_date": create_date, "count_time": count_second})
+        
+
+    dates = [date["create_date"].strftime("%m/%d") for date in count_times_par_date]
+    times = [date['count_time']/60 for date in count_times_par_date]
+
+    duration_data = {"dates": dates, "times":times}
+
+    return duration_data
+
+# 分から時:分:秒に変換
+def minutes_to_hms(minutes):
+    hours = int(minutes // 60)
+    minutes_remainder = int(minutes % 60)
+    seconds = round((minutes % 1) * 60)
+
+    return f"{hours:02}:{minutes_remainder:02}:{seconds:02}"

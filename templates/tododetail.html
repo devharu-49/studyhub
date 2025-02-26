@@ -22,13 +22,13 @@
     <div class="col-span-2 mt-5 flex items-center">
       <a
         href="{% url 'task_edit' task.id %}"
-        class="mr-10 box-border rounded border-2 border-card-border bg-card-button-yellow px-[10%] py-[1%]"
+        class="mr-10 box-border rounded border-card-border bg-card-button-yellow px-[10%] py-[1%]"
       >
         編集
       </a>
       <a
-        href="{{ referer_url }}"
-        class="rounded border-2 border-card-border bg-card-button px-[10%] py-[1%]"
+        href="{{ request.META.HTTP_REFERER }}"
+        class="rounded border-card-border bg-card-button px-[10%] py-[1%]"
       >
         戻る
       </a>
