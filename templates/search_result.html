@@ -16,7 +16,7 @@
                 <div class="flex flex-col space-y-3 overflow-y-auto hidden-scrollbar h-[90%]">
                     {% for result, distance in results|zip_lists:distances %}
                     {% with lat=result.geometry.location.lat|stringformat:"s" lng=result.geometry.location.lng|stringformat:"s" place_id=result.place_id %}
-                    <a href="{% url 'map:search_detail' lat lng place_id %}">
+                    <a href="{% url 'map:search_detail' %}?lat={{ lat }}&lng={{ lng }}&place_id={{ place_id }}">
                         <div class="border-4 border-card-border rounded-lg py-4 px-4 bg-white space-y-2">
                             <h1 class="font-kosugiMaru font-bold text-lg">{{ result.name }}</h1>
                             <div class="flex justify-between mr-8 items-center">

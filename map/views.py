@@ -67,7 +67,8 @@ def search_detail(request):
 
 def search_result(request):
   global places_result
-  query = request.GET.get('query', '')  # 検索ワード
+  keyword = request.GET.get('keyword', '')  # 検索ワード
+  print("キーワード", keyword)
   place = request.GET.get('place', 'cafe')  # 選ばれた場所
   distance = request.GET.get('distance', 3000)  # 距離（デフォルトで3000）
   global latest_location
@@ -76,7 +77,7 @@ def search_result(request):
   lon = latest_location.get('longitude')
 
   location = (float(lat), float(lon)) # まとめる
-  places_result = gmaps.places_nearby(location=location, radius=distance, language="ja", type=place)
+  places_result = gmaps.places_nearby(location=location, radius=distance, language="ja", type=place, keyword=keyword)
 
   distances = []  # 距離を格納するリスト
 
