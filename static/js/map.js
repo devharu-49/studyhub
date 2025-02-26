@@ -1,49 +1,71 @@
 document.addEventListener("DOMContentLoaded", function () {
-  getLocation(); // ページが読み込まれたら実行
+  getLocationAndSendToDjango(); // ページが読み込まれたら実行
 });
 
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(sendLocation, showError);
+function getSelectedTypes() {
+  if (localStorage.getItem("selectedTypes") !== null) {
+    const selectedTypes = JSON.parse(localStorage.getItem("selectedTypes"));
+    return selectedTypes[0];
   } else {
-    alert("Geolocation is not supported by this browser.");
+    return "cafe";
   }
 }
 
-function sendLocation(position) {
-  const lat = position.coords.latitude;
-  const lng = position.coords.longitude;
-  console.log("現在地:", lat, lng);
+function getDistance() {
+  if (localStorage.getItem("distance") !== null) {
+    const distance = JSON.parse(localStorage.getItem("distance"));
+    return distance[0];
+  } else {
+    return 3000;
+  }
+}
 
-  // Djangoバックエンドへ送信
-  fetch("/api/send_location/", {
+function getLocationAndSendToDjango() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const userLocation = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+        const selectedTypes = getSelectedTypes();
+        const distance = getDistance();
+
+        // 現在地と選択されたタイプをDjangoに送信
+        fetchPlacesFromDjango(userLocation, selectedTypes, distance);
+      },
+      (error) => {
+        console.error("位置情報の取得に失敗しました", error);
+        alert("位置情報を取得できませんでした");
+      }
+    );
+  } else {
+    alert("このブラウザでは位置情報を取得できません");
+  }
+}
+
+function fetchPlacesFromDjango(location, placeTypes, distance) {
+  const url = `/api/send_location/`;
+  const data = {
+    latitude: location.latitude,
+    longitude: location.longitude,
+    types: placeTypes,
+    distance: distance,
+  };
+
+  fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-CSRFToken": getCookie("csrftoken"), // DjangoのCSRF対策
+      "X-CSRFToken": getCookie("csrftoken"), // CSRFトークンを追加
     },
-    body: JSON.stringify({ latitude: lat, longitude: lng }),
+    body: JSON.stringify(data),
   })
     .then((response) => response.json())
-    .then((data) => console.log("サーバーの応答:", data))
-    .catch((error) => console.error("エラー:", error));
-}
-
-function showError(error) {
-  console.error("エラー:", error);
-}
-
-function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith(name + "=")) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
+    .then((data) => {
+      localStorage.setItem("placesData", JSON.stringify(data.results)); // 結果をローカルに保存
+    })
+    .catch((error) => {
+      console.error("場所情報の取得に失敗しました", error);
+    });
 }

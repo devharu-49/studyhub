@@ -76,6 +76,39 @@
   height: 15rem;
 }
 
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.3s;
+}
+
+.slider::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 5px;
+  background: #c5c5c5;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  background: #000000;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  position: relative;
+  top: -7px;
+}
+
+.slider:focus {
+  background: #ccc;
+}
+  
 .nav-md {
   @apply top-20 h-full w-2/3 text-menuColor transition-all max-md:fixed max-md:rounded max-md:border-s-2 max-md:bg-stone-100;
 }
