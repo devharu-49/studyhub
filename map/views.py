@@ -89,7 +89,7 @@ def search_result(request):
 def search_near_place():
   keyword ='勉強場所'  # 検索ワード
   place = 'cafe'  # 選ばれた場所
-  distance = 3000  # 距離
+  distance = 2000  # 距離
   global latest_location
 
   lat = latest_location.get('latitude')

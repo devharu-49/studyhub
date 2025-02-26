@@ -6,10 +6,10 @@
   class="background container flex h-[calc(100dvh-5rem)] min-w-full items-center justify-evenly"
 >
   <div
-    class="grid h-[90%] w-3/12 grid-rows-[0.5fr_1fr_1fr_1fr] rounded border-4 border-card-border bg-card px-5 py-10"
+    class="grid h-[90%] w-3/12 grid-rows-[0.5fr_1fr_1fr_1fr] justify-center rounded border-4 border-card-border bg-card px-5 py-10"
   >
     <h1 class="mb-10 mt-2 text-center font-kosugiMaru text-3xl font-bold">
-      近くのStudyHub
+      近くのStudySpot
     </h1>
     {% if results %}
     <!-- prettier-ignore -->
@@ -17,12 +17,12 @@
       {% with lat=result.lat lng=result.lng place_id=result.place_id %}
     <a
       href="{% url 'map:search_detail' %}?lat={{ lat }}&lng={{ lng }}&place_id={{ place_id }}"
-      class="w-full"
+      class="w-full truncate"
     >
       <div
-        class="space-y-2 rounded-lg border-4 border-card-border bg-white px-4 py-4 text-center"
+        class="w-full space-y-2 rounded-lg border-4 border-card-border bg-white px-4 py-4 text-center"
       >
-        <h1 class="text-center font-kosugiMaru text-lg font-bold">
+        <h1 class="truncate text-center font-kosugiMaru text-lg font-bold">
           {{ result.name }}
         </h1>
         <div class="text-center">
@@ -61,7 +61,7 @@
     {% endfor %}
   </div>
 
-  <div>
+  <div class="">
     <img
       class="main-character"
       src="/static/images/doubutu_carrybackwomotteryokousurutukinowakuma.png"
