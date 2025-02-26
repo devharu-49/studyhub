@@ -1,10 +1,9 @@
 let lngFromUrl;
 let latFromUrl;
 let placeIdFromUrl;
-// let userLocation;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 詳細ページのURLから取得したplace_idまたは緯度経度に基づいてマーカーを表示
+  // 詳細ページのURLから取得したplace_idまたは緯度経度取得
   placeIdFromUrl = new URLSearchParams(window.location.search).get("place_id");
   latFromUrl = parseFloat(
     new URLSearchParams(window.location.search).get("lat")
@@ -13,33 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     new URLSearchParams(window.location.search).get("lng")
   );
 
-  // getLocation((userLocation) => {
-  //   console.log("userLocation", userLocation);
-  initMap(
-    // userLocation.latitude,
-    // userLocation.longitude,
-    latFromUrl,
-    lngFromUrl
-  );
+  initMap(latFromUrl, lngFromUrl);
 });
-// });
-
-// 現在地取得
-// function getLocation(callback) {
-//   console.log("getLocation");
-
-//   if (navigator.geolocation) {
-//     navigator.geolocation.getCurrentPosition((position) => {
-//       userLocation = {
-//         latitude: position.coords.latitude,
-//         longitude: position.coords.longitude,
-//       };
-//       callback(userLocation); // 取得後にコールバック関数を実行
-//     });
-//   } else {
-//     alert("このブラウザでは位置情報を取得できません");
-//   }
-// }
 
 // map描画
 function initMap(latitude, longitude) {

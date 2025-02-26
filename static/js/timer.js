@@ -9,7 +9,6 @@ let remainingTime; // タイマー残り時間(ミリ秒)
 let isTimerEdited; // タイマー編集履歴
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("sessionstrage", sessionStorage);
   currentTimerValue = document.getElementById("time");
   timeEditer = document.getElementById("edit-time");
   isWorking =
@@ -31,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // isRunnigにtrueが保存されているか確認
   if (sessionStorage.getItem("isRunning") === "true") {
-    console.log(times);
     if (Object.values(times).every((value) => value === 0)) {
       startTimer();
     } else {
@@ -39,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
       isRunning = true;
       toggleButton();
     }
-    // requestAnimationFrame(updateTimer(times.targetTime));
   } else {
     // タイマー表示時間が保存されているか確認
     if (sessionStorage.getItem("displayTime")) {
@@ -75,10 +72,8 @@ function updateTimer(targetTime) {
 //タイマー開始
 function startTimer() {
   if (isRunning) return;
-  console.log("start!!");
 
   if (isTimerEdited && times.passedTime == 0 && isWorking) {
-    console.log("update!!");
     updateSetTime();
   }
 
@@ -89,7 +84,6 @@ function startTimer() {
     times.startTime + timeToMilliseconds(currentTimerValue.innerHTML); //終了時刻を格納
 
   timerInterval = setInterval(() => updateTimer(times.targetTime), 500); //1秒間隔でタイマー更新関数実行
-  // requestAnimationFrame(updateTimer(times.targetTime));
 }
 
 //タイマー停止
@@ -123,12 +117,8 @@ function startEditTime() {
   timeEditer = document.getElementById("edit-time");
   if (timeEditer.classList.contains("flex")) return;
 
-  console.log(currentTimerValue.innerHTML);
   const timeParts = currentTimerValue.innerHTML.split(":");
-  console.log("ここからここから");
-  console.log(timeParts);
   const inputs = timeEditer.querySelectorAll(".input-time"); // 出力はNodeList
-  console.log(inputs);
   [...inputs].map((input, index) => {
     input.value = timeParts[index];
     // 編集箇所以外がクリックされたとき非表示にする
@@ -239,19 +229,15 @@ function timeToMilliseconds(timeString) {
 
 // 勉強時間登録
 function saveTime() {
-  console.log(times);
   if (times.passedTime == 0) {
     toggleTimerModal();
     return;
   }
-
   resetTime();
   if (isPomodoro) {
     isRunning = true;
-    console.log("isRunning", isRunning);
   }
   document.saveTimeForm.submit();
-  console.log("save!!");
 }
 
 // timesリセット
@@ -281,7 +267,6 @@ function updateMyPage() {
 function saveSessionlStrage() {
   sessionStorage.setItem("times", JSON.stringify(times));
   sessionStorage.setItem("isRunning", isRunning);
-  console.log("saveSessionlStrage", isRunning);
   if (
     (!isRunning && times.passedTime !== 0) ||
     (isTimerEdited && times.passedTime == 0)
