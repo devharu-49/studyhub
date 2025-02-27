@@ -15,8 +15,8 @@
 }
 
 .logincharacter {
-  width: 15rem;
-  height: 15rem;
+  width: 7rem;
+  height: 7rem;
 }
 
 .signupcharacter {
@@ -33,7 +33,7 @@
 }
 
 .titletext {
-  font-size: 9rem;
+  font-size: 4rem;
 }
 
 .hidden-scrollbar {
@@ -108,7 +108,7 @@
 .slider:focus {
   background: #ccc;
 }
-  
+
 .nav-md {
   @apply top-20 h-full w-2/3 text-menuColor transition-all max-md:fixed max-md:rounded max-md:border-s-2 max-md:bg-stone-100;
 }
