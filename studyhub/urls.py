@@ -24,7 +24,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("timer/", include("timer.urls")),
     path("search/", include("map.urls")),
-    path("api/", include("map.urls")),
     path("todo/", include("todo.urls")),
     path("", include("user.urls")),
 ]

@@ -1,39 +1,38 @@
-// マーカーの表示を管理する関数
-function displayDetailMarker(marker) {
-  // マーカーの位置を再設定
-  const position = marker.getPosition();
+let lngFromUrl;
+let latFromUrl;
+let placeIdFromUrl;
 
-  // 新しいマーカーを追加
-  const detailMarker = new google.maps.Marker({
-    position: position,
-    map: map, // mapは事前に初期化されているものと仮定
-    title: marker.getTitle(),
-  });
+document.addEventListener("DOMContentLoaded", () => {
+  // 詳細ページのURLから取得したplace_idまたは緯度経度取得
+  placeIdFromUrl = new URLSearchParams(window.location.search).get("place_id");
+  latFromUrl = parseFloat(
+    new URLSearchParams(window.location.search).get("lat")
+  );
+  lngFromUrl = parseFloat(
+    new URLSearchParams(window.location.search).get("lng")
+  );
 
-  // 他のマーカーを消す
-  markers.forEach((m) => m.setMap(null));
-
-  // 詳細マーカーのみを表示
-  detailMarker.setMap(map);
-}
-
-// 詳細ページのURLから取得したplace_idまたは緯度経度に基づいてマーカーを表示
-const placeIdFromUrl = new URLSearchParams(window.location.search).get(
-  "place_id"
-);
-const latFromUrl = parseFloat(
-  new URLSearchParams(window.location.search).get("lat")
-);
-const lngFromUrl = parseFloat(
-  new URLSearchParams(window.location.search).get("lng")
-);
-
-// ここではplace_idや緯度経度から、markers内で一致するものを探し、表示
-markers.forEach((marker) => {
-  if (
-    marker.getPosition().lat() === latFromUrl &&
-    marker.getPosition().lng() === lngFromUrl
-  ) {
-    displayDetailMarker(marker);
-  }
+  initMap(latFromUrl, lngFromUrl);
 });
+
+// map描画
+function initMap(latitude, longitude) {
+  var LatLng = new google.maps.LatLng(latitude, longitude);
+  var Options = {
+    zoom: 15,
+    center: LatLng,
+    mapTypeId: "roadmap",
+  };
+  map = new google.maps.Map(document.getElementById("map"), Options);
+
+  // 📍 マーカーを追加（赤ピン）
+  const marker = new google.maps.Marker({
+    position: { lat: latitude, lng: longitude },
+    map: map,
+    // title: title,
+    icon: {
+      url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // 🔴 赤ピン
+    },
+  });
+  marker.setMap(map);
+}

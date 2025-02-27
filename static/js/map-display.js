@@ -12,7 +12,7 @@ function initMap(latitude, longitude) {
   map = new google.maps.Map(document.getElementById("map"), Options);
 
   if (!placesData || placesData.length === 0) {
-    alert("近くの施設が見つかりませんでした。");
+    // alert("近くの施設が見つかりませんでした。");
     return;
   }
 
@@ -35,7 +35,7 @@ function initMap(latitude, longitude) {
 }
 
 function fetchLocationData() {
-  fetch("/api/get_location/")
+  fetch("/search/get_location/")
     .then((response) => response.json())
     .then((data) => {
       console.log("Djangoから取得した位置情報:", data);
@@ -66,7 +66,7 @@ function addMarker(location, title, place_id) {
 
   // マーカーがクリックされたときに詳細ページに遷移する
   marker.addListener("click", function () {
-    window.location.href = `/search/detail/${location.lat}/${location.lng}/${place_id}`;
+    window.location.href = `/search/detail/?lat=${location.lat}&lng=${location.lng}&place_id=${place_id}`;
   });
 
   // マーカーを配列に追加

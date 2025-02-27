@@ -45,7 +45,7 @@ function getLocationAndSendToDjango() {
 }
 
 function fetchPlacesFromDjango(location, placeTypes, distance) {
-  const url = `/api/send_location/`;
+  const url = `/search/send_location/`;
   const data = {
     latitude: location.latitude,
     longitude: location.longitude,

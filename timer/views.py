@@ -38,9 +38,7 @@ def save_time(request):
         return redirect('login')
     
     if request.method == "POST":
-        print("ここまでここまで")
         is_working = request.session.get("is_working", True)
-        print(type(is_working))
         if is_working:
             post_data = request.POST.copy()
             timeparts = [int(part) for part in post_data.get("count_time").split(":")]

@@ -6,6 +6,7 @@ from todo.models import Tasks
 from timer.models import Times
 from .models import CustomUser
 from .forms import CustomSignupForm, LoginForm, MypageForm
+from map.views import search_near_place
 
 from datetime import timedelta
 
@@ -64,7 +65,14 @@ def main_view(request):
         .exclude(is_completed=True)
         .order_by("deadline")[:3]
     )
-    return render(request, "main.html", {"tasks": tasks})
+    # 近くの検索結果を3件取得
+    near_place = search_near_place()
+    keys = ["name", "geometry", "rating", "place_id", "walking_distance","vicinity"]
+    filtered_by_key = [{k: r[k] for k in keys} for r in near_place]
+    transformed_data = [{"name": item['name'], "lat": str(item['geometry']['location']['lat']), "lng": str(item['geometry']['location']['lng']), "rating":str(item["rating"]), "place_id":item["place_id"], "walking_distance":item["walking_distance"], "vicinity":item["vicinity"]}
+    for item in filtered_by_key]
+
+    return render(request, "main.html", {"tasks": tasks, "results" : transformed_data})
 
 
 # マイページ
@@ -81,28 +89,23 @@ def mypage_view(request, id):
             form.save()
             if not is_pomodoro:
                 request.session["is_working"] = False
-            return redirect("mypage", id=request.user.user_id)
-        
+            return redirect("mypage", id=request.user.user_id)      
     else:
         form = MypageForm(instance=user_info)
 
-    range = request.GET.get("range", "week")
+    range = request.GET.get("range", "week") # 設定された集計期間
+    duration_data = get_duration_data(request.user.user_id, range) # グラフ用のデータ取得
+    work_time_sum = minutes_to_hms(sum(duration_data["times"])) # 指定期間の合計
 
-    duration_data = get_duration_data(request.user.user_id, range)
-    work_time_sum = minutes_to_hms(sum(duration_data["times"]))
-
-    context = {"form":form, "work_time_sum":work_time_sum, "duration_data":duration_data, "range":range}
-        
+    context = {"form":form, "work_time_sum":work_time_sum, "duration_data":duration_data, "range":range}      
     return render(request, "mypage.html", context)
 
 
 # 指定期間の作業時間データを収集
 def get_duration_data(user_id, range='week'):
-    # 今を取得
-    now = timezone.localdate()
- 
+
+    now = timezone.localdate() 
     # 週、月、年、全部の選択肢によって場合分け
-    # 各選択肢ごとに取得する期間の幅を取得
     if range == "week":
         start_date = now - timedelta(days=6)
     elif range == "month":
@@ -111,30 +114,25 @@ def get_duration_data(user_id, range='week'):
         start_date = now - timedelta(days=365)
     else:
         start_date = None
-    print("たいむs", start_date)
-    # print(start_date.date())
     
     # その幅を使ってDBからデータをとってくる
     if start_date:
         count_times = Times.objects.filter(user_id = user_id, created_at__gte = start_date).order_by("created_at")
     else:
         count_times = Times.objects.filter(user_id = user_id).order_by("created_at")
-    print("わーくたいむs", count_times.values)
-
-    # グラフ用に整形
-    count_times_par_date = []
-
+    # 日ごとのデータを入れる配列
+    count_times_par_date = []    
+    # 計算基準日設定
     if start_date:
         date = start_date
     else:
         current_user = CustomUser.objects.get(user_id = user_id)
-        print("ゆーざー", current_user.created_at.date())
         date = current_user.created_at.date()
-
+    # 現在までの日ごとの辞書を作成
     while date <= now:
         count_times_par_date.append({"create_date": date, "count_time": 0})
         date += timedelta(days=1)
-
+    # 集計
     for time in count_times:
         create_date = time.created_at.date()
         count_second = time.count_time.total_seconds()
@@ -145,13 +143,11 @@ def get_duration_data(user_id, range='week'):
                 break
         else:
             count_times_par_date.append({"create_date": create_date, "count_time": count_second})
-        
-
+    # データ分割と変換    
     dates = [date["create_date"].strftime("%m/%d") for date in count_times_par_date]
     times = [date['count_time']/60 for date in count_times_par_date]
 
     duration_data = {"dates": dates, "times":times}
-
     return duration_data
 
 # 分から時:分:秒に変換

@@ -1,6 +1,3 @@
-// Chart.js をインポート
-// import Chart from "chart.js/auto";
-console.log(durationData);
 // キャンバスを取得
 const canvas = document.getElementById("myChart");
 
@@ -41,7 +38,7 @@ const options = {
   },
 };
 
-// 折れ線グラフを作成
+// 棒グラフを作成
 const myChart = new Chart(ctx, {
   type: "bar",
   data: data,
