@@ -106,21 +106,25 @@ def search_near_place():
 
 # 各検索結果に対して徒歩の距離を計算
 def add_walking_distance_to_results(results,lat,lon):
-
+  # 検索場所の座標のリストを作成
+  place_latlons = []
   for place in results:
       place_lat = place["geometry"]["location"]["lat"]
       place_lon = place["geometry"]["location"]["lng"]
 
-      # 現在地と検索場所の間の徒歩距離を計算
-      origin = (lat, lon)
-      destination = (place_lat, place_lon)
+      destination = f"{place_lat}, {place_lon}"
+      place_latlons.append(destination)
 
-      # Google Distance Matrix APIを使って徒歩の距離を計算
-      distance_matrix_result = gmaps.distance_matrix(origins=[origin], destinations=[destination], mode="walking", language="ja")
+  # 現在地と検索場所の間の徒歩距離を計算
+  origin = f"{lat}, {lon}"
+  destinations_str = "|".join(place_latlons)
 
-      # 徒歩距離を取得
-      if distance_matrix_result["status"] == "OK":
-          distance_text = distance_matrix_result["rows"][0]["elements"][0]["distance"]["text"]
-          place["walking_distance"] = distance_text  # 徒歩距離をplaceの情報に追加
+  # Google Distance Matrix APIを使って徒歩の距離を計算
+  distance_matrix_result = gmaps.distance_matrix(origins=origin, destinations=destinations_str, mode="walking", language="ja")
+
+  # 徒歩距離を取得
+  for i, element in enumerate(distance_matrix_result["rows"][0]["elements"]):
+    if element["status"] == "OK" and i < len(results):
+        results[i]["walking_distance"] = element["distance"]["text"]
 
   return results

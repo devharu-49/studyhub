@@ -12,7 +12,7 @@ function initMap(latitude, longitude) {
   map = new google.maps.Map(document.getElementById("map"), Options);
 
   if (!placesData || placesData.length === 0) {
-    alert("近くの施設が見つかりませんでした。");
+    // alert("近くの施設が見つかりませんでした。");
     return;
   }
 
