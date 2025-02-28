@@ -66,7 +66,7 @@ def main_view(request):
         .order_by("deadline")[:3]
     )
     # 近くの検索結果を3件取得
-    near_place = search_near_place()
+    near_place = search_near_place(request)
     keys = ["name", "geometry", "rating", "place_id", "walking_distance","vicinity"]
     filtered_by_key = [{k: r[k] for k in keys} for r in near_place]
     transformed_data = [{"name": item['name'], "lat": str(item['geometry']['location']['lat']), "lng": str(item['geometry']['location']['lng']), "rating":str(item["rating"]), "place_id":item["place_id"], "walking_distance":item["walking_distance"], "vicinity":item["vicinity"]}

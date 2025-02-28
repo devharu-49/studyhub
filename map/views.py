@@ -17,8 +17,6 @@ places_result = None
 @csrf_exempt  # CSRF対策を無効化（適宜、別の方法で対策推奨）
 # JSから現在の位置情報を受け取る
 def receive_location(request):
-  global latest_location
-  global places_result
   if request.method == "POST":
     data = json.loads(request.body)
     lat = data.get('latitude')
@@ -26,16 +24,17 @@ def receive_location(request):
     place_type = data.get('types')
     distance = data.get('distance')
 
-    latest_location = {"latitude":lat, "longitude":lon}
+    request.session["latest_location"] = {"latitude":lat, "longitude":lon}
     location = (float(lat), float(lon))
 
     # デフォルトでカフェを検索
     places_result = gmaps.places_nearby(location=location, radius=distance, language="ja", type=place_type)
+    request.session["places_result"] = places_result
     return JsonResponse({"results": places_result["results"]})
 
 # JSに位置情報を返す
 def get_location(request):
-  global latest_location
+  latest_location = request.session["latest_location"]
   return JsonResponse(latest_location)
 
 # 検索ページを返す
@@ -53,10 +52,10 @@ def search_detail(request):
 
   detailed_info = gmaps.place(place_id=place_id, language="ja")  # 施設詳細情報を取得
 
-  global latest_location
+  latest_location = request.session["latest_location"]
 
-  origin_lat = latest_location.get('latitude')
-  origin_lng = latest_location.get('longitude')
+  origin_lat = latest_location['latitude']
+  origin_lng = latest_location['longitude']
 
 
   # 現在地と検索場所の間の徒歩距離を計算
@@ -74,14 +73,15 @@ def search_detail(request):
 
 # 検索結果ページを表示
 def search_result(request):
-  global places_result
+  places_result = request.session["places_result"]
   keyword = request.GET.get('keyword', '')  # 検索ワード
   place = request.GET.get('place', 'cafe')  # 選ばれた場所
   distance = request.GET.get('distance', 3000)  # 距離（デフォルトで3000）
-  global latest_location
+  
+  latest_location = request.session["latest_location"]
 
-  lat = latest_location.get('latitude')
-  lon = latest_location.get('longitude')
+  lat = latest_location['latitude']
+  lon = latest_location['longitude']
 
   location = (float(lat), float(lon)) # まとめる
   places_result = gmaps.places_nearby(location=location, radius=distance, language="ja", type=place, keyword=keyword)
@@ -90,17 +90,21 @@ def search_result(request):
   return render(request, "search_result.html", {"results" : results})
 
 # メインページに表示する項目を取得
-def search_near_place():
+def search_near_place(request):
+  if not "latest_location" in request.session:
+     request.session["latest_location"] = {'latitude': 35.6811673, 'longitude': 139.7670516}
+
   keyword ='勉強場所'  # 検索ワード
   place = 'cafe'  # 選ばれた場所
   distance = 2000  # 距離
-  global latest_location
+  latest_location = request.session["latest_location"]
 
-  lat = latest_location.get('latitude')
-  lon = latest_location.get('longitude')
+  lat = latest_location['latitude']
+  lon = latest_location['longitude']
 
   location = (float(lat), float(lon)) # まとめる
   places_result = gmaps.places_nearby(location=location, radius=distance, language="ja", type=place, keyword=keyword)
+
 
   results = add_walking_distance_to_results(places_result["results"],lat,lon)
   sorted_data = sorted(results, key=lambda x: float(x['walking_distance'].split()[0])) # walking_distanceで降順に
