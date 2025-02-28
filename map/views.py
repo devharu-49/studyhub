@@ -92,7 +92,7 @@ def search_result(request):
 # メインページに表示する項目を取得
 def search_near_place(request):
   if not "latest_location" in request.session:
-     request.session["latest_location"] = {'latitude': 35.6811673, 'longitude': 139.7670516}
+     request.session["latest_location"] = {'latitude': 35.771543010412714, 'longitude': 140.38421842379938}
 
   keyword ='勉強場所'  # 検索ワード
   place = 'cafe'  # 選ばれた場所
