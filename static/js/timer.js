@@ -152,6 +152,7 @@ function endEditTime() {
 }
 
 // タイマー編集終了イベントを起こす関数
+// タイマー編集終了イベントを起こす関数
 function clickOutsideTimer(event) {
   if (timeEditer.contains(event.target) || event.target === currentTimerValue)
     return;
@@ -237,7 +238,7 @@ function saveTime() {
   if (isPomodoro) {
     isRunning = true;
   }
-  document.saveTimeForm.submit();
+  isWorking ? document.saveTimeForm.submit() : document.breakTimeForm.submit();
 }
 
 // timesリセット

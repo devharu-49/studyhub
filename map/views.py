@@ -3,8 +3,12 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import googlemaps
 import json
+import os
+from dotenv import load_dotenv
 
-API_KEY = "AIzaSyAuDf-txlL1EEte-Iqolx0CvtvxazFkF6k"
+load_dotenv('.env')
+
+API_KEY = os.getenv("API_KEY")
 gmaps = googlemaps.Client(key=API_KEY)
 
 latest_location = {'latitude': 35.6811673, 'longitude': 139.7670516}
