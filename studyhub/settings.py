@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-6i2r!(#u(l@rzkg+3$=04^9l85=4)1y(gwzo=1f4$4u7r9c4hv"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "nginx"]
+ALLOWED_HOSTS = ["*"]
 
 
 
@@ -146,7 +146,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "user.CustomUser"
 
-CSRF_COOKIE_SECURE = False
+
+CSRF_TRUSTED_ORIGINS = [
+   'http://studyhub-dteam.com',
+   'https://studyhub-dteam.com',
+   'https://studyhub-1424517419.ap-northeast-1.elb.amazonaws.com',
+   'http://studyhub-1424517419.ap-northeast-1.elb.amazonaws.com'
+    ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 
 # これ以下はログを出すための設定なので、最終的には消してください
