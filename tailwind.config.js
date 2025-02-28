@@ -26,10 +26,10 @@ module.exports = {
         "card-button-red": "#f48f8f",
         "card-border": "#b2b3b0",
       },
-      screens: {
-        // ブレイクポイントの上書き
-        md: "800px", //デフォルトは768px
-      },
+      // screens: {
+      //   // ブレイクポイントの上書き
+      //   md: "800px", //デフォルトは768px
+      // },
     },
   },
   plugins: [require("@tailwindcss/forms")],

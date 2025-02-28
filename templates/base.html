@@ -19,10 +19,10 @@
 
     {% block header %}{% endblock header %}
 
-    <link
+    <!-- <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+    /> -->
   </head>
 
   <body class="h-dvh w-full overflow-hidden bg-baseColor">
@@ -79,13 +79,15 @@
           </li>
           <li class="nav-item ml-auto">
             <form
+              name="logoutForm"
               method="POST"
               action="{% url 'logout' %}"
               class="flex h-full items-center justify-center"
             >
               {% csrf_token %}
               <button
-                type="submit"
+                type="button"
+                onclick="resetSessionStorage()"
                 class="flex h-full items-center justify-center p-5 hover:bg-highlightColor"
               >
                 <ion-icon
@@ -106,7 +108,7 @@
 
     <div
       id="timer-container"
-      class="absolute inset-x-0 bottom-0 z-40 mx-auto flex w-[20%] min-w-72 max-w-fit items-center sm:right-5 sm:mr-0"
+      class="absolute inset-x-0 bottom-0 z-40 mx-auto flex w-[20%] min-w-64 max-w-fit items-center sm:right-5 sm:mr-0"
     >
       <img
         id="timer-image"
@@ -214,14 +216,13 @@
           class="flex flex-col items-center justify-center"
           method="post"
         >
-          <h2 class="mx-24 mt-12 text-2xl">お疲れさまでした！</h2>
+          <h2 class="mx-12 my-6 text-2xl">お疲れさまでした！</h2>
           <p>今回の勉強時間</p>
           <!-- prettier-ignore -->
           {% csrf_token %}
-          {{ timer_modal_form.count_time|add_class:"mt-1 mb-3 text-xl font-bold text-center"|attr:"id:registered-time" }}
-          <p>登録しますか？</p>
+          {{ timer_modal_form.count_time|add_class:"mt-1 mb-6 text-xl font-bold text-center"|attr:"id:registered-time" }}
 
-          <div class="mb-12 flex w-full max-w-sm justify-center gap-8">
+          <div class="mb-6 flex w-full max-w-sm justify-center gap-8">
             <button
               type="button"
               onclick="saveTime()"
@@ -238,7 +239,7 @@
             </button>
           </div>
           {% if is_working and is_pomodoro %}
-          <p>[登録]を押すと休憩時間のタイマーを開始します</p>
+          <p class="mx-6 my-3">[登録]を押すと休憩時間のタイマーを開始します</p>
           {% endif %}
         </form>
       </div>
@@ -252,9 +253,10 @@
         <form
           name="breakTimeForm"
           action="{% url 'timer:save' %}"
-          class="flex flex-col items-center justify-center"
+          class="flex flex-col items-center justify-center gap-6"
           method="post"
         >
+          {% csrf_token %}
           <h2 class="mx-24 mt-12 text-2xl">休憩終了！</h2>
           <p>作業時間を開始します</p>
 

@@ -12,3 +12,9 @@ document.getElementById("hamburger").addEventListener("click", (event) => {
     nav.classList.toggle("right-[-100%]");
   }
 });
+
+function resetSessionStorage() {
+  console.log("logout");
+  sessionStorage.clear();
+  document.logoutForm.submit();
+}

@@ -13,23 +13,27 @@
   </head>
   <body>
     <div
-      class="background content container flex min-h-screen min-w-full flex-nowrap items-center justify-center gap-24 md:flex-wrap"
+      class="background container flex min-h-dvh min-w-full flex-col items-center justify-center lg:flex-row lg:justify-evenly"
     >
-      <div class="logintitle">
-        <h1 class="titletext font-rampartOne">StudyHub</h1>
-        <p class="mt-8 text-center font-kosugiMaru text-xl font-bold">
+      <div class="">
+        <h1 class="titletext font-rampartOne md:text-8xl">StudyHub</h1>
+        <p class="text-center font-kosugiMaru font-bold md:mt-5 md:text-xl">
           - 今日頑張る場所を探そう -
         </p>
-        <img
-          class="logincharacter mt-5"
-          src="../static/images/doubutu_halloweenhoukikuma.png"
-          alt=""
-        />
       </div>
+      <img
+        class="logincharacter absolute bottom-4 left-[10%] sm:h-60 sm:w-60"
+        src="../static/images/doubutu_halloweenhoukikuma.png"
+        alt=""
+      />
       <div
-        class="flex w-3/12 flex-col gap-6 rounded border-2 border-card-border bg-card px-5"
+        class="mt-10 flex w-72 flex-col gap-3 rounded border-2 border-card-border bg-card px-5 md:w-6/12 lg:w-3/12 lg:gap-6"
       >
-        <h2 class="mt-5 text-center font-rampartOne text-5xl">Login</h2>
+        <h2
+          class="mt-3 text-center font-rampartOne text-3xl md:mt-5 md:text-5xl"
+        >
+          Login
+        </h2>
         <!-- 非フィールドエラー -->
         {% if form.non_field_errors %}
         <!-- prettier-ignore -->
@@ -56,7 +60,7 @@
             <input
               type="email"
               name="email"
-              class="h-14 w-full rounded-md border-2 border-card-border pl-1 placeholder-gray-400"
+              class="auth-input"
               placeholder="mail@example.com"
               required
             />
@@ -76,7 +80,7 @@
               type="password"
               name="password"
               id="password"
-              class="h-14 w-full rounded-md border-2 border-card-border"
+              class="auth-input"
               required
             />
             {% if form.password.errors %}
@@ -95,7 +99,7 @@
           <!-- 修正: <a>ではなく、buttonのsubmitに変更 -->
           <button
             type="submit"
-            class="w-full rounded-md bg-card-button py-4 font-kosugiMaru font-bold text-white underline"
+            class="w-full rounded-md bg-card-button py-2 font-kosugiMaru font-bold text-white underline lg:py-4"
           >
             ログイン
           </button>
