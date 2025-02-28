@@ -1,43 +1,22 @@
-services:
-  db:
-    image: mysql:8.0
-    container_name: studyhub-db
-    restart: always
-    volumes:
-      - mysql_data:/var/lib/mysql
-    env_file:
-      - .env
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD} # Root password for MySQL
-      MYSQL_DATABASE: ${DATABASE_NAME} # Name of the database
-    ports:
-      - "3306:3306"
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      retries: 5
-      start_period: 30s
+version: "3.8"
 
+services:
   web:
     build:
       context: .
     container_name: studyhub-web
     restart: always
     command: >
-      bash /app/wait-for-it.sh db 3306 -- bash -c "python manage.py migrate && exec uwsgi --ini /app/uwsgi.ini"
+      bash -c "python manage.py migrate && python manage.py collectstatic --noinput && exec uwsgi --ini /app/uwsgi.ini"
     volumes:
       - static_volume:/app/static
       - uwsgi_sock:/app/uwsgi.sock
     ports:
       - "3031:3031"
-
     env_file:
       - .env
-    depends_on:
-      db:
-        condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://nginx/ || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:3031 || exit 1"]
       interval: 10s
       retries: 5
       start_period: 30s
@@ -53,11 +32,9 @@ services:
       - static_volume:/app/static
       - uwsgi_sock:/app/uwsgi.sock
     depends_on:
-      web:
-        condition: service_started
+      - web
 
 volumes:
-  mysql_data:
   static_volume:
   uwsgi_sock:
     driver: local

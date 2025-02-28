@@ -24,7 +24,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 # 依存関係のインストール
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt && \
-    rm -rf /root/.cache/pip  # ✅ Pythonのキャッシュ削除
+    rm -rf /root/.cache/pip  # ✅  Pythonのキャッシュ削除
 
 # Tailwind CSS のインストール
 COPY package.json package-lock.json /app/
@@ -49,6 +49,3 @@ RUN chmod +x /app/wait-for-it.sh
 
 # uWSGI の設定ファイルをコピー
 COPY ./uwsgi.ini /app/uwsgi.ini
-
-# コンテナ起動時のコマンドを指定
-CMD ["/entrypoint.sh"]
