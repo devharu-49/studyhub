@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // map描画
-function initMap(latitude, longitude) {
+window.initMap(latitude, longitude) {
   var LatLng = new google.maps.LatLng(latitude, longitude);
   var Options = {
     zoom: 15,
@@ -31,7 +31,7 @@ function initMap(latitude, longitude) {
     map: map,
     // title: title,
     icon: {
-      url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // 🔴 赤ピン
+      url: "https://maps.googleapis.com/mapfiles/ms/icons/red-dot.png", // 🔴 赤ピン
     },
   });
   marker.setMap(map);

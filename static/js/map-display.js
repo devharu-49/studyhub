@@ -1,7 +1,7 @@
 let map;
 let markers = [];
 
-function initMap(latitude, longitude) {
+window.initMap(latitude, longitude) {
   const placesData = JSON.parse(localStorage.getItem("placesData")); // ローカルストレージからデータを取得
   var MyLatLng = new google.maps.LatLng(latitude, longitude);
   var Options = {
@@ -60,7 +60,7 @@ function addMarker(location, title, place_id) {
     map: map,
     title: title,
     icon: {
-      url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // 🔴 赤ピン
+      url: "https://maps.googleapis.com/mapfiles/ms/icons/red-dot.png", // 🔴 赤ピン
     },
   });
 
