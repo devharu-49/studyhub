@@ -33,6 +33,7 @@ services:
       - uwsgi_sock:/app/uwsgi.sock
     depends_on:
       - web
+          condition: service_healthy
 
 volumes:
   static_volume:
