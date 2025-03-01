@@ -34,6 +34,8 @@ window.initMap(latitude, longitude) {
   });
 }
 
+window.initMap = initMap;
+
 function fetchLocationData() {
   fetch("/search/get_location/")
     .then((response) => response.json())
