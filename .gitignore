@@ -1,0 +1,39 @@
+# 🔹 Python のバイナリ・キャッシュファイル
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 🔹 環境設定ファイル
+.env
+.idea/
+*.swp
+.DS_Store
+
+# 🔹 仮想環境
+venv/
+venvharu/
+.venv/
+Pipfile
+Pipfile.lock
+
+# 🔹 Django の一時ファイル・データベース
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# 🔹 Docker 関連
+*.log
+docker-compose.override.yml
+
+# 🔹 Git に不要なファイル
+*.log
+*.bak
+*.tmp
+
+#  🔹 Node.js
+node_modules/
+
+# 🔹 開発用のDocker関連
+docker-compose-local.yml
+Dockerfile-local

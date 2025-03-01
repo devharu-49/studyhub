@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% load static %} {% block header %}
+<script src="{% static 'js/map.js' %}" defer></script>
+<script src="{% static 'js/map-display.js' %}" defer></script>
+{% endblock header %} {% block body %}
+
+<div
+  class="container flex h-[calc(100dvh-5rem)] min-w-full flex-wrap items-center justify-evenly md:flex-nowrap"
+>
+  <div id="map" class="rounded-lg border-4 border-card-border"></div>
+  <div class="map-card">
+    <div
+      class="hidden-scrollbar flex h-[90%] flex-col space-y-3 overflow-y-auto"
+    >
+      {% if results %} {% for result in results %}
+      <!-- prettier-ignore -->
+      {% with lat=result.geometry.location.lat|stringformat:"s" lng=result.geometry.location.lng|stringformat:"s" place_id=result.place_id %}
+      <a
+        href="{% url 'map:search_detail' %}?lat={{ lat }}&lng={{ lng }}&place_id={{ place_id }}"
+      >
+        <div
+          class="flex w-full items-center justify-between space-y-2 rounded-lg border-4 border-card-border bg-white px-4 py-4"
+        >
+          <div class="w-3/4">
+            <h1 class="truncate font-kosugiMaru text-lg font-bold">
+              {{ result.name }}
+            </h1>
+            <p class="truncate font-kosugiMaru text-lg">
+              {{ result.vicinity }}
+            </p>
+            <p class="font-kosugiMaru text-lg">
+              <span class="text-yellow-400">★</span>{{ result.rating }}
+            </p>
+          </div>
+          <div class="ml-3">
+            <p class="flex items-center justify-center font-kosugiMaru text-xl">
+              {{ result.walking_distance }}
+            </p>
+          </div>
+        </div>
+      </a>
+      {% endwith %} {% endfor %} {% else %}
+
+      <div
+        class="space-y-2 rounded-lg border-4 border-card-border bg-white px-4 py-4"
+      >
+        <h1 class="font-kosugiMaru text-lg font-bold">検索結果がありません</h1>
+      </div>
+      {% endif %}
+    </div>
+    <div
+      class="absolute bottom-1 flex h-32 w-56 items-center justify-center overflow-hidden max-lg:hidden"
+    >
+      <img
+        class="search-result-character object-cover"
+        src="/static/images/doubutu_dokusyo_kuma.png"
+        alt=""
+      />
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

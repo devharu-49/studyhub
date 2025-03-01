@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block body %}
+<div
+  class="mx-auto h-[calc(100dvh-5rem)] w-[60%] pb-32 pt-[2%] font-kosugiMaru"
+>
+  <h2 class="mb-[2%] h-[5%] text-center text-4xl font-bold">ToDo詳細</h2>
+  <div class="grid h-[93%] grid-cols-[1fr_8fr] grid-rows-[1fr_1fr_1fr_6fr_1fr]">
+    <label for="title" class="min-w-24">タイトル：</label>
+    <p class="w-full">{{ task.title }}</p>
+    <label for="deadline" class="inline-block min-w-24">締切日：</label>
+    <p class="w-full">{{ task.deadline|date:"Y/m/d" }}</p>
+    <label for="" class="inline-block min-w-24">状態：</label>
+    <p class="w-full">
+      <!-- prettier-ignore -->
+      {% if task.is_completed %}
+        完了
+      {% else %}
+        未完了
+      {% endif %}
+    </p>
+    <label for="" class="inline-block min-w-24">内容：</label>
+    <p class="w-full overflow-y-auto">{{ task.description|linebreaksbr }}</p>
+    <div class="col-span-2 mt-5 flex items-center">
+      <a
+        href="{% url 'task_edit' task.id %}"
+        class="mr-10 box-border rounded border-card-border bg-card-button-yellow px-[10%] py-[1%]"
+      >
+        編集
+      </a>
+      <a
+        href="{{ request.META.HTTP_REFERER }}"
+        class="rounded border-card-border bg-card-button px-[10%] py-[1%]"
+      >
+        戻る
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

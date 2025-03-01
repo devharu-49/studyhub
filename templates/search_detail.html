@@ -1,0 +1,53 @@
+{% extends 'base.html' %}{% load static %} {% block header %}
+<!-- 詳細画面の HTML -->
+<script src="{% static 'js/map-display-detail.js' %}" defer></script>
+{% endblock header %} {% block body %}
+<div
+  class="container flex h-[calc(100dvh-5rem)] min-w-full flex-wrap items-center justify-evenly md:flex-nowrap"
+>
+  <div id="map" class="rounded-lg border-4 border-card-border"></div>
+  <div class="map-card">
+    <div
+      class="flex h-[90%] flex-col justify-evenly rounded-lg border-4 border-card-border bg-card p-10"
+    >
+      <h1 class="truncate font-kosugiMaru text-4xl font-bold">
+        {{ details.name }}
+      </h1>
+      <div>
+        <p class="truncate font-kosugiMaru text-2xl font-medium">
+          住所：{{ details.vicinity }}
+        </p>
+      </div>
+      <p
+        class="w-full truncate whitespace-nowrap font-kosugiMaru text-2xl font-medium"
+      >
+        現在地からの距離(徒歩)：{{ distance }}
+      </p>
+      <p class="truncate font-kosugiMaru text-2xl font-medium">
+        レビュー：<span class="text-yellow-400">★</span> {{ details.rating }}
+      </p>
+      <div class="gap-3">
+        <p class="mb-2 text-2xl font-medium">営業時間：</p>
+        <div class="grid grid-cols-2">
+          {% for day in details.opening_hours.weekday_text %}
+
+          <p class="mb-2 truncate font-kosugiMaru text-xl">{{ day }}</p>
+          {% endfor %}
+        </div>
+      </div>
+      <p class="w-full truncate font-kosugiMaru text-xl font-bold">
+        <a href="{{ details.website }}" class="text-blue-400 underline"
+          >{{ details.website }}</a
+        >
+      </p>
+    </div>
+    <img
+      class="search-detail-character hidden"
+      Z
+      src="/static/images/doubutu_tukinowaguma_valley3.png"
+      alt=""
+    />
+  </div>
+</div>
+
+{% endblock body %}

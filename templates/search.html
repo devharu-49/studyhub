@@ -1,0 +1,116 @@
+{% extends 'base.html' %} {% load static %} {% block header %}
+<script src="{% static 'js/map.js' %}" defer></script>
+<script src="{% static 'js/map-display.js' %}" defer></script>
+{% endblock header %} {% block body %}
+
+<div
+  class="container flex h-[calc(100dvh-5rem)] min-w-full flex-wrap items-center justify-evenly md:flex-nowrap"
+>
+  <div id="map" class="rounded-lg border-4 border-card-border"></div>
+  <img
+    class="search-character absolute left-[44.8rem] top-[7.6rem] hidden"
+    src="/static/images/doubutu_madokaraamewomirutukinowaguma.png"
+    alt=""
+  />
+  <div class="h-[80%] w-[43%]">
+    <form
+      id="searchForm"
+      class="flex h-[90%] w-full flex-col gap-16 rounded-lg border-4 border-card-border bg-card px-5"
+      action="{% url 'map:search_result' %}"
+      method="GET"
+    >
+      <div class="flex h-full w-full flex-col gap-16">
+        <div>
+          <input
+            name="keyword"
+            type="text"
+            class="mt-16 h-14 w-full rounded-xl border-4 border-card-border pl-3"
+            placeholder="検索ワード"
+          />
+        </div>
+        <div>
+          <div class="flex justify-evenly">
+            <label class="inline-flex cursor-pointer items-center">
+              <span class="mr-3 font-kosugiMaru text-2xl">カフェ</span>
+              <input
+                type="radio"
+                name="place"
+                value="cafe"
+                class="peer sr-only"
+                checked
+              />
+              <div
+                class="peer relative h-6 w-11 rounded-full bg-gray-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
+              ></div>
+            </label>
+            <label class="inline-flex cursor-pointer items-center">
+              <span class="mr-3 font-kosugiMaru text-2xl">図書館</span>
+              <input
+                type="radio"
+                name="place"
+                value="library"
+                class="peer sr-only"
+              />
+              <div
+                class="peer relative h-6 w-11 rounded-full bg-gray-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
+              ></div>
+            </label>
+            <label class="inline-flex cursor-pointer items-center">
+              <span class="mr-3 font-kosugiMaru text-2xl">大学</span>
+              <input
+                type="radio"
+                name="place"
+                value="university"
+                class="peer sr-only"
+              />
+              <div
+                class="peer relative h-6 w-11 rounded-full bg-gray-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-blue-300 rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800"
+              ></div>
+            </label>
+          </div>
+        </div>
+        <div>
+          <input
+            name="distance"
+            type="range"
+            min="1000"
+            step="1000"
+            max="5000"
+            class="slider w-full"
+          />
+          <div
+            class="flex w-full justify-between px-2 font-kosugiMaru text-xl font-bold"
+          >
+            <span>1km</span>
+            <span>2km</span>
+            <span>3km</span>
+            <span>4km</span>
+            <span>5km</span>
+          </div>
+        </div>
+      </div>
+      <button
+        class="mb-10 w-full rounded-xl bg-card-button py-4 font-kosugiMaru text-xl font-bold text-white underline"
+        type="submit"
+      >
+        検索
+      </button>
+    </form>
+  </div>
+</div>
+<script>
+  document.getElementById("searchForm").addEventListener("submit", function () {
+    const selectedTypes = Array.from(
+      document.querySelectorAll('input[name="place"]:checked')
+    ).map((input) => input.value); // カンマ区切りで送信
+    const distance = Array.from(
+      document.querySelectorAll('input[name="distance"]')
+    ).map((input) => input.value);
+
+    // localStorage に保存
+    localStorage.setItem("selectedTypes", JSON.stringify(selectedTypes));
+    localStorage.setItem("distance", JSON.stringify(distance));
+  });
+</script>
+
+{% endblock body %}

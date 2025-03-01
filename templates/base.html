@@ -1,11 +1,302 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% load static %} {% load widget_tweaks %}
+
+<!doctype html>
+<html lang="ja" class="overflow-hidden">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>StudyHub</title>
-</head>
-<body>
-    <h1>Hello, World!</h1>
-</body>
+
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuDf-txlL1EEte-Iqolx0CvtvxazFkF6k&callback=initMap"
+      async
+      defer
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Rampart+One&display=swap"
+      rel="stylesheet"
+    />
+
+    {% block header %}{% endblock header %}
+
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    /> -->
+  </head>
+
+  <body class="h-dvh w-full overflow-hidden bg-baseColor">
+    <header
+      id="menubar"
+      class="flex h-20 items-center bg-menuColor max-md:justify-between"
+    >
+      <a
+        href="/"
+        class="pb-2 pl-5 pr-10 font-rampartOne text-4xl text-baseColor"
+        >StudyHub</a
+      >
+      <button
+        type="button"
+        class="mr-5 flex flex-col space-y-2 md:hidden"
+        id="hamburger"
+      >
+        <span class="h-0.5 w-8 bg-baseColor duration-150"></span>
+        <span class="h-0.5 w-8 bg-baseColor duration-150"></span>
+        <span class="h-0.5 w-8 bg-baseColor duration-150"></span>
+      </button>
+      <nav
+        id="nav"
+        class="nav-md right-[-100%] z-40 md:flex md:w-full md:text-baseColor"
+      >
+        <ul class="flex h-full w-full items-center max-md:flex-col">
+          <li class="nav-item">
+            <a
+              onclick="resetLocalStorage()"
+              href="/"
+              class="flex h-full items-center px-6 font-kosugiMaru text-2xl"
+              >HOME</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="{% url 'map:search' %}"
+              class="flex h-full items-center px-6 font-kosugiMaru text-2xl"
+              >検索</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="{% url 'task_list'%}"
+              class="flex h-full items-center px-6 font-kosugiMaru text-2xl"
+              >ToDo</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="{% url 'mypage' user.user_id %}"
+              class="flex h-full items-center px-4 font-kosugiMaru text-2xl"
+              >マイページ</a
+            >
+          </li>
+          <li class="nav-item ml-auto">
+            <form
+              name="logoutForm"
+              method="POST"
+              action="{% url 'logout' %}"
+              class="flex h-full items-center justify-center"
+            >
+              {% csrf_token %}
+              <button
+                type="button"
+                onclick="resetSessionStorage()"
+                class="flex h-full items-center justify-center p-5 hover:bg-highlightColor"
+              >
+                <ion-icon
+                  name="exit-outline"
+                  class="hidden pl-3 text-4xl md:flex"
+                ></ion-icon>
+                <p class="px-8 font-kosugiMaru text-2xl font-medium md:hidden">
+                  ログアウト
+                </p>
+              </button>
+            </form>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    {% block body %} {% endblock body %}
+
+    <div
+      id="timer-container"
+      class="absolute inset-x-0 bottom-0 z-40 mx-auto flex w-[20%] min-w-64 max-w-fit items-center sm:right-5 sm:mr-0"
+    >
+      <img
+        id="timer-image"
+        src="{% static 'images/timer.png' %}"
+        alt="タイマー画像"
+        class=""
+      />
+      <div
+        id="timer-controls"
+        class="absolute flex h-[80%] w-full items-center justify-between px-[3%]"
+        data-url="{% url 'timer:update' %}"
+      >
+        <div
+          id="timer-display"
+          class="flex h-full w-[65%] flex-col items-center justify-center rounded-md bg-white"
+        >
+          <p
+            id="time-edit-error"
+            class="fixed mb-[4.5rem] hidden text-xs text-card-button-red"
+          >
+            半角数字で入力してください
+          </p>
+
+          {% if is_working and is_pomodoro %}
+          <p class="fixed mb-[4.5rem] animate-pulse text-xs">Work Time</p>
+          {% elif not is_working and is_pomodoro %}
+          <p class="fixed mb-[4.5rem] animate-pulse text-xs">Break Time</p>
+          {% endif %}
+          <!-- prettier-ignore -->
+          <p
+            id="time"
+            class="block text-4xl font-medium"
+            data-working="{{ is_working }}"
+            data-pomodoro="{{ is_pomodoro }}"
+          >{{ set_time }}</p>
+          <div
+            id="edit-time"
+            class="hidden w-11/12 items-center justify-center"
+          >
+            <input
+              name="hours"
+              type="text"
+              pattern="^[1-9][0-9]*$"
+              inputmode="numeric"
+              maxlength="2"
+              value="00"
+              class="input-time w-12 px-0.5 py-1 text-center text-4xl font-medium"
+            />
+            <p class="text-center text-4xl font-medium">:</p>
+            <input
+              name="minutes"
+              type="text"
+              pattern="^[1-9][0-9]*$"
+              inputmode="numeric"
+              maxlength="2"
+              value="00"
+              class="input-time w-12 px-0.5 py-1 text-center text-4xl font-medium"
+            />
+            <p class="text-center text-4xl font-medium">:</p>
+            <input
+              name="seconds"
+              type="text"
+              pattern="^[1-9][0-9]*$"
+              inputmode="numeric"
+              maxlength="2"
+              value="00"
+              class="input-time w-12 px-0.5 py-1 text-center text-4xl font-medium"
+            />
+          </div>
+        </div>
+        <div class="flex h-full w-[30%] flex-col justify-between gap-3 py-[2%]">
+          <button
+            id="timer-start-btn"
+            onclick="startTimer()"
+            class="flex h-full w-full items-center justify-center rounded-full bg-white"
+          >
+            START
+          </button>
+          <button
+            id="timer-stop-btn"
+            onclick="stopTimer()"
+            class="hidden h-full w-full items-center justify-center rounded-full bg-white"
+          >
+            STOP
+          </button>
+          <button
+            id="timer-finish-btn"
+            onclick="finishTimer()"
+            class="flex h-full w-full items-center justify-center rounded-full bg-white"
+          >
+            FINISH
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="timer-modal" class="modal-container hidden">
+      <div class="timer-modal-overlay modal-overlay"></div>
+      <div
+        class="z-50 flex h-fit w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"
+      >
+        <form
+          name="saveTimeForm"
+          action="{% url 'timer:save' %}"
+          class="flex flex-col items-center justify-center"
+          method="post"
+        >
+          <h2 class="mx-12 my-6 text-2xl">お疲れさまでした！</h2>
+          <p>今回の勉強時間</p>
+          <!-- prettier-ignore -->
+          {% csrf_token %}
+          {{ timer_modal_form.count_time|add_class:"mt-1 mb-6 text-xl font-bold text-center"|attr:"id:registered-time" }}
+
+          <div class="mb-6 flex w-full max-w-sm justify-center gap-8">
+            <button
+              type="button"
+              onclick="saveTime()"
+              class="h-8 w-24 rounded bg-card-button-red"
+            >
+              登録
+            </button>
+            <button
+              type="button"
+              onclick="toggleTimerModal()"
+              class="h-8 w-24 rounded bg-stone-50"
+            >
+              キャンセル
+            </button>
+          </div>
+          {% if is_working and is_pomodoro %}
+          <p class="mx-6 my-3">[登録]を押すと休憩時間のタイマーを開始します</p>
+          {% endif %}
+        </form>
+      </div>
+    </div>
+
+    <div id="breaktime-modal" class="modal-container hidden">
+      <div class="time-modal-overlay modal-overlay"></div>
+      <div
+        class="z-50 flex h-fit w-fit flex-col items-center justify-center rounded border-2 border-card-border bg-card"
+      >
+        <form
+          name="breakTimeForm"
+          action="{% url 'timer:save' %}"
+          class="flex flex-col items-center justify-center gap-6"
+          method="post"
+        >
+          {% csrf_token %}
+          <h2 class="mx-24 mt-12 text-2xl">休憩終了！</h2>
+          <p>作業時間を開始します</p>
+
+          <div class="mb-12 flex w-full max-w-sm justify-center gap-8">
+            <button
+              type="button"
+              onclick="saveTime()"
+              class="h-8 w-24 rounded bg-card-button-red"
+            >
+              開始
+            </button>
+            <button
+              type="button"
+              onclick="toggleBreakTimeModal()"
+              class="h-8 w-24 rounded bg-stone-50"
+            >
+              まだ
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {% block modal %} {% endblock modal %}
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <script src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'js/timer.js' %}"></script>
+  </body>
 </html>

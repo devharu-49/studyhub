@@ -1,0 +1,85 @@
+{% extends "base.html" %} {% block body %}
+<div class="mx-auto h-[calc(100dvh-5rem)] w-[60%] pt-[2%] font-kosugiMaru">
+  <h2 class="mb-[2%] text-center text-4xl font-bold">
+    {% if task %}Todo編集{% else %}ToDo作成{% endif %}
+  </h2>
+  <form
+    method="post"
+    action="{% if task %}{% url 'task_edit' task.id %}{% else %}{% url 'task_create' %}{% endif %}"
+  >
+    {% csrf_token %}
+    <div class="mb-[3%] flex items-center">
+      <label for="title" class="min-w-24">タイトル：</label>
+      <input
+        type="text"
+        name="title"
+        value="{{ form.title.value|default:'' }}"
+        class="w-full rounded-lg border-4 border-card-border"
+      />
+      {% if form.title.errors %}
+      <div class="text-red-500">{{ form.title.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-[3%] flex items-center">
+      <label for="deadline" class="inline-block min-w-24">締切日：</label>
+      <input
+        type="date"
+        name="deadline"
+        id="id_deadline"
+        value="{{ form.deadline.value|date:'Y-m-d'|default:'' }}"
+        placeholder="0000/00/00"
+        class="rounded-lg border-4 border-card-border"
+      />
+    </div>
+    <div class="mb-[3%] flex items-center">
+      <label for="" class="inline-block min-w-24">状態：</label>
+      <!-- prettier-ignore -->
+      <input
+        type="radio"
+        name="is_completed"
+        value="True"
+        class="form-radio"
+        {% if form.is_completed.value %}checked{% endif %}/><label
+        for="completed"
+        class="mr-[5%]"
+        >完了</label
+      >
+      <!-- prettier-ignore -->
+      <input
+        type="radio"
+        name="is_completed"
+        value="False"
+        class="form-radio"
+        {% if not form.is_completed.value %}checked{% endif %}/><label
+        for="incompleted"
+        >未完了</label
+      >
+    </div>
+    <div class="mb-[3%] flex items-start">
+      <label for="" class="inline-block min-w-24">内容：</label>
+      <textarea
+        name="description"
+        id="description"
+        class="h-[30%] w-full rounded-lg border-4 border-card-border"
+      >
+{{form.description.value|default:''}}</textarea
+      >
+    </div>
+    <button
+      type="submit"
+      class="mr-10 rounded border-card-border bg-card-button-yellow px-[10%] py-[1%]"
+    >
+      {% if task %}更新{% else %}作成{% endif %}
+    </button>
+    <button
+      type="button"
+      onclick="location.href='{{ request.GET.next|default:'/todo/' }}'"
+      class="rounded border-card-border bg-card-button px-[10%] py-[1%]"
+    >
+      戻る
+    </button>
+  </form>
+</div>
+
+{% endblock body %}

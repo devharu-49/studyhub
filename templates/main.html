@@ -1,0 +1,81 @@
+{% extends 'base.html' %} {% load static %} {% block header %}
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap"
+  async
+  defer
+></script>
+<script src="{% static 'js/map-display.js' %}" defer></script>
+<script src="{% static 'js/map.js' %}" defer></script>
+
+{% endblock header %}{% block body %}
+<div
+  class="background flex h-[calc(100dvh-5rem)] min-w-full flex-col items-center overflow-hidden pb-32 pt-[2%]"
+>
+  <div
+    class="hidden-scrollbar flex h-full w-full flex-col items-center max-sm:overflow-y-auto sm:flex-row sm:justify-evenly"
+  >
+    <div class="main-content-box">
+      <h1 class="mb-5 mt-2 text-center font-kosugiMaru text-2xl font-bold">
+        近くのStudySpot
+      </h1>
+      {% if results %}
+      <!-- prettier-ignore -->
+      {% for result in results %}
+      {% with lat=result.lat lng=result.lng place_id=result.place_id %}
+      <a
+        href="{% url 'map:search_detail' %}?lat={{ lat }}&lng={{ lng }}&place_id={{ place_id }}"
+        class="mb-4 h-full w-full truncate"
+      >
+        <div
+          class="flex h-[90%] w-full flex-col justify-evenly rounded-lg border-4 border-card-border bg-white px-4 py-4 text-center hover:bg-stone-100"
+        >
+          <h3 class="truncate text-center font-kosugiMaru font-semibold">
+            {{ result.name }}
+          </h3>
+          <p class="truncate font-kosugiMaru font-medium max-sm:hidden">
+            {{ result.vicinity }}
+          </p>
+          <div class="flex justify-center gap-8">
+            <p class="font-kosugiMaru font-medium">
+              <span class="text-yellow-400">★</span>{{ result.rating }}
+            </p>
+            <p class="font-kosugiMaru font-medium">
+              {{ result.walking_distance }}
+            </p>
+          </div>
+        </div>
+      </a>
+      {% endwith %} {% endfor %} {% endif %}
+    </div>
+
+    <div class="main-content-box">
+      <h1 class="mb-5 mt-2 text-center font-kosugiMaru text-2xl font-bold">
+        急ぎのToDo
+      </h1>
+      {% for task in tasks %}
+      <a
+        href="{% url 'task_detail' task.id %}"
+        class="mb-4 h-full w-full truncate"
+      >
+        <div
+          class="flex h-[90%] flex-col items-center justify-center space-y-1 rounded-lg border-4 border-card-border bg-white px-4 py-4 text-center hover:bg-stone-100"
+        >
+          <h3 class="truncate text-center font-kosugiMaru font-semibold">
+            {{ task.title }}
+          </h3>
+          <p class="font-mediu font-kosugiMaru">
+            {{ task.deadline|date:"Y/m/d" }} まで
+          </p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+    <img
+      class="main-character absolute bottom-4 left-auto max-sm:hidden xl:static xl:h-56 xl:w-56"
+      src="/static/images/doubutu_carrybackwomotteryokousurutukinowakuma.png"
+      alt=""
+    />
+  </div>
+</div>
+{% endblock body %}
