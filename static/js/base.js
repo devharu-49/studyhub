@@ -16,5 +16,10 @@ document.getElementById("hamburger").addEventListener("click", (event) => {
 function resetSessionStorage() {
   console.log("logout");
   sessionStorage.clear();
+  localStorage.clear();
   document.logoutForm.submit();
+}
+
+function resetLocalStorage() {
+  localStorage.clear();
 }
