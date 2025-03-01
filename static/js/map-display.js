@@ -3,8 +3,8 @@ let markers = [];
 
 window.initMap(latitude, longitude) {
   const placesData = JSON.parse(localStorage.getItem("placesData")); // ローカルストレージからデータを取得
-  var MyLatLng = new google.maps.LatLng(latitude, longitude);
-  var Options = {
+  let MyLatLng = new google.maps.LatLng(latitude, longitude);
+  let Options = {
     zoom: 15,
     center: MyLatLng,
     mapTypeId: "roadmap",
