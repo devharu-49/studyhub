@@ -8,33 +8,42 @@
   <div id="map" class="rounded-lg border-4 border-card-border"></div>
   <div class="map-card">
     <div
-      class="flex flex-col space-y-10 rounded-lg border-4 border-card-border bg-card py-16 pl-20"
+      class="flex h-[90%] flex-col justify-evenly rounded-lg border-4 border-card-border bg-card p-10"
     >
-      <div class="flex items-center space-x-36">
-        <h1 class="font-kosugiMaru text-4xl font-bold">{{ details.name }}</h1>
-        <p class="font-kosugiMaru text-3xl font-bold">{{ distance }}</p>
-      </div>
+      <h1 class="truncate font-kosugiMaru text-4xl font-bold">
+        {{ details.name }}
+      </h1>
       <div>
-        <p class="font-kosugiMaru text-xl font-bold">{{ details.vicinity }}</p>
-      </div>
-      <div>
-        <p class="font-kosugiMaru text-xl font-bold">
-          <span class="text-yellow-400">★</span> {{ details.rating }}
+        <p class="truncate font-kosugiMaru text-2xl font-medium">
+          住所：{{ details.vicinity }}
         </p>
       </div>
-      <div class="flex flex-wrap justify-start gap-3">
-        {% for day in details.opening_hours.weekday_text %}
-        <p class="font-kosugiMaru text-xl font-bold">{{ day }}</p>
-        {% endfor %}
+      <p
+        class="w-full truncate whitespace-nowrap font-kosugiMaru text-2xl font-medium"
+      >
+        現在地からの距離(徒歩)：{{ distance }}
+      </p>
+      <p class="truncate font-kosugiMaru text-2xl font-medium">
+        レビュー：<span class="text-yellow-400">★</span> {{ details.rating }}
+      </p>
+      <div class="gap-3">
+        <p class="mb-2 text-2xl font-medium">営業時間：</p>
+        <div class="grid grid-cols-2">
+          {% for day in details.opening_hours.weekday_text %}
+
+          <p class="mb-2 truncate font-kosugiMaru text-xl">{{ day }}</p>
+          {% endfor %}
+        </div>
       </div>
-      <p class="font-kosugiMaru text-xl font-bold">
+      <p class="w-full truncate font-kosugiMaru text-xl font-bold">
         <a href="{{ details.website }}" class="text-blue-400 underline"
           >{{ details.website }}</a
         >
       </p>
     </div>
     <img
-      class="search-detail-character"
+      class="search-detail-character hidden"
+      Z
       src="/static/images/doubutu_tukinowaguma_valley3.png"
       alt=""
     />

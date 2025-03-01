@@ -18,20 +18,24 @@
         href="{% url 'map:search_detail' %}?lat={{ lat }}&lng={{ lng }}&place_id={{ place_id }}"
       >
         <div
-          class="space-y-2 rounded-lg border-4 border-card-border bg-white px-4 py-4"
+          class="flex w-full items-center justify-between space-y-2 rounded-lg border-4 border-card-border bg-white px-4 py-4"
         >
-          <h1 class="font-kosugiMaru text-lg font-bold">{{ result.name }}</h1>
-          <div class="mr-8 flex items-center justify-between">
-            <p class="font-kosugiMaru text-lg font-bold">
+          <div class="w-3/4">
+            <h1 class="truncate font-kosugiMaru text-lg font-bold">
+              {{ result.name }}
+            </h1>
+            <p class="truncate font-kosugiMaru text-lg">
               {{ result.vicinity }}
             </p>
-            <p class="font-kosugiMaru text-xl font-bold">
+            <p class="font-kosugiMaru text-lg">
+              <span class="text-yellow-400">★</span>{{ result.rating }}
+            </p>
+          </div>
+          <div class="ml-3">
+            <p class="flex items-center justify-center font-kosugiMaru text-xl">
               {{ result.walking_distance }}
             </p>
           </div>
-          <p class="font-kosugiMaru text-lg font-bold">
-            <span class="text-yellow-400">★</span>{{ result.rating }}
-          </p>
         </div>
       </a>
       {% endwith %} {% endfor %} {% else %}
