@@ -39,10 +39,6 @@ RUN npx tailwindcss -i /app/static/css/tailwind.css -o /app/static/css/style.css
 # 静的ファイルを収集
 RUN python manage.py collectstatic --noinput
 
-# エントリポイントスクリプトをコピー
-COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
 # wait-for-it.sh を追加
 COPY wait-for-it.sh /app/wait-for-it.sh
 RUN chmod +x /app/wait-for-it.sh
