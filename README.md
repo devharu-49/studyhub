@@ -17,13 +17,26 @@
 | etc.           | Prettier, Git, GitHub, Docker Compose |
 
 <br />
+## 🏆 開発概要
+このアプリはハッカソンでチーム開発した作品です。  
+私は主に **インフラ構築・環境設計（AWS, Docker, nginx, uWSGI, MySQL）** を担当しました。
 
+## 👥 チーム構成
+- フロントエンド：2名（HTML, Tailwind CSS, JavaScript）
+- バックエンド：1名（Django, API開発）
+- インフラ：私（AWS, Docker, nginx,）
+
+## 🧩 担当範囲
+- Docker を利用した開発／本番環境の構築
+- AWS上へのデプロイ（EC2, RDS, ALB, S3）
+- nginx + uWSGI のリバースプロキシ設定
+- セキュリティグループ／VPC設計
 ## 🏗 インフラ構成図
 
 ![Infrastructure Diagram](docs/infrastructure.png)
 
 - 開発環境：Docker Compose（nginx + Django + MySQL）
-- 本番環境：AWS EC2 / RDS(MySQL) / S3 / nginx / Gunicorn
+- 本番環境：AWS EC2 / RDS(MySQL)  / nginx / Gunicorn
 - セキュリティ：Security Group設計、CloudWatch監視
 - 今後の拡張：ALB + Auto Scaling、GitHub ActionsによるCI/CD化
 
