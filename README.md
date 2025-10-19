@@ -34,7 +34,8 @@
 - セキュリティグループ／VPC設計
 ## 🏗 インフラ構成図
 
-![Infrastructure Diagram](docs/infrastructure.png)
+![Infrastructure](https://raw.githubusercontent.com/devharu-49/studyhub/main/docs/infrastructure.jpg)
+
 
 - 開発環境：Docker Compose（nginx + Django + MySQL）
 - 本番環境：AWS EC2 / RDS(MySQL)  / nginx / Gunicorn
