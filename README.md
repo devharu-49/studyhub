@@ -17,9 +17,10 @@
 | etc.           | Prettier, Git, GitHub, Docker Compose |
 
 <br />
+
 ## 🏆 開発概要
 このアプリはハッカソンでチーム開発した作品です。  
-私は主に **インフラ構築・環境設計（AWS, Docker, nginx, uWSGI, MySQL）** を担当しました。
+私は主に インフラ構築・環境設計（AWS, Docker, nginx, uWSGI, MySQL） を担当しました。
 
 ## 👥 チーム構成
 - フロントエンド：2名（HTML, Tailwind CSS, JavaScript）
